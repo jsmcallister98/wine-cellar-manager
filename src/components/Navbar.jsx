@@ -3,7 +3,7 @@
 import { jsx } from 'theme-ui'
 import React from 'react'
 import Link from 'next/link'
-import { NavLink, Flex } from 'theme-ui'
+import { Flex } from 'theme-ui'
 
 const Navbar = () => {
   return (

@@ -5,6 +5,7 @@ import { ThemeProvider } from 'theme-ui'
 import theme from '../src/theme'
 import Navbar from '../src/components/Navbar' 
 import '../styles/globals.css'
+import '../styles/login.css'
 
 export default function App({ Component, pageProps }) {
   return (
