@@ -3,12 +3,13 @@
 import { jsx } from 'theme-ui'
 import { ThemeProvider } from 'theme-ui'
 import theme from '../src/theme'
-import Navbar from '../src/components/Navbar'
+import Navbar from '../src/components/Navbar' 
+import '../styles/globals.css'
 
 export default function App({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
-      <div>
+      <div sx={{ fontFamily: 'Montserrat'}}>
         <Navbar />
         <Component {...pageProps} />
       </div>      

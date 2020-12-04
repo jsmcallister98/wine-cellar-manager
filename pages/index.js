@@ -19,10 +19,10 @@ export default function Home() {
       </Head>
       <Flex sx={{ flexDirection: 'column',
                   textAlign: 'center',
-                  mt: -64
+                  mt: -128
                   }}>
-        <h1 sx={{ fontSize: [5, 6, 7, 7] }}> Welcome To WineOh </h1>
-        <p sx={{ fontSize: 3 }}> The easiest way to keep track of your favorite wines. </p>
+        <h1 sx={{ fontSize: [5, 6, 7, 7], fontWeight: 'semiBold' }}> Welcome To WineOh </h1>
+        <p sx={{ fontSize: [2, 2, 3] }}> The easiest way to keep track of your favorite wines. </p>
       </Flex>
     </Flex>
   )

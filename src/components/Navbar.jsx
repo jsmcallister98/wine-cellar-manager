@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <nav sx={{ background: 'linear-gradient(180deg, #520101 0%, #000000 100%)',
                 }}>
-      <Flex sx={{ justifyContent: 'space-between'}}>
+      <Flex sx={{ justifyContent: 'space-between', alignItems: 'center'}}>
         <Link href='/'>
           <a sx={{variant: 'styles.a'}}> WineOh </a>
         </Link>
