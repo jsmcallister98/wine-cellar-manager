@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import * as FAicons from 'react-icons/fa'
 
 const Login = () => {
@@ -9,6 +10,8 @@ const Login = () => {
   
   const [userName, setUserName] = React.useState('')
   const [password, setPassword] = React.useState('')
+
+  const [clicked, setClicked] = React.useState(false)
   
   const handleFocusedUser = () => {
     if (userName === '') {
@@ -21,23 +24,23 @@ const Login = () => {
       setFocusedPass(false)
     };
   };
+
   return (
     <div>
-      <img className="wave" src="img/wave.png" />
       <div className="container">
         <div className="img">
-          <img src="img/bg.svg" />
+          <Image src="/images/loginpage1.svg" alt="image" width="713" height="600"/>
         </div>
-        <div className="login-content">
+        <div className={clicked ? "login-content flip" : "login-content unflip"}>
           <form action="index.html">
-            <img src="img/avatar.svg" />
+            <img src="https://www.flaticon.com/svg/static/icons/svg/3828/3828376.svg" />
             <h2 className="title">Welcome</h2>
               <div className={focusedUser ? "input-div one focus" : "input-div one"}>
                 <div className="i">
                   <FAicons.FaUser className="fas fa-user"></FAicons.FaUser>
                 </div>
                 <div className="div">
-                    <h5>Username</h5>
+                    <h5>Email</h5>
                     <input type="text" className="input" 
                       onFocus={() => setFocusedUser(true)}
                       onChange={event => setUserName(event.target.value)}
@@ -64,8 +67,62 @@ const Login = () => {
                 </Link>
               </div>
               <input type="submit" className="btn" value="Login" />
+              <button 
+                onClick={(e) => [e.preventDefault(), setClicked(true)]}
+                className="btn">Sign Up
+              </button>
             </form>
         </div>
+        {/* <div className={clicked ? "signup login-content unflip" : "signup login-content flip"}>
+          <form action="index.html">
+            <img src="img/avatar.svg" />
+            <h2 className="title">Welcome</h2>
+              <div className={focusedUser ? "input-div one focus" : "input-div one"}>
+                <div className="i">
+                  <FAicons.FaUser className="fas fa-user"></FAicons.FaUser>
+                </div>
+                <div className="div">
+                    <h5>Email</h5>
+                    <input type="text" className="input" 
+                      onFocus={() => setFocusedUser(true)}
+                      onChange={event => setUserName(event.target.value)}
+                      onBlur={() => handleFocusedUser()} 
+                    />
+                </div>
+              </div>
+              <div className={focusedPass ? "input-div pass focus" : "input-div pass"}>
+                <div className="i"> 
+                  <FAicons.FaLock className="fas fa-lock"></FAicons.FaLock>
+                </div>
+                <div className="div">
+                    <h5>Password</h5>
+                    <input type="password" className="input"
+                      onFocus={() => setFocusedPass(true)}
+                      onChange={event => setPassword(event.target.value)}
+                      onBlur={() => handleFocusedPass()} 
+                    />
+                </div>
+              </div>
+              <div className={focusedPass ? "input-div pass focus" : "input-div pass"}>
+                <div className="i"> 
+                  <FAicons.FaLock className="fas fa-lock"></FAicons.FaLock>
+                </div>
+                <div className="div">
+                    <h5>Confirm Password</h5>
+                    <input type="password" className="input"
+                      onFocus={() => setFocusedPass(true)}
+                      onChange={event => setPassword(event.target.value)}
+                      onBlur={() => handleFocusedPass()} 
+                    />
+                </div>
+              </div>
+              <button 
+                onClick={(e) => [e.preventDefault(), setClicked(false)]}
+                className="btn">Sign Up
+              </button>
+              <input type="submit" className="btn" value="Login" />
+            </form>
+        </div> */}
       </div>
     </div>
   )
