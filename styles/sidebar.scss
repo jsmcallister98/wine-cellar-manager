@@ -1,0 +1,27 @@
+$sidebar-bg-color: #ffffff !default;
+$sidebar-color: #000000 !default;
+$sidebar-width: 250px !default;
+$sidebar-collapsed-width: 80px !default;
+$highlight-color: #d85a5a !default;
+$submenu-bg-color: #ffffff !default;
+$submenu-bg-color-collapsed: #ffffff !default;
+$icon-bg-color: #db7575 !default;
+$icon-size: 35px !default;
+$breakpoint-xs: 480px !default;
+$breakpoint-sm: 576px !default;
+$breakpoint-md: 768px !default;
+$breakpoint-lg: 992px !default;
+$breakpoint-xl: 1200px !default;
+
+#CellarPage {
+
+  .pro-sidebar {
+    height: 100vh;
+  }
+
+  .pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item {
+    padding-top: 15px;
+  }
+}
+
+@import '~react-pro-sidebar/dist/scss/styles.scss';

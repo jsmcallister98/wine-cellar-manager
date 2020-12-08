@@ -6,6 +6,7 @@ import theme from '../src/theme'
 import Navbar from '../src/components/Navbar' 
 import '../styles/globals.css'
 import '../styles/login.css'
+import '../styles/sidebar.scss'
 
 export default function App({ Component, pageProps }) {
   return (
