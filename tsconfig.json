@@ -21,7 +21,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx", "src/components/Navbar.jsx"
+    "**/*.tsx", "src/components/Navbar.js"
   ],
   "exclude": [
     "node_modules"

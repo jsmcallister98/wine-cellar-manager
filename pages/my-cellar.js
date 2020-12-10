@@ -4,11 +4,30 @@ import { jsx } from 'theme-ui'
 import React from 'react'
 import * as FaIcons from 'react-icons/fa'
 import { Box, Grid, Flex } from 'theme-ui'
-import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar'
+import useSWR from 'swr'
+
 
 const Cellar = () => {
 
   const [collapsed, setCollapsed] = React.useState(false)
+
+  const fetcher = url => fetch(url).then(res => res.json())
+
+  function useBottle () {
+    const { data, error } = useSWR(`/api/bottles/`, fetcher)
+    console.log(data)
+
+    return { 
+      bottles: data,
+      isLoading: !error && !data,
+      isError: error
+    }
+  }
+
+  const { bottles, isLoading } = useBottle()
+  if (isLoading) return <div>Loading...</div>
+
   return (
     <Flex id="CellarPage">
       <ProSidebar collapsed={collapsed}>
@@ -30,7 +49,9 @@ const Cellar = () => {
 
           </SubMenu>
           <SubMenu title="My Bottles">
-
+            {bottles.data.map(bottle => (
+              <MenuItem>{bottle.name}</MenuItem>)
+              )}
           </SubMenu>
         </Menu>
       </ProSidebar>

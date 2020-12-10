@@ -15,6 +15,7 @@
     "react-icons": "^4.1.0",
     "react-pro-sidebar": "^0.4.4",
     "sass": "^1.30.0",
+    "swr": "^0.3.9",
     "theme-ui": "^0.3.4"
   },
   "devDependencies": {
