@@ -22,6 +22,35 @@ $breakpoint-xl: 1200px !default;
   .pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item {
     padding-top: 15px;
   }
+
+  .bottle-icon, span.pro-icon {
+    background: #fff;
+    font-size: 1.2rem;
+  }
+
+  // Opening / closing sidebar
+  .close-icon {
+    font-size: 1.5rem;
+    margin-left: 216px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #000000;
+  }
+
+  .open-icon {
+    font-size: 1.5rem;
+    margin-left: 46px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #000000;
+  }
+
+  .active-side {
+    display: none;
+  }
+
 }
 
 @import '~react-pro-sidebar/dist/scss/styles.scss';
