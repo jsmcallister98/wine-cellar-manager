@@ -8,7 +8,7 @@ const BottleSchema = new mongoose.Schema({
     maxlength: [50, 'Must be no more than 50 characters']
   },
   year: {
-    type: Number,
+    type: String,
     required: [true, 'Please enter a year'],
     trim: true, 
     maxlength: [4, 'Must be 4 digits'],

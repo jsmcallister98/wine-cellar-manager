@@ -19,7 +19,8 @@ export default async (req, res) => {
       
     case 'POST':
       try {
-        const bottle = await Bottle.create(req.body);
+        console.log(req.body)
+        const bottle = await Bottle.create(req.body.newBottle);
 
         res.status(201).json({ success: true, data: bottle })
       } catch (error) {

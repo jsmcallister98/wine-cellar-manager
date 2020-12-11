@@ -3,15 +3,16 @@
 import { jsx } from 'theme-ui'
 import React from 'react'
 import * as FaIcons from 'react-icons/fa'
-import { Box, Grid, Flex } from 'theme-ui'
+import { Box, Grid, Flex, Button } from 'theme-ui'
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader } from 'react-pro-sidebar'
 import useSWR from 'swr'
 
 
 const Cellar = () => {
-
+  // opening/closing of sidebar
   const [active, setActive] = React.useState(false)
 
+  // fetching data from server
   const fetcher = url => fetch(url).then(res => res.json())
 
   function useBottle () {
@@ -27,6 +28,46 @@ const Cellar = () => {
 
   const { bottles, isLoading } = useBottle()
   if (isLoading) return <div>Loading...</div>
+
+  // post data to server 
+  const [newBottle, setNewBottle] = React.useState({name: '', type: '', year: '', location: ''})
+
+  const handleNameChange = (e) => {
+    const newParam = {name: e.target.value}
+    setNewBottle({...newBottle, ...newParam})
+  }
+
+  const handleTypeChange = (e) => {
+    const newParam = {type: e.target.value}
+    setNewBottle({...newBottle, ...newParam})
+  }
+
+  const handleYearChange = (e) => {
+    const newParam = {year: e.target.value}
+    setNewBottle({...newBottle, ...newParam})
+  }
+
+  const handleLocationChange = (e) => {
+    const newParam = {location: e.target.value}
+    setNewBottle({...newBottle, ...newParam})
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    fetch('/api/bottles', {
+      method: 'POST',
+      headers: { 
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        newBottle: newBottle
+      })
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(error => console.log(error))
+  }
 
   return (
     <Flex id="CellarPage">
@@ -46,12 +87,13 @@ const Cellar = () => {
           <SubMenu title="Add a Rack" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
 
           </SubMenu>
-  <SubMenu title="Add a Bottle" icon={<FaIcons.FaWineBottle className="bottle-icon" />}>
-            <form>
-              <input type="text" placeholder="Bottle Name" />
-              <input type="text" placeholder="Wine Type" />
-              <input type="text" placeholder="Year" />
-              <input type="text" placeholder="Location" />
+          <SubMenu title="Add a Bottle" icon={<FaIcons.FaWineBottle className="bottle-icon" />}>
+            <form onSubmit={(e) => handleSubmit(e)}>
+              <input onChange={(e) => handleNameChange(e)} type="text" placeholder="Bottle Name" />
+              <input onChange={(e) => handleTypeChange(e)} type="text" placeholder="Wine Type" />
+              <input onChange={(e) => handleYearChange(e)} type="text" placeholder="Year" />
+              <input onChange={(e) => handleLocationChange(e)} type="text" placeholder="Location" />
+              <input type="submit" />
             </form>
           </SubMenu>
           <SubMenu title="My Racks" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
@@ -72,7 +114,7 @@ const Cellar = () => {
       className="rack-container">
       <div>
         <Grid 
-          sx={{background: "#563617", p: 1}}
+          sx={{background: "#422912", p: 1}}
           columns={6}
           gap={3}>
           <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
@@ -101,7 +143,7 @@ const Cellar = () => {
           </Flex>
         </Grid>
         <Grid 
-          sx={{background: "#563617", p: 1}}
+          sx={{background: "#422912", p: 1}}
           columns={6}
           gap={3}>
           <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
@@ -130,7 +172,7 @@ const Cellar = () => {
           </Flex>
         </Grid>
         <Grid 
-          sx={{background: "#563617", p: 1}}
+          sx={{background: "#422912", p: 1}}
           columns={6}
           gap={3}>
           <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
@@ -159,7 +201,7 @@ const Cellar = () => {
           </Flex>
         </Grid>
         <Grid 
-          sx={{background: "#563617", p: 1}}
+          sx={{background: "#422912", p: 1}}
           columns={6}
           gap={3}>
           <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
@@ -188,7 +230,7 @@ const Cellar = () => {
           </Flex>
         </Grid>
         <Grid 
-          sx={{background: "#563617", p: 1}}
+          sx={{background: "#422912", p: 1}}
           columns={6}
           gap={3}>
           <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
@@ -217,7 +259,7 @@ const Cellar = () => {
           </Flex>
         </Grid>
         <Grid 
-          sx={{background: "#563617", p: 1}}
+          sx={{background: "#422912", p: 1}}
           columns={6}
           gap={3}>
           <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
