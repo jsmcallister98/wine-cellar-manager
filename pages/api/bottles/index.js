@@ -29,7 +29,7 @@ export default async (req, res) => {
       break;
 
     default:
-    res.status(400).json({ success: false });
-    break;
+      res.status(400).json({ success: false });
+      break;
   }
 }
