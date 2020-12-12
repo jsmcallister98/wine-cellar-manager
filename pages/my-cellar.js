@@ -10,12 +10,12 @@ import useSWR from 'swr'
 
 const Cellar = () => {
   // opening/closing of sidebar
-  const [active, setActive] = React.useState(false)
+  const [active, setActive] = React.useState(false);
 
   // fetching data from server
-  const fetcher = url => fetch(url).then(res => res.json())
+  const fetcher = url => fetch(url).then(res => res.json());
 
-  function useBottle () {
+  const useBottle = () => {
     const { data, error } = useSWR(`/api/bottles/`, fetcher)
     console.log(data)
 
@@ -24,35 +24,35 @@ const Cellar = () => {
       isLoading: !error && !data,
       isError: error
     }
-  }
+  };
 
-  const { bottles, isLoading } = useBottle()
+  const { bottles, isLoading } = useBottle();
   if (isLoading) return <div>Loading...</div>
 
   // post data to server 
-  const [newBottle, setNewBottle] = React.useState({name: '', type: '', year: '', location: ''})
+  const [newBottle, setNewBottle] = React.useState({name: '', type: '', year: '', location: ''});
 
   const handleNameChange = (e) => {
-    const newParam = {name: e.target.value}
-    setNewBottle({...newBottle, ...newParam})
-  }
+    const newParam = {name: e.target.value};
+    setNewBottle({...newBottle, ...newParam});
+  };
 
   const handleTypeChange = (e) => {
-    const newParam = {type: e.target.value}
-    setNewBottle({...newBottle, ...newParam})
-  }
+    const newParam = {type: e.target.value};
+    setNewBottle({...newBottle, ...newParam});
+  };
 
   const handleYearChange = (e) => {
-    const newParam = {year: e.target.value}
-    setNewBottle({...newBottle, ...newParam})
-  }
+    const newParam = {year: e.target.value};
+    setNewBottle({...newBottle, ...newParam});
+  };
 
   const handleLocationChange = (e) => {
-    const newParam = {location: e.target.value}
-    setNewBottle({...newBottle, ...newParam})
-  }
+    const newParam = {location: e.target.value};
+    setNewBottle({...newBottle, ...newParam});
+  };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     fetch('/api/bottles', {
       method: 'POST',
@@ -66,8 +66,8 @@ const Cellar = () => {
     })
     .then(res => res.json())
     .then(data => console.log(data))
-    .catch(error => console.log(error))
-  }
+    .catch(error => console.log(error));
+  };
 
   return (
     <Flex id="CellarPage">
