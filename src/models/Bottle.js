@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const BottleSchema = new mongoose.Schema({
   name: {
@@ -23,6 +23,19 @@ const BottleSchema = new mongoose.Schema({
     required: [true, 'Please enter a location'],
     trim: true,
     maxlength: [50, 'Must be no more than 50 characters']
+  },
+  rack: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'WineRack',
+    required: [true, 'Please enter the corresponding rack label']
+  }, 
+  xPosition: {
+    type: Number,
+    required: [true, 'Please enter which column this bottle is in']
+  },
+  yPosition: {
+    type: Number,
+    required: [true, 'Please enter which row this bottle is in']
   }
 });
 

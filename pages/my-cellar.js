@@ -26,8 +26,40 @@ const Cellar = () => {
     }
   };
 
+  const useWineRack = () => {
+    const { data, error } = useSWR(`/api/wineracks/`, fetcher)
+    console.log(data)
+
+    return { 
+      wineracks: data,
+      isLoadingRacks: !error && !data,
+      isError: error
+    }
+  };
+
+  const { wineracks, isLoadingRacks } = useWineRack();
+
+  let rows = [0,0,0,0,0]
+  let columns = [0,0,0,0,0]
+  
+  const populateRows = () => {
+    for (let i = 0; i < wineracks.data.rows; i++) {
+      rows.push(0)
+    }
+  }
+
+  const populateColumns = () => {
+    for (let i = 0; i < wineracks.data.columns; i++) {
+      columns.push(0)
+    }
+  }
+
+  const populateAll = () => {
+    populateRows();
+    populateColumns();
+  }
+
   const { bottles, isLoading } = useBottle();
-  if (isLoading) return <div>Loading...</div>
 
   // post data to server 
   const [newBottle, setNewBottle] = React.useState({name: '', type: '', year: '', location: ''});
@@ -69,6 +101,8 @@ const Cellar = () => {
     .catch(error => console.log(error));
   };
 
+  if (isLoading) return <div>Loading...</div>
+
   return (
     <Flex id="CellarPage">
       <ProSidebar collapsed={active}>
@@ -101,8 +135,8 @@ const Cellar = () => {
           </SubMenu>
           <SubMenu title="My Bottles" icon={<FaIcons.FaWineBottle className="bottle-icon" />}>
             {bottles.data.map(bottle => (
-              <MenuItem>{bottle.name}</MenuItem>)
-              )}
+              <MenuItem>{bottle.name}</MenuItem>))
+            }
           </SubMenu>
         </Menu>
       </ProSidebar>
@@ -112,6 +146,23 @@ const Cellar = () => {
            justifyContent: "center",
            width: "100%"}}
       className="rack-container">
+      {wineracks.data.map(winerack => (
+        <div>
+          {rows.map(row => (
+            <Grid           
+            sx={{background: "#422912", p: 1}}
+            columns={columns.length}
+            gap={3}>
+              {columns.map(column => (
+              <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
+                <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
+                     bg=''></Box>
+              </Flex>
+              ))}
+            </Grid>
+          ))}
+        </div>
+      ))}
       <div>
         <Grid 
           sx={{background: "#422912", p: 1}}

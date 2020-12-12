@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-import BottleSchema from './Bottle'
 
 const WineRackSchema = new mongoose.Schema ({
   label: {
@@ -17,9 +16,9 @@ const WineRackSchema = new mongoose.Schema ({
     required: [true, "Please enter the number of columns(vertical)"],
     max: 20
   },
-  bottles: {
-    type: [BottleSchema]
-  }
+  bottles: [
+    { type: mongoose.Schema.Types.ObjectId, ref: 'Bottle'}
+  ]
 });
 
 module.exports = mongoose.models.WineRack || mongoose.model('WineRack', WineRackSchema);

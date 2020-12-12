@@ -19,6 +19,12 @@ $breakpoint-xl: 1200px !default;
     height: 100vh;
   }
 
+  .pro-sidebar > .pro-sidebar-inner > .pro-sidebar-layout .pro-sidebar-header {
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(69,0,0,1) 35%, rgba(255,255,255,1) 100%);
+    border: none;
+  }
+
   .pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item {
     padding-top: 15px;
   }
@@ -35,7 +41,7 @@ $breakpoint-xl: 1200px !default;
     cursor: pointer;
     margin-top: 10px;
     margin-bottom: 10px;
-    color: #000000;
+    color: #fff;
   }
 
   .open-icon {
@@ -44,7 +50,7 @@ $breakpoint-xl: 1200px !default;
     cursor: pointer;
     margin-top: 10px;
     margin-bottom: 10px;
-    color: #000000;
+    color: #fff;
   }
 
   .active-side {
