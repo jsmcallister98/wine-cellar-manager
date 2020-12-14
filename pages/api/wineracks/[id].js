@@ -12,7 +12,7 @@ export default async (req, res) => {
   switch(method) {
     case 'GET':
       try {
-        const rack = await WineRack.findById({});
+        const rack = await WineRack.findById(id).populate("bottles");
 
         if (!rack) {
         return res.status(400).json({ success: false })

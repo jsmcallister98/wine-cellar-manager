@@ -12,6 +12,9 @@ const Cellar = () => {
   // opening/closing of sidebar
   const [active, setActive] = React.useState(false);
 
+  let rows = [0]
+  let columns = [0]
+
   // fetching data from server
   const fetcher = url => fetch(url).then(res => res.json());
 
@@ -38,26 +41,6 @@ const Cellar = () => {
   };
 
   const { wineracks, isLoadingRacks } = useWineRack();
-
-  let rows = [0,0,0,0,0]
-  let columns = [0,0,0,0,0]
-  
-  const populateRows = () => {
-    for (let i = 0; i < wineracks.data.rows; i++) {
-      rows.push(0)
-    }
-  }
-
-  const populateColumns = () => {
-    for (let i = 0; i < wineracks.data.columns; i++) {
-      columns.push(0)
-    }
-  }
-
-  const populateAll = () => {
-    populateRows();
-    populateColumns();
-  }
 
   const { bottles, isLoading } = useBottle();
 
@@ -141,205 +124,29 @@ const Cellar = () => {
         </Menu>
       </ProSidebar>
       
-    <div 
-      sx={{display: "flex",
-           justifyContent: "center",
-           width: "100%"}}
-      className="rack-container">
-      {wineracks.data.map(winerack => (
-        <div>
-          {rows.map(row => (
-            <Grid           
-            sx={{background: "#422912", p: 1}}
-            columns={columns.length}
-            gap={3}>
-              {columns.map(column => (
-              <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-                <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                     bg=''></Box>
-              </Flex>
-              ))}
-            </Grid>
-          ))}
-        </div>
-      ))}
-      <div>
-        <Grid 
-          sx={{background: "#422912", p: 1}}
-          columns={6}
-          gap={3}>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg=''></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='muted'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg=''></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='muted'></Box>
-          </Flex>
-        </Grid>
-        <Grid 
-          sx={{background: "#422912", p: 1}}
-          columns={6}
-          gap={3}>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='muted'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='muted'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg=''></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-        </Grid>
-        <Grid 
-          sx={{background: "#422912", p: 1}}
-          columns={6}
-          gap={3}>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg=''></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='muted'></Box>
-          </Flex>
-        </Grid>
-        <Grid 
-          sx={{background: "#422912", p: 1}}
-          columns={6}
-          gap={3}>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg=''></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='muted'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg=''></Box>
-          </Flex>
-        </Grid>
-        <Grid 
-          sx={{background: "#422912", p: 1}}
-          columns={6}
-          gap={3}>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='muted'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg=''></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='muted'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg=''></Box>
-          </Flex>
-        </Grid>
-        <Grid 
-          sx={{background: "#422912", p: 1}}
-          columns={6}
-          gap={3}>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg=''></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='muted'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg=''></Box>
-          </Flex>
-          <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-            <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                 bg='#943132'></Box>
-          </Flex>
-        </Grid>
+      <div 
+        sx={{display: "flex",
+            justifyContent: "center",
+            width: "100%"}}
+        className="rack-container">
+        {wineracks.data.map(winerack => (
+          <div>
+            {winerack.rows.map(row => (
+              <Grid           
+              sx={{background: "#422912", p: 1}}
+              columns={winerack.columns.length}
+              gap={3}>
+                {winerack.columns.map(column => (
+                <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
+                  <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
+                      bg=''></Box>
+                </Flex>
+                ))}
+              </Grid>
+            ))}
+          </div>
+        ))}
       </div>
-    </div>
     </Flex>
   )
 }

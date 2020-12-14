@@ -6,6 +6,15 @@ dbConnect()
 export default async (req, res) => {
   const { method } = req;
 
+  let rowArray = []
+  let columnArray = []
+  for (let i = 0; i < req.body.rows; i++) {
+    rowArray.push(0)
+  }
+  for (let i = 0; i < req.body.columns; i++) {
+    columnArray.push(0)
+  }
+
   switch(method) {
     case 'GET':
       try {
@@ -19,7 +28,12 @@ export default async (req, res) => {
 
     case 'POST':
       try {
-        const newRack = await WineRack.create(req.body)
+
+        const newRack = await WineRack.create({
+          label: req.body.label,
+          rows: rowArray,
+          columns: columnArray
+        })
 
         res.status(200).json({ success: true, data: newRack })
       } catch (error) {

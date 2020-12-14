@@ -25,9 +25,8 @@ const BottleSchema = new mongoose.Schema({
     maxlength: [50, 'Must be no more than 50 characters']
   },
   rack: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'WineRack',
-    required: [true, 'Please enter the corresponding rack label']
+    type: String,
+    required: true
   }, 
   xPosition: {
     type: Number,

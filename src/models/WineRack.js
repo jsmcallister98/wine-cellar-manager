@@ -7,18 +7,19 @@ const WineRackSchema = new mongoose.Schema ({
     maxlength: [50, "Must be no more than 50 characters"]
   },
   rows: {
-    type: Number,
+    type: [],
     required: [true, "Please enter the number of rows(horizontal)"],
     max: 20
   },
   columns: {
-    type: Number,
+    type: [],
     required: [true, "Please enter the number of columns(vertical)"],
     max: 20
   },
-  bottles: [
-    { type: mongoose.Schema.Types.ObjectId, ref: 'Bottle'}
-  ]
+  bottles: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Bottle'
+  }]
 });
 
 module.exports = mongoose.models.WineRack || mongoose.model('WineRack', WineRackSchema);

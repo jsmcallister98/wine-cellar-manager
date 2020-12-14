@@ -1,12 +1,26 @@
 import dbConnect from '../../../utils/dbConnect';
 import Bottle from '../../../src/models/Bottle';
+import WineRack from '../../../src/models/WineRack';
 
 dbConnect();
+
+// const createBottle = (rackName, bottle) => {
+//   return Bottle.create(bottle).then(docBottle => {
+//     console.log(docBottle);
+
+//     return WineRack.findOneAndUpdate(
+//       { label: rackName },
+//       { $push: { bottles: docBottle._id } },
+//       { new: true, useFindAndModify: false }
+//     );
+//   });
+// };
 
 export default async (req, res) => {
   const { method } = req;
 
   switch(method) {
+
     case 'GET': 
       try {
         const bottles = await Bottle.find({});
@@ -19,10 +33,15 @@ export default async (req, res) => {
       
     case 'POST':
       try {
-        console.log(req.body)
-        const bottle = await Bottle.create(req.body.newBottle);
+        const newBottle = await Bottle.create(req.body);
 
-        res.status(201).json({ success: true, data: bottle })
+        const updatedRack = WineRack.findOneAndUpdate(
+          { label: req.body.rack },
+          { $push: { bottles: newBottle } },
+          { new: true, useFindAndModify: false }
+        ).then()
+
+        res.status(201).json({ success: true, data: newBottle })
       } catch (error) {
         res.status(400).json({ success: false });
       }
