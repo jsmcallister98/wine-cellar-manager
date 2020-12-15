@@ -8,17 +8,17 @@ export default async (req, res) => {
 
   let rowArray = []
   let columnArray = []
-  for (let i = 0; i < req.body.rows; i++) {
-    rowArray.push(0)
+  for (let i = 1; i <= req.body.rows; i++) {
+    rowArray.push(i)
   }
-  for (let i = 0; i < req.body.columns; i++) {
-    columnArray.push(0)
+  for (let i = 1; i <= req.body.columns; i++) {
+    columnArray.push(i)
   }
 
   switch(method) {
     case 'GET':
       try {
-        const racks = await WineRack.find({});
+        const racks = await WineRack.find({}).populate("bottles");
 
         res.status(200).json({ success: true, data: racks})
       } catch (error) {

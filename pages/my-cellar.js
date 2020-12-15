@@ -130,16 +130,24 @@ const Cellar = () => {
             width: "100%"}}
         className="rack-container">
         {wineracks.data.map(winerack => (
-          <div>
+          <div sx={{ m: 3 }}>
             {winerack.rows.map(row => (
-              <Grid           
+              <Grid
+              key={row}           
               sx={{background: "#422912", p: 1}}
               columns={winerack.columns.length}
               gap={3}>
                 {winerack.columns.map(column => (
-                <Flex sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
-                  <Box sx={{width: 35, height: 35, borderRadius: '50%'}}
-                      bg=''></Box>
+                <Flex key={column} sx={{justifyContent: 'center', alignItems: 'center', width: 40, height: 40, borderRadius: 3}} bg='#000'>
+                  {winerack.bottles.map(bottle => (
+                    bottle.yPosition == row && bottle.xPosition == column ? (
+                    <Box key={bottle.name} sx={{width: 35, height: 35, borderRadius: '50%'}}
+                        bg='muted'></Box> 
+                    )
+                      : (
+                        null
+                    )
+                  ))}
                 </Flex>
                 ))}
               </Grid>
