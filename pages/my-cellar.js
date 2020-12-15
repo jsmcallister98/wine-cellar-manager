@@ -6,14 +6,12 @@ import * as FaIcons from 'react-icons/fa'
 import { Box, Grid, Flex, Button } from 'theme-ui'
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader } from 'react-pro-sidebar'
 import useSWR from 'swr'
+import Router from 'next/router'
 
 
 const Cellar = () => {
   // opening/closing of sidebar
   const [active, setActive] = React.useState(false);
-
-  let rows = [0]
-  let columns = [0]
 
   // fetching data from server
   const fetcher = url => fetch(url).then(res => res.json());
@@ -45,7 +43,15 @@ const Cellar = () => {
   const { bottles, isLoading } = useBottle();
 
   // post data to server 
-  const [newBottle, setNewBottle] = React.useState({name: '', type: '', year: '', location: ''});
+  const [newBottle, setNewBottle] = React.useState({
+    name: '', 
+    type: '', 
+    year: '', 
+    location: '',
+    rack: '',
+    xPosition: 0,
+    yPosition: 0
+  });
 
   const handleNameChange = (e) => {
     const newParam = {name: e.target.value};
@@ -67,6 +73,22 @@ const Cellar = () => {
     setNewBottle({...newBottle, ...newParam});
   };
 
+  const handleRackChange = (e) => {
+    const newParam = {rack: e.target.value};
+    setNewBottle({...newBottle, ...newParam});
+  };
+
+  const handleXPositionChange = (e) => {
+    const newParam = {xPosition: parseInt(e.target.value)};
+    setNewBottle({...newBottle, ...newParam});
+    console.log(newBottle)
+  };
+
+  const handleYPositionChange = (e) => {
+    const newParam = {yPosition: parseInt(e.target.value)};
+    setNewBottle({...newBottle, ...newParam});
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch('/api/bottles', {
@@ -82,9 +104,10 @@ const Cellar = () => {
     .then(res => res.json())
     .then(data => console.log(data))
     .catch(error => console.log(error));
+    Router.reload(window.location.pathname);
   };
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading || isLoadingRacks) return <div>Loading...</div>
 
   return (
     <Flex id="CellarPage">
@@ -110,7 +133,10 @@ const Cellar = () => {
               <input onChange={(e) => handleTypeChange(e)} type="text" placeholder="Wine Type" />
               <input onChange={(e) => handleYearChange(e)} type="text" placeholder="Year" />
               <input onChange={(e) => handleLocationChange(e)} type="text" placeholder="Location" />
-              <input type="submit" />
+              <input onChange={(e) => handleRackChange(e)} type="text" placeholder="Winerack label" />
+              <input onChange={(e) => handleYPositionChange(e)} type="text" placeholder="Row" />
+              <input onChange={(e) => handleXPositionChange(e)} type="text" placeholder="Column" />
+              <input onClick={() => reset()} type="submit" />
             </form>
           </SubMenu>
           <SubMenu title="My Racks" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
@@ -118,7 +144,7 @@ const Cellar = () => {
           </SubMenu>
           <SubMenu title="My Bottles" icon={<FaIcons.FaWineBottle className="bottle-icon" />}>
             {bottles.data.map(bottle => (
-              <MenuItem>{bottle.name}</MenuItem>))
+              <MenuItem key={bottle.name + '_'}>{bottle.name}</MenuItem>))
             }
           </SubMenu>
         </Menu>
@@ -130,7 +156,7 @@ const Cellar = () => {
             width: "100%"}}
         className="rack-container">
         {wineracks.data.map(winerack => (
-          <div sx={{ m: 3 }}>
+          <div key={winerack.label} sx={{ m: 3 }}>
             {winerack.rows.map(row => (
               <Grid
               key={row}           
