@@ -6,8 +6,7 @@ import * as FaIcons from 'react-icons/fa'
 import { Box, Grid, Flex, Button } from 'theme-ui'
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader } from 'react-pro-sidebar'
 import useSWR from 'swr'
-import Router from 'next/router'
-
+import Link from 'next/link'
 
 const Cellar = () => {
   // opening/closing of sidebar
@@ -42,7 +41,45 @@ const Cellar = () => {
 
   const { bottles, isLoading } = useBottle();
 
-  // post data to server 
+  // post new rack to server
+  const [newRack, setNewRack] = React.useState({
+    label: '',
+    rows: 0,
+    columns: 0
+  });
+
+  const handleLabelChange = (e) => {
+    const newParam = {label: e.target.value};
+    setNewRack({...newRack, ...newParam});
+  };
+
+  const handleRowsChange = (e) => {
+    const newParam = {rows: e.target.value};
+    setNewRack({...newRack, ...newParam});
+  };
+
+  const handleColumnsChange = (e) => {
+    const newParam = {columns: e.target.value};
+    setNewRack({...newRack, ...newParam});
+  };
+
+  const handleRackSubmit = async (e) => {
+    e.preventDefault();
+    await fetch('/api/wineracks', {
+      method: 'POST',
+      headers: { 
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(newRack)
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(error => console.log(error));
+    window.location.reload();
+  };
+
+  // post new bottle to server 
   const [newBottle, setNewBottle] = React.useState({
     name: '', 
     type: '', 
@@ -89,9 +126,9 @@ const Cellar = () => {
     setNewBottle({...newBottle, ...newParam});
   };
 
-  const handleSubmit = (e) => {
+  const handleBottleSubmit = async (e) => {
     e.preventDefault();
-    fetch('/api/bottles', {
+    await fetch('/api/bottles', {
       method: 'POST',
       headers: { 
         'Accept': 'application/json',
@@ -104,7 +141,7 @@ const Cellar = () => {
     .then(res => res.json())
     .then(data => console.log(data))
     .catch(error => console.log(error));
-    Router.reload(window.location.pathname);
+    window.location.reload();
   };
 
   if (isLoading || isLoadingRacks) return <div>Loading...</div>
@@ -125,10 +162,17 @@ const Cellar = () => {
             </form>
           </MenuItem>
           <SubMenu title="Add a Rack" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
-
+            <form onSubmit={(e) => handleRackSubmit(e)}>
+              <input onChange={(e) => handleLabelChange(e)} type="text" placeholder="Winerack label" />
+              <input onChange={(e) => handleRowsChange(e)} type="text" placeholder="Rows" />
+              <input onChange={(e) => handleColumnsChange(e)} type="text" placeholder="Columns" />
+              <button type="submit">
+                Submit
+              </button>
+            </form>
           </SubMenu>
           <SubMenu title="Add a Bottle" icon={<FaIcons.FaWineBottle className="bottle-icon" />}>
-            <form onSubmit={(e) => handleSubmit(e)}>
+            <form onSubmit={(e) => handleBottleSubmit(e)}>
               <input onChange={(e) => handleNameChange(e)} type="text" placeholder="Bottle Name" />
               <input onChange={(e) => handleTypeChange(e)} type="text" placeholder="Wine Type" />
               <input onChange={(e) => handleYearChange(e)} type="text" placeholder="Year" />
@@ -136,7 +180,9 @@ const Cellar = () => {
               <input onChange={(e) => handleRackChange(e)} type="text" placeholder="Winerack label" />
               <input onChange={(e) => handleYPositionChange(e)} type="text" placeholder="Row" />
               <input onChange={(e) => handleXPositionChange(e)} type="text" placeholder="Column" />
-              <input onClick={() => reset()} type="submit" />
+              <button type="submit">
+                Submit
+              </button>
             </form>
           </SubMenu>
           <SubMenu title="My Racks" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
@@ -154,7 +200,7 @@ const Cellar = () => {
         sx={{display: "flex",
             justifyContent: "center",
             width: "100%"}}
-        className="rack-container">
+        className={"rack-container" + newBottle.name}>
         {wineracks.data.map(winerack => (
           <div key={winerack.label} sx={{ m: 3 }}>
             {winerack.rows.map(row => (
@@ -184,5 +230,6 @@ const Cellar = () => {
     </Flex>
   )
 }
+
 
 export default Cellar
