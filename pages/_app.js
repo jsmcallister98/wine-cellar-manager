@@ -7,14 +7,17 @@ import Navbar from '../src/components/Navbar'
 import '../styles/globals.css'
 import '../styles/login.css'
 import '../styles/sidebar.scss'
+import { Provider } from 'next-auth/client'
 
 export default function App({ Component, pageProps }) {
   return (
-    <ThemeProvider theme={theme}>
-      <div sx={{ fontFamily: 'Montserrat'}}>
-        <Navbar />
-        <Component {...pageProps} />
-      </div>      
-    </ThemeProvider>
+    <Provider session={pageProps.session}>
+      <ThemeProvider theme={theme}>
+        <div sx={{ fontFamily: 'Montserrat'}}>
+          <Navbar />
+          <Component {...pageProps} />
+        </div>      
+      </ThemeProvider>
+    </Provider>
   )
 }
