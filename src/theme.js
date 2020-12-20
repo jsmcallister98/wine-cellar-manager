@@ -40,7 +40,7 @@ export default {
     text: '#fff',
     background: '#000',
     primary: '#520101',
-    secondary: '#7F4C7A',
+    secondary: '#ffc7e0',
     muted: '#DED6CD'
   },
   styles: {
