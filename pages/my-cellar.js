@@ -3,11 +3,13 @@
 import { jsx } from 'theme-ui'
 import React from 'react'
 import * as FaIcons from 'react-icons/fa'
-import { Box, Grid, Flex } from 'theme-ui'
+import { Box, Grid, Flex, Button } from 'theme-ui'
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader } from 'react-pro-sidebar'
 import useSWR from 'swr'
+import { useColorMode } from "theme-ui";
 
 const Cellar = () => {
+  const [colorMode, setColorMode] = useColorMode()
   // opening/closing of sidebar
   const [active, setActive] = React.useState(false);
 
@@ -150,50 +152,63 @@ const Cellar = () => {
 
   return (
     <Flex id="CellarPage">
-      <ProSidebar collapsed={active}>
-        <SidebarHeader>
-          <FaIcons.FaAngleDoubleLeft onClick={() => setActive(true)} 
+      <ProSidebar collapsed={active} sx={{borderRight: '1px solid'}}>
+        <SidebarHeader sx={colorMode === 'default' ? { background: 'linear-gradient(180deg, #000000 0%, #520101 40%, #ffffff 100%)'} : 
+          { background: 'linear-gradient(180deg, #fff 0%, #ffffff 100%)'} }>
+          <FaIcons.FaAngleDoubleLeft sx={{color: 'text'}} onClick={() => setActive(true)} 
           className={active ? "close-icon active-side" : "close-icon"}/>
-          <FaIcons.FaAngleDoubleRight onClick={() => setActive(false)}
+          <FaIcons.FaAngleDoubleRight sx={{color: 'text'}} onClick={() => setActive(false)}
           className={active ? "open-icon" : "open icon active-side"}/>
         </SidebarHeader>      
         <Menu iconShape="square">
           <MenuItem icon={<FaIcons.FaSearch />}>
             <form >
-              <input type="text" placeholder="Search" sx={{width: "100%", height: 30}} />
+              <input type="text" placeholder="Search" sx={{width: "100%", p: 2, borderRadius: 3, border: '1px solid', color: 'primary'}} />
             </form>
           </MenuItem>
           <SubMenu title="Add a Rack" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
             <form onSubmit={(e) => handleRackSubmit(e)}>
-              <input onChange={(e) => handleLabelChange(e)} type="text" placeholder="Winerack label" />
-              <input onChange={(e) => handleRowsChange(e)} type="text" placeholder="Rows" />
-              <input onChange={(e) => handleColumnsChange(e)} type="text" placeholder="Columns" />
-              <button type="submit">
+              <input onChange={(e) => handleLabelChange(e)} type="text" placeholder="Winerack label"
+                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
+              <input onChange={(e) => handleRowsChange(e)} type="text" placeholder="Rows" 
+                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
+              <input onChange={(e) => handleColumnsChange(e)} type="text" placeholder="Columns" 
+                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
+              <Button sx={{cursor: 'pointer', width: 174}} type="submit">
                 Submit
-              </button>
+              </Button>
             </form>
           </SubMenu>
           <SubMenu title="Add a Bottle" icon={<FaIcons.FaWineBottle className="bottle-icon" />}>
             <form onSubmit={(e) => handleBottleSubmit(e)}>
-              <input onChange={(e) => handleNameChange(e)} type="text" placeholder="Bottle Name" />
-              <input onChange={(e) => handleTypeChange(e)} type="text" placeholder="Wine Type" />
-              <input onChange={(e) => handleYearChange(e)} type="text" placeholder="Year" />
-              <input onChange={(e) => handleLocationChange(e)} type="text" placeholder="Location" />
-              <input onChange={(e) => handleRackChange(e)} type="text" placeholder="Winerack label" />
-              <input onChange={(e) => handleYPositionChange(e)} type="text" placeholder="Row" />
-              <input onChange={(e) => handleXPositionChange(e)} type="text" placeholder="Column" />
-              <button type="submit">
+              <input onChange={(e) => handleNameChange(e)} type="text" placeholder="Bottle Name" 
+                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
+              <input onChange={(e) => handleTypeChange(e)} type="text" placeholder="Wine Type" 
+                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
+              <input onChange={(e) => handleYearChange(e)} type="text" placeholder="Year" 
+                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
+              <input onChange={(e) => handleLocationChange(e)} type="text" placeholder="Location" 
+                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
+              <input onChange={(e) => handleRackChange(e)} type="text" placeholder="Winerack label" 
+                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
+              <input onChange={(e) => handleYPositionChange(e)} type="text" placeholder="Row" 
+                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
+              <input onChange={(e) => handleXPositionChange(e)} type="text" placeholder="Column" 
+                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
+              <Button sx={{cursor: 'pointer', width: 174}} type="submit">
                 Submit
-              </button>
+              </Button>
             </form>
           </SubMenu>
           <SubMenu title="My Racks" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
-
+            {wineracks.data.map(winerack => (
+              <MenuItem key={winerack.label + '_'}>{winerack.label}</MenuItem> 
+            ))}
           </SubMenu>
           <SubMenu title="My Bottles" icon={<FaIcons.FaWineBottle className="bottle-icon" />}>
             {bottles.data.map(bottle => (
-              <MenuItem key={bottle.name + '_'}>{bottle.name}</MenuItem>))
-            }
+              <MenuItem key={bottle.name + '_'}>{bottle.name}</MenuItem>
+              ))}
           </SubMenu>
         </Menu>
       </ProSidebar>
@@ -208,9 +223,10 @@ const Cellar = () => {
             {winerack.rows.map(row => (
               <Grid
                 key={row}           
-                sx={{background: "#422912", p: 1}}
+                sx={{p: 1}}
                 columns={winerack.columns.length}
                 gap={3}
+                bg='wood'
               >
                 {winerack.columns.map(column => (
                 <Flex 
@@ -220,7 +236,7 @@ const Cellar = () => {
                     width: 40, 
                     height: 40, 
                     borderRadius: 3}} 
-                    bg='#000'
+                    bg='background'
                 >
                   {winerack.bottles.map(bottle => (
                     bottle.yPosition == row && bottle.xPosition == column ? (
@@ -228,7 +244,7 @@ const Cellar = () => {
                       sx={{width: 35, 
                         height: 35, 
                         borderRadius: '50%'}}
-                        bg='muted'
+                        bg='primary'
                     >
                     </Box> 
                     )

@@ -41,7 +41,18 @@ export default {
     background: '#000',
     primary: '#520101',
     secondary: '#ffc7e0',
-    muted: '#DED6CD'
+    muted: '#DED6CD',
+    wood: '#422912',
+    modes: {
+      light: {
+        text: '#000',
+        background: '#fff',
+        primary: '#520101',
+        secondary: '#ffc7e0',
+        muted: '#DED6CD',
+        wood: '#987b61'
+      }
+    }
   },
   styles: {
     root: {

@@ -34,7 +34,7 @@ const Login = () => {
         <div className={clicked ? "login-content flip" : "login-content unflip"}>
           <form action="index.html">
             <img src="https://www.flaticon.com/svg/static/icons/svg/3828/3828376.svg" />
-            <h2 className="title">Welcome</h2>
+            <h2 sx={{color: 'primary'}} className="title">Welcome</h2>
               <div className={focusedUser ? "input-div one focus" : "input-div one"}>
                 <div className="i">
                   <FAicons.FaUser className="fas fa-user"></FAicons.FaUser>
