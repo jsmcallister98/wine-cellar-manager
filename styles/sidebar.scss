@@ -1,11 +1,11 @@
-$sidebar-bg-color: #ffffff !default;
-$sidebar-color: #000000 !default;
+// $sidebar-bg-color: #ffffff !default;
+// $sidebar-color: #000000 !default;
 $sidebar-width: 250px !default;
 $sidebar-collapsed-width: 80px !default;
-$highlight-color: #d85a5a !default;
-$submenu-bg-color: #ffffff !default;
-$submenu-bg-color-collapsed: #ffffff !default;
-$icon-bg-color: #ffffff !default;
+// $highlight-color: #eeb8b8 !default;
+// $submenu-bg-color: #ffffff !default;
+$submenu-bg-color-collapsed: #eee2de !default;
+// $icon-bg-color: #ffffff !default;
 $icon-size: 35px !default;
 $breakpoint-xs: 480px !default;
 $breakpoint-sm: 576px !default;
@@ -19,6 +19,18 @@ $breakpoint-xl: 1200px !default;
     height: 100vh;
   }
 
+  .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item {
+    background: none;
+  }
+
+  span.pro-icon-wrapper {
+    background: none;
+  }
+
+  .pro-sidebar > .pro-sidebar-inner {
+    background: none;
+  }
+
   .pro-sidebar > .pro-sidebar-inner > .pro-sidebar-layout .pro-sidebar-header {
     border: none;
   }
@@ -28,7 +40,6 @@ $breakpoint-xl: 1200px !default;
   }
 
   .bottle-icon, span.pro-icon {
-    background: #fff;
     font-size: 1.2rem;
   }
 

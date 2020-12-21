@@ -1,3 +1,6 @@
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { jsx } from 'theme-ui'
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -34,8 +37,9 @@ const Login = () => {
         <div className={clicked ? "login-content flip" : "login-content unflip"}>
           <form action="index.html">
             <img src="https://www.flaticon.com/svg/static/icons/svg/3828/3828376.svg" />
-            <h2 sx={{color: 'primary'}} className="title">Welcome</h2>
-              <div className={focusedUser ? "input-div one focus" : "input-div one"}>
+            <h2 sx={{color: 'text'}} className="title">Welcome</h2>
+              <div className={focusedUser ? "input-div one focus" : "input-div one"}
+                sx={{borderBottom: '1px solid #000'}}>
                 <div className="i">
                   <FAicons.FaUser className="fas fa-user"></FAicons.FaUser>
                 </div>
@@ -48,7 +52,8 @@ const Login = () => {
                     />
                 </div>
               </div>
-              <div className={focusedPass ? "input-div pass focus" : "input-div pass"}>
+              <div className={focusedPass ? "input-div pass focus" : "input-div pass"}
+                sx={{borderBottom: '1px solid #000'}}>
                 <div className="i"> 
                   <FAicons.FaLock className="fas fa-lock"></FAicons.FaLock>
                 </div>

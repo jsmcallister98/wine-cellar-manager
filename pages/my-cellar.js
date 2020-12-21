@@ -152,9 +152,10 @@ const Cellar = () => {
 
   return (
     <Flex id="CellarPage">
-      <ProSidebar collapsed={active} sx={{borderRight: '1px solid'}}>
-        <SidebarHeader sx={colorMode === 'default' ? { background: 'linear-gradient(180deg, #000000 0%, #520101 40%, #ffffff 100%)'} : 
-          { background: 'linear-gradient(180deg, #fff 0%, #ffffff 100%)'} }>
+      <ProSidebar collapsed={active} sx={colorMode === 'default' ? { background: '#520101', color: '#fff'} : 
+          { background: '#987b61', color: '#000'} }>
+        <SidebarHeader sx={colorMode === 'default' ? { background: 'linear-gradient(180deg, #000000 0%, #520101 100%)'} : 
+          { background: 'linear-gradient(180deg, #eee2de 0%, #987b61 100%)'} }>
           <FaIcons.FaAngleDoubleLeft sx={{color: 'text'}} onClick={() => setActive(true)} 
           className={active ? "close-icon active-side" : "close-icon"}/>
           <FaIcons.FaAngleDoubleRight sx={{color: 'text'}} onClick={() => setActive(false)}
@@ -174,7 +175,7 @@ const Cellar = () => {
                 sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
               <input onChange={(e) => handleColumnsChange(e)} type="text" placeholder="Columns" 
                 sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
-              <Button sx={{cursor: 'pointer', width: 174}} type="submit">
+              <Button sx={{cursor: 'pointer', width: 174}} bg='background' color='text' type="submit">
                 Submit
               </Button>
             </form>
@@ -195,7 +196,7 @@ const Cellar = () => {
                 sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
               <input onChange={(e) => handleXPositionChange(e)} type="text" placeholder="Column" 
                 sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
-              <Button sx={{cursor: 'pointer', width: 174}} type="submit">
+              <Button sx={{cursor: 'pointer', width: 174}} bg='background' color='text' type="submit">
                 Submit
               </Button>
             </form>

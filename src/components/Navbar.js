@@ -11,18 +11,18 @@ const Navbar = () => {
   const [colorMode, setColorMode] = useColorMode()
   return (
     <nav sx={colorMode === 'default' ? { background: 'linear-gradient(180deg, #520101 0%, #000000 100%)'} : 
-    { background: 'linear-gradient(180deg, #520101 0%, #ffffff 100%)'} }>
+    { background: 'linear-gradient(180deg, #520101 0%, #eee2de 100%)'} }>
       <Flex sx={{ justifyContent: 'space-between', alignItems: 'center'}}>
         <Link href='/'>
-          <a sx={{variant: 'styles.a'}}> WineOh </a>
+          <a sx={{variant: 'styles.a', fontWeight: '600'}}> WineOh </a>
         </Link>
         <ThemeToggle />
         <ul>
           <Link href='my-cellar'>
-           <a sx={{variant: 'styles.a'}} > My Cellar </a> 
+           <a sx={{variant: 'styles.a', fontWeight: '600'}} > My Cellar </a> 
           </Link>
           <Link href='login'> 
-           <a sx={{variant: 'styles.a'}} > Sign In </a>
+           <a sx={{variant: 'styles.a', fontWeight: '600'}} > Sign In </a>
           </Link>
         </ul>
       </Flex>

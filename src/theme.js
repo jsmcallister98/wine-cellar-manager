@@ -46,8 +46,8 @@ export default {
     modes: {
       light: {
         text: '#000',
-        background: '#fff',
-        primary: '#520101',
+        background: '#eee2de',
+        primary: '#8b1d1d',
         secondary: '#ffc7e0',
         muted: '#DED6CD',
         wood: '#987b61'
