@@ -20,7 +20,11 @@ const options = {
       from: process.env.EMAIL_FROM,
     })
   ],
-  database: process.env.MONGO_URI
+  database: process.env.MONGO_URI,
+  session: {
+    jwt: true,
+    maxAge: 30 * 24 * 60 * 60 // 30 days
+  }
 }
 
 export default (req, res) => NextAuth(req, res, options)  
