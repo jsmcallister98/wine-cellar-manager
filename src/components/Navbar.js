@@ -10,19 +10,23 @@ import { useColorMode } from "theme-ui";
 const Navbar = () => {
   const [colorMode, setColorMode] = useColorMode()
   return (
-    <nav sx={colorMode === 'default' ? { background: 'linear-gradient(180deg, #520101 0%, #000000 100%)'} : 
-    { background: 'linear-gradient(180deg, #520101 0%, #eee2de 100%)'} }>
+    <nav sx={colorMode === 'default' ? { background: 'linear-gradient(180deg, #520101 0%, #000000 100%)', zIndex: '1000'} : 
+    { background: 'linear-gradient(180deg, #6d5642 0%, #eee2de 100%)', zIndex: '1000'} }>
       <Flex sx={{ justifyContent: 'space-between', alignItems: 'center'}}>
-        <Link href='/'>
-          <a sx={{variant: 'styles.a', fontWeight: '600'}}> WineOh </a>
-        </Link>
-        <ThemeToggle />
+        <Flex sx={{ justifyContent: 'space-between', alignItems: 'center'}}>
+          <Link href='/'>
+            <a sx={{variant: 'styles.a', paddingRight: 0, marginRight: 20, fontWeight: '500', fontSize: '1.2rem', color: '#fff'}}>
+              WineOh 
+            </a>
+          </Link>
+          <ThemeToggle />
+        </Flex>
         <ul>
           <Link href='my-cellar'>
-           <a sx={{variant: 'styles.a', fontWeight: '600'}} > My Cellar </a> 
+           <a sx={{variant: 'styles.a', fontWeight: '500', color: '#fff'}} > My Cellar </a> 
           </Link>
           <Link href='login'> 
-           <a sx={{variant: 'styles.a', fontWeight: '600'}} > Sign In </a>
+           <a sx={{variant: 'styles.a', fontWeight: '500', color: '#fff'}} > Sign In </a>
           </Link>
         </ul>
       </Flex>

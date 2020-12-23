@@ -164,17 +164,17 @@ const Cellar = () => {
         <Menu iconShape="square">
           <MenuItem icon={<FaIcons.FaSearch />}>
             <form >
-              <input type="text" placeholder="Search" sx={{width: "100%", p: 2, borderRadius: 3, border: '1px solid', color: 'primary'}} />
+              <input type="text" placeholder="Search" sx={{width: "100%", p: 2, borderRadius: 3, border: '1px solid', color: 'text'}} />
             </form>
           </MenuItem>
           <SubMenu title="Add a Rack" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
             <form onSubmit={(e) => handleRackSubmit(e)}>
               <input onChange={(e) => handleLabelChange(e)} type="text" placeholder="Winerack label"
-                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
+                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'text'}} />
               <input onChange={(e) => handleRowsChange(e)} type="text" placeholder="Rows" 
-                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
+                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'text'}} />
               <input onChange={(e) => handleColumnsChange(e)} type="text" placeholder="Columns" 
-                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
+                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'text'}} />
               <Button sx={{cursor: 'pointer', width: 174}} bg='background' color='text' type="submit">
                 Submit
               </Button>
