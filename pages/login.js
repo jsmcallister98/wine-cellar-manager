@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from 'theme-ui'
+import { jsx, Flex } from 'theme-ui'
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -34,28 +34,31 @@ const Login = () => {
         <div className="img">
           <Image src="/images/loginpage1.svg" alt="image" width="713" height="600"/>
         </div>
-        <div className={clicked ? "login-content flip" : "login-content unflip"}>
+        <Flex 
+          className={clicked ? "login-content flip" : "login-content unflip"}>
           <form action="index.html">
-            <img src="https://www.flaticon.com/svg/static/icons/svg/3828/3828376.svg" />
-            <h2 sx={{color: 'text'}} className="title">Welcome</h2>
+            <img src="/images/login_img1.svg" />
+            <h2 className="title">Welcome</h2>
               <div className={focusedUser ? "input-div one focus" : "input-div one"}
-                sx={{borderBottom: '1px solid #000'}}>
+                sx={{borderBottom: '1px solid', color: 'text'}}
+                >
                 <div className="i">
-                  <FAicons.FaUser className="fas fa-user"></FAicons.FaUser>
+                  <FAicons.FaUser className="fas fa-user" sx={{color: 'text'}}></FAicons.FaUser>
                 </div>
-                <div className="div">
+                <div className="div"> 
                     <h5>Email</h5>
                     <input type="text" className="input" 
                       onFocus={() => setFocusedUser(true)}
                       onChange={event => setUserName(event.target.value)}
-                      onBlur={() => handleFocusedUser()} 
+                      onBlur={() => handleFocusedUser()}
                     />
                 </div>
               </div>
               <div className={focusedPass ? "input-div pass focus" : "input-div pass"}
-                sx={{borderBottom: '1px solid #000'}}>
+                sx={{borderBottom: '1px solid', color: 'text'}}
+                >
                 <div className="i"> 
-                  <FAicons.FaLock className="fas fa-lock"></FAicons.FaLock>
+                  <FAicons.FaLock className="fas fa-lock" sx={{color: 'text'}}></FAicons.FaLock>
                 </div>
                 <div className="div">
                     <h5>Password</h5>
@@ -77,7 +80,7 @@ const Login = () => {
                 className="btn">Sign Up
               </button>
             </form>
-        </div>
+        </Flex>
         {/* <div className={clicked ? "signup login-content unflip" : "signup login-content flip"}>
           <form action="index.html">
             <img src="img/avatar.svg" />

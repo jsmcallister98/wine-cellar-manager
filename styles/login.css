@@ -6,12 +6,11 @@
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	padding: 0 4rem;
+	margin-top: -64px;
 }
 
-.img{
-	display: flex;
-	justify-content: center;
-	align-items: center;
+.container .img {
+	padding-top: 128px;
 }
 
 .login-content{
@@ -19,7 +18,6 @@
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-	margin-top: -128px;
 }
 
 .login-content form{
@@ -27,7 +25,7 @@
 }
 
 .login-content img{
-    height: 100px;
+		height: 110px;
 }
 
 .login-content h2{
@@ -72,7 +70,7 @@
 	left: 10px;
 	top: 50%;
 	transform: translateY(-50%);
-	color: #999;
+	/* color: #999; */
 	font-size: 18px;
 	transition: .3s;
 	font-weight: 500;
@@ -84,7 +82,7 @@
 	bottom: -2px;
 	width: 0%;
 	height: 2px;
-	background-color: #520101;
+	background-color:#9b3939;
 	transition: .4s;
 }
 
@@ -106,7 +104,7 @@
 }
 
 .input-div.focus > .i > .fas{
-	color: #520101;
+	color:  #9b3939;
 }
 
 .input-div > div > input{
@@ -120,7 +118,7 @@
 	background: none;
 	padding: 0.5rem 0.7rem;
 	font-size: 1.2rem;
-	color: #555;
+	/* color: #555; */
 }
 
 .input-div.pass{
@@ -147,7 +145,7 @@
 	border-radius: 25px;
 	outline: none;
 	border: none;
-	background-image: linear-gradient(to right,#5e0909, #520101,#690606);
+	background: linear-gradient(to right,#5e0909, #520101,#690606);
 	background-size: 200%;
 	font-size: 1.2rem;
 	color: #fff;
