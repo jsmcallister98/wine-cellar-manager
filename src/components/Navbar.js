@@ -15,7 +15,7 @@ const Navbar = () => {
       <Flex sx={{ justifyContent: 'space-between', alignItems: 'center'}}>
         <Flex sx={{ justifyContent: 'space-between', alignItems: 'center'}}>
           <Link href='/'>
-            <a sx={{variant: 'styles.a', paddingRight: 0, marginRight: 20, fontWeight: '500', fontSize: '1.2rem', color: '#fff'}}>
+            <a sx={{variant: 'styles.a', paddingRight: 0, marginRight: 20, fontWeight: '500', fontSize: '1.2rem'}}>
               WineOh 
             </a>
           </Link>
@@ -23,10 +23,10 @@ const Navbar = () => {
         </Flex>
         <ul>
           <Link href='my-cellar'>
-           <a sx={{variant: 'styles.a', fontWeight: '500', color: '#fff'}} > My Cellar </a> 
+           <a sx={{variant: 'styles.a', fontWeight: '500'}} > My Cellar </a> 
           </Link>
           <Link href='login'> 
-           <a sx={{variant: 'styles.a', fontWeight: '500', color: '#fff'}} > Sign In </a>
+           <a sx={{variant: 'styles.a', fontWeight: '500'}} > Sign In </a>
           </Link>
         </ul>
       </Flex>

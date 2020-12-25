@@ -4,18 +4,6 @@ import WineRack from '../../../src/models/WineRack';
 
 dbConnect();
 
-// const createBottle = (rackName, bottle) => {
-//   return Bottle.create(bottle).then(docBottle => {
-//     console.log(docBottle);
-
-//     return WineRack.findOneAndUpdate(
-//       { label: rackName },
-//       { $push: { bottles: docBottle._id } },
-//       { new: true, useFindAndModify: false }
-//     );
-//   });
-// };
-
 export default async (req, res) => {
   const { method } = req;
 

@@ -18,12 +18,23 @@ const options = {
         },
       },
       from: process.env.EMAIL_FROM,
+    }),
+    Providers.Google({
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET
     })
   ],
   database: process.env.MONGO_URI,
   session: {
     jwt: true,
     maxAge: 30 * 24 * 60 * 60 // 30 days
+  },
+  pages: {
+    signIn: '/login',
+    signOut: '/auth/signout',
+    error: '/auth/error', // Error code passed in query string as ?error=
+    verifyRequest: '/auth/verify-request', // (used for check email message)
+    newUser: null // If set, new users will be directed here on first sign in
   }
 }
 
