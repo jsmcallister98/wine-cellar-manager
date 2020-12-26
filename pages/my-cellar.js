@@ -1,49 +1,53 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from 'theme-ui'
-import React from 'react'
-import * as FaIcons from 'react-icons/fa'
-import { Box, Grid, Flex, Button } from 'theme-ui'
-import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader } from 'react-pro-sidebar'
-import useSWR from 'swr'
-import { useColorMode } from "theme-ui";
+import { jsx } from 'theme-ui';
+import React from 'react';
+import * as FaIcons from 'react-icons/fa';
+import { Box, Grid, Flex, Button, useColorMode } from 'theme-ui';
+import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader } from 'react-pro-sidebar';
+import useSWR from 'swr';
+import Head from 'next/head';
+import { useUser } from "../utils/hooks";
 
 const Cellar = () => {
-  const [colorMode, setColorMode] = useColorMode()
+  const [colorMode, setColorMode] = useColorMode();
   // opening/closing of sidebar
   const [active, setActive] = React.useState(false);
 
   // hover over bottles to display info
-  const [hovering, setHovering] = React.useState(false)
+  const [hovering, setHovering] = React.useState(false);
 
-  // fetching data from server
-  const fetcher = url => fetch(url).then(res => res.json());
+  // // fetching data from server
+  // const fetcher = url => fetch(url).then(res => res.json());
 
-  const useBottle = () => {
-    const { data, error } = useSWR(`/api/bottles/`, fetcher)
-    console.log(data)
+  // const useBottle = () => {
+  //   const { data, error } = useSWR(`/api/bottles/`, fetcher)
+  //   console.log(data)
 
-    return { 
-      bottles: data,
-      isLoading: !error && !data,
-      isError: error
-    }
-  };
+  //   return { 
+  //     bottles: data,
+  //     isLoading: !error && !data,
+  //     isError: error
+  //   }
+  // };
 
-  const useWineRack = () => {
-    const { data, error } = useSWR(`/api/wineracks/`, fetcher)
-    console.log(data)
+  // const useWineRack = () => {
+  //   const { data, error } = useSWR(`/api/wineracks/`, fetcher)
+  //   console.log(data)
 
-    return { 
-      wineracks: data,
-      isLoadingRacks: !error && !data,
-      isError: error
-    }
-  };
+  //   return { 
+  //     wineracks: data,
+  //     isLoadingRacks: !error && !data,
+  //     isError: error
+  //   }
+  // };
 
-  const { wineracks, isLoadingRacks } = useWineRack();
+  // const { wineracks, isLoadingRacks } = useWineRack();
 
-  const { bottles, isLoading } = useBottle();
+  // const { bottles, isLoading } = useBottle();
+
+  const [user] = useUser();
+  const { name, email, wineracks, bottles, cellars } = user || {};
 
   // post new rack to server
   const [newRack, setNewRack] = React.useState({
@@ -148,10 +152,13 @@ const Cellar = () => {
     window.location.reload();
   };
 
-  if (isLoading || isLoadingRacks) return <div>Loading...</div>
+  // if (isLoading || isLoadingRacks) return <div>Loading...</div>
 
   return (
     <Flex id="CellarPage">
+
+      <Head>My Wine Cellar</Head>
+      
       <ProSidebar collapsed={active} sx={colorMode === 'default' ? { background: '#520101', color: '#fff'} : 
           { background: '#987b61', color: '#000'} }>
         <SidebarHeader sx={colorMode === 'default' ? { background: 'linear-gradient(180deg, #000000 0%, #520101 100%)'} : 
@@ -202,12 +209,12 @@ const Cellar = () => {
             </form>
           </SubMenu>
           <SubMenu title="My Racks" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
-            {wineracks.data.map(winerack => (
+            {wineracks && wineracks.data.map(winerack => (
               <MenuItem key={winerack.label + '_'}>{winerack.label}</MenuItem> 
             ))}
           </SubMenu>
           <SubMenu title="My Bottles" icon={<FaIcons.FaWineBottle className="bottle-icon" />}>
-            {bottles.data.map(bottle => (
+            {bottles && bottles.data.map(bottle => (
               <MenuItem key={bottle.name + '_'}>{bottle.name}</MenuItem>
               ))}
           </SubMenu>
@@ -219,7 +226,7 @@ const Cellar = () => {
           justifyContent: "center",
           width: "100%"}}
         className={"rack-container"}>
-        {wineracks.data.map(winerack => (
+        {wineracks && wineracks.data.map(winerack => (
           <div key={winerack.label} sx={{ m: 3 }}>
             {winerack.rows.map(row => (
               <Grid

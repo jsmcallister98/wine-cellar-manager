@@ -6,9 +6,7 @@ import { useColorMode } from "theme-ui";
 
 export default function Home() {
 
-  const [colorMode, setColorMode] = useColorMode()
-
-  document.body.style.overflow = 'hidden'
+  const [colorMode, setColorMode] = useColorMode();
 
   return (
     <Flex sx={colorMode === 'default' ? { 
