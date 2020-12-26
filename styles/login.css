@@ -107,7 +107,7 @@
 	color:  #9b3939;
 }
 
-.input-div > div > input{
+.input-div > div > label > input{
 	position: absolute;
 	left: 0;
 	top: 0;
