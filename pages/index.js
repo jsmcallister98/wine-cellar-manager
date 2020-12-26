@@ -2,18 +2,11 @@
 /** @jsx jsx */
 import { jsx, Flex } from 'theme-ui'
 import Head from 'next/head'
-import { signIn, signOut, useSession } from 'next-auth/client'
 import { useColorMode } from "theme-ui";
 
 export default function Home() {
 
   const [colorMode, setColorMode] = useColorMode()
-
-  const [session, loading] = useSession()
-
-  if (loading) {
-    return <p> Loading... </p>
-  }
 
   document.body.style.overflow = 'hidden'
 
@@ -39,26 +32,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Flex sx={colorMode === 'default' ? { 
-                    flexDirection: 'column',
-                    textAlign: 'center',
-                    mt: -250
-                  } : {
-                    flexDirection: 'column',
-                    textAlign: 'center',
-                    mt: -128
-                  }}>
-        {!session && (
-          <div>
-            Not Signed in <br />
-            <button onClick={signIn}>Sign In</button>
-          </div>
-        )}
-        {session && (
-          <div>
-            Signed in as {session.user.email} <br />
-            <button onClick={signOut}>Sign Out</button>
-          </div>
-        )}
+                flexDirection: 'column',
+                textAlign: 'center',
+                mt: -250
+                } : {
+                flexDirection: 'column',
+                textAlign: 'center',
+                mt: -128
+        }}>
         <h1 sx={{ fontSize: [5, 6, 7, 7], fontWeight: 'semiBold' }}> Welcome To WineOh </h1>
         <p sx={{ fontSize: [2, 2, 3] }}> The easiest way to keep track of your favorite wines. </p>
       </Flex>

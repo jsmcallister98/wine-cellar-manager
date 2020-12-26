@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Flex } from 'theme-ui'
 import ThemeToggle from './ThemeToggle'
 import { useColorMode } from "theme-ui";
+import { useUser } from "../../utils/hooks";
 
 const Navbar = () => {
   // ========================================================
@@ -43,9 +44,9 @@ const Navbar = () => {
           <Link href='my-cellar'>
            <a sx={{variant: 'styles.a', fontWeight: '500'}} > My Cellar </a> 
           </Link>
-          <Link href='login'> 
+          {!user && <Link href='login'> 
            <a sx={{variant: 'styles.a', fontWeight: '500'}} > Sign In </a>
-          </Link>
+          </Link>}
           {user && <Link href='login'> 
            <a onClick={handleLogout} sx={{variant: 'styles.a', fontWeight: '500'}} > Logout </a>
           </Link>}
