@@ -19,7 +19,10 @@ const WineRackSchema = new mongoose.Schema ({
   bottles: [{ 
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Bottle'
-  }]
+  }],
+  user: {
+    type: String
+  }
 });
 
 module.exports = mongoose.models.WineRack || mongoose.model('WineRack', WineRackSchema);

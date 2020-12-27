@@ -1,6 +1,7 @@
 import nextConnect from 'next-connect';
 import middleware from '../../../src/middleware/middleware';
 import { extractUser } from '../../../utils/api-helpers';
+import WineRack from '../../../src/models/WineRack'
 
 const handler = nextConnect();
 
@@ -13,18 +14,31 @@ handler.patch(async (req, res) => {
     req.status(401).end();
     return;
   }
-  const { name, bio } = req.body;
+
+  let rowArray = []
+  let columnArray = []
+  for (let i = 1; i <= req.body.rows; i++) {
+    rowArray.push(i)
+  }
+  for (let i = 1; i <= req.body.columns; i++) {
+    columnArray.push(i)
+  }
+  console.log(req.user)
+  console.log(req.body)
+
+  const newRack = await WineRack.create({
+    label: req.body.label,
+    rows: rowArray,
+    columns: columnArray
+  });
+
+  const { name, bottles, wineracks } = req.body;
   await req.db.collection('users').updateOne(
     { _id: req.user._id },
-    {
-      $set: {
-        ...(name && { name }),
-        bottles: bottles || [],
-        wineracks: wineracks || []
-      },
-    },
+      { $push: { wineracks: newRack } },
+      { new: true, useFindAndModify: false },
   );
-  res.json({ user: { name, bio } });
+  res.json({ user: { name, bottles, wineracks } });
 });
 
 export default handler;

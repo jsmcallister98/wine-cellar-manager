@@ -1,94 +1,144 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import { Box, Grid, Flex, Button, useColorMode } from 'theme-ui';
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader } from 'react-pro-sidebar';
-import useSWR from 'swr';
 import Head from 'next/head';
 import { useUser } from "../utils/hooks";
 
 const Cellar = () => {
   const [colorMode, setColorMode] = useColorMode();
   // opening/closing of sidebar
-  const [active, setActive] = React.useState(false);
-
+  const [active, setActive] = useState(false);
+  
   // hover over bottles to display info
-  const [hovering, setHovering] = React.useState(false);
-
+  const [hovering, setHovering] = useState(false);
+  
   // // fetching data from server
   // const fetcher = url => fetch(url).then(res => res.json());
-
+  
   // const useBottle = () => {
-  //   const { data, error } = useSWR(`/api/bottles/`, fetcher)
-  //   console.log(data)
-
-  //   return { 
-  //     bottles: data,
-  //     isLoading: !error && !data,
-  //     isError: error
-  //   }
-  // };
-
-  // const useWineRack = () => {
-  //   const { data, error } = useSWR(`/api/wineracks/`, fetcher)
-  //   console.log(data)
-
-  //   return { 
-  //     wineracks: data,
-  //     isLoadingRacks: !error && !data,
-  //     isError: error
-  //   }
-  // };
-
-  // const { wineracks, isLoadingRacks } = useWineRack();
-
-  // const { bottles, isLoading } = useBottle();
-
-  const [user] = useUser();
+    //   const { data, error } = useSWR(`/api/bottles/`, fetcher)
+    //   console.log(data)
+    
+    //   return { 
+      //     bottles: data,
+      //     isLoading: !error && !data,
+      //     isError: error
+      //   }
+      // };
+      
+      // const useWineRack = () => {
+        //   const { data, error } = useSWR(`/api/wineracks/`, fetcher)
+        //   console.log(data)
+        
+        //   return { 
+          //     wineracks: data,
+          //     isLoadingRacks: !error && !data,
+          //     isError: error
+          //   }
+          // };
+          
+          // const { wineracks, isLoadingRacks } = useWineRack();
+          
+          // const { bottles, isLoading } = useBottle();
+          
+  const [user, { mutate }] = useUser();
   const { name, email, wineracks, bottles, cellars } = user || {};
+  const [isUpdating, setIsUpdating] = useState(false);
+  const labelRef = useRef();
+  const rowsRef = useRef();
+  const columnsRef = useRef();
+  const [msg, setMsg] = useState({ message: '', isError: false });
 
+  // useEffect(() => {
+  //   nameRef.current.value = user.name;
+  //   bottlesRef.current.value = user.bottles;
+  //   wineracksRef.current.value = user.wineracks;
+  // }, [user]);
+
+  const handleWinerackSubmit = async (e) => {
+    e.preventDefault();
+    if (isUpdating) return;
+    setIsUpdating(true);
+    const winerack = {
+      label: e.currentTarget.label.value,
+      rows: e.currentTarget.rows.value,
+      columns: e.currentTarget.columns.value,
+    };
+    const formData = new FormData();
+    formData.append('wineracks', winerack);
+    const res = await fetch('/api/user', {
+      method: 'PATCH',
+      headers: { 
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(winerack),
+    });
+    if (res.status === 200) {
+      const userData = await res.json();
+      mutate({
+        user: {
+          ...user,
+          ...userData.user,
+        },
+      });
+      setMsg({ message: 'Cellar updated' });
+    } else {
+      setMsg({ message: await res.text(), isError: true });
+    }
+  };
+  
   // post new rack to server
-  const [newRack, setNewRack] = React.useState({
+  const [newRack, setNewRack] = useState({
     label: '',
     rows: 0,
     columns: 0
   });
-
+  
   const handleLabelChange = (e) => {
     const newParam = {label: e.target.value};
     setNewRack({...newRack, ...newParam});
   };
 
+  const handleUserChange = (e) => {
+    const newParam = {user: user.email};
+    setNewRack({...newRack, ...newParam});
+  };
+  
   const handleRowsChange = (e) => {
     const newParam = {rows: e.target.value};
     setNewRack({...newRack, ...newParam});
   };
-
+  
   const handleColumnsChange = (e) => {
     const newParam = {columns: e.target.value};
     setNewRack({...newRack, ...newParam});
   };
-
+  
   const handleRackSubmit = async (e) => {
     e.preventDefault();
+    console.log(JSON.stringify(newRack))
+    console.log(user)
     await fetch('/api/wineracks', {
       method: 'POST',
       headers: { 
         'Accept': 'application/json',
         'Content-type': 'application/json'
       },
-      body: JSON.stringify(newRack)
+      body: JSON.stringify(newRack),
     })
     .then(res => res.json())
     .then(data => console.log(data))
     .catch(error => console.log(error));
-    window.location.reload();
+    // window.location.reload();
   };
 
   // post new bottle to server 
-  const [newBottle, setNewBottle] = React.useState({
+  const [newBottle, setNewBottle] = useState({
     name: '', 
     type: '', 
     year: '', 
@@ -156,7 +206,6 @@ const Cellar = () => {
 
   return (
     <Flex id="CellarPage">
-
       <Head>My Wine Cellar</Head>
       
       <ProSidebar collapsed={active} sx={colorMode === 'default' ? { background: '#520101', color: '#fff'} : 
@@ -175,15 +224,43 @@ const Cellar = () => {
             </form>
           </MenuItem>
           <SubMenu title="Add a Rack" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
-            <form onSubmit={(e) => handleRackSubmit(e)}>
-              <input onChange={(e) => handleLabelChange(e)} type="text" placeholder="Winerack label"
-                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'text'}} />
-              <input onChange={(e) => handleRowsChange(e)} type="text" placeholder="Rows" 
-                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'text'}} />
-              <input onChange={(e) => handleColumnsChange(e)} type="text" placeholder="Columns" 
-                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'text'}} />
-              <Button sx={{cursor: 'pointer', width: 174}} bg='background' color='text' type="submit">
-                Submit
+          {msg.message ? <p style={{ color: msg.isError ? 'red' : '#0070f3', textAlign: 'center' }}>{msg.message}</p> : null}
+            <form onSubmit={handleWinerackSubmit}>
+              <label htmlFor="label">
+                <input 
+                  onChange={(e) => handleLabelChange(e)}
+                  type="text" 
+                  id="label"
+                  name="label"
+                  placeholder="Winerack label"
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'text'}}
+                />
+              </label>
+              <label htmlFor="rows">
+                <input 
+                  onChange={(e) => handleRowsChange(e)} 
+                  type="text" 
+                  id="rows"
+                  name="rows"
+                  placeholder="Rows" 
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'text'}} 
+                />
+              </label>
+              <label htmlFor="columns">
+                <input 
+                  onChange={(e) => handleColumnsChange(e)} 
+                  type="text" 
+                  id="columns"
+                  name="columns"
+                  placeholder="Columns" 
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'text'}} 
+                />
+              </label>
+              <Button 
+                disabled={isUpdating}
+                type="submit"
+                sx={{cursor: 'pointer', width: 174}} bg='background' color='text' type="submit">
+                Create Winerack
               </Button>
             </form>
           </SubMenu>
@@ -209,12 +286,12 @@ const Cellar = () => {
             </form>
           </SubMenu>
           <SubMenu title="My Racks" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
-            {wineracks && wineracks.data.map(winerack => (
+            {wineracks && wineracks.map(winerack => (
               <MenuItem key={winerack.label + '_'}>{winerack.label}</MenuItem> 
             ))}
           </SubMenu>
           <SubMenu title="My Bottles" icon={<FaIcons.FaWineBottle className="bottle-icon" />}>
-            {bottles && bottles.data.map(bottle => (
+            {bottles && bottles.map(bottle => (
               <MenuItem key={bottle.name + '_'}>{bottle.name}</MenuItem>
               ))}
           </SubMenu>
@@ -226,7 +303,7 @@ const Cellar = () => {
           justifyContent: "center",
           width: "100%"}}
         className={"rack-container"}>
-        {wineracks && wineracks.data.map(winerack => (
+        {wineracks && wineracks.map(winerack => (
           <div key={winerack.label} sx={{ m: 3 }}>
             {winerack.rows.map(row => (
               <Grid
