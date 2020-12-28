@@ -35,6 +35,9 @@ const BottleSchema = new mongoose.Schema({
   yPosition: {
     type: Number,
     required: [true, 'Please enter which row this bottle is in']
+  },
+  isBottle: {
+    type: Boolean
   }
 });
 

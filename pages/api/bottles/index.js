@@ -21,10 +21,10 @@ export default async (req, res) => {
       
     case 'POST':
       try {
-        const newBottle = await Bottle.create(req.body.newBottle);
-
+        const newBottle = await Bottle.create(req.body);
+        console.log(req.body)
         const updatedRack = WineRack.findOneAndUpdate(
-          { label: req.body.newBottle.rack },
+          { label: req.body.rack },
           { $push: { bottles: newBottle } },
           { new: true, useFindAndModify: false }
         ).then()

@@ -20,8 +20,8 @@ const WineRackSchema = new mongoose.Schema ({
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Bottle'
   }],
-  user: {
-    type: String
+  isWinerack: {
+    type: Boolean
   }
 });
 

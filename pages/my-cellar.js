@@ -68,8 +68,6 @@ const Cellar = () => {
       rows: e.currentTarget.rows.value,
       columns: e.currentTarget.columns.value,
     };
-    const formData = new FormData();
-    formData.append('wineracks', winerack);
     const res = await fetch('/api/user', {
       method: 'PATCH',
       headers: { 
@@ -96,7 +94,8 @@ const Cellar = () => {
   const [newRack, setNewRack] = useState({
     label: '',
     rows: 0,
-    columns: 0
+    columns: 0,
+    isWinerack: true
   });
   
   const handleLabelChange = (e) => {
@@ -145,7 +144,8 @@ const Cellar = () => {
     location: '',
     rack: '',
     xPosition: 0,
-    yPosition: 0
+    yPosition: 0,
+    isBottle: true
   });
 
   const handleNameChange = (e) => {
@@ -192,15 +192,44 @@ const Cellar = () => {
         'Accept': 'application/json',
         'Content-type': 'application/json'
       },
-      body: JSON.stringify({
-        newBottle: newBottle
-      })
+      body: JSON.stringify(newBottle)
     })
     .then(res => res.json())
     .then(data => console.log(data))
     .catch(error => console.log(error));
     window.location.reload();
   };
+
+  const handleNewBottleSubmit = async (e) => {
+    e.preventDefault();
+    if (isUpdating) return;
+    setIsUpdating(true);
+    const res = await fetch('/api/user', {
+      method: 'PATCH',
+      headers: { 
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(newBottle),
+    });
+    if (res.status === 200) {
+      const userData = await res.json();
+      mutate({
+        user: {
+          ...user,
+          ...userData.user,
+        },
+      });
+      setMsg({ message: 'Cellar updated' });
+    } else {
+      setMsg({ message: await res.text(), isError: true });
+    }
+  };
+
+  const handleBothSubmit = (e) => {
+    handleNewBottleSubmit(e)
+    handleBottleSubmit(e)
+  }
 
   // if (isLoading || isLoadingRacks) return <div>Loading...</div>
 
@@ -265,7 +294,8 @@ const Cellar = () => {
             </form>
           </SubMenu>
           <SubMenu title="Add a Bottle" icon={<FaIcons.FaWineBottle className="bottle-icon" />}>
-            <form onSubmit={(e) => handleBottleSubmit(e)}>
+          {msg.message ? <p style={{ color: msg.isError ? 'red' : '#0070f3', textAlign: 'center' }}>{msg.message}</p> : null}
+            <form onSubmit={handleBothSubmit}>
               <input onChange={(e) => handleNameChange(e)} type="text" placeholder="Bottle Name" 
                 sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
               <input onChange={(e) => handleTypeChange(e)} type="text" placeholder="Wine Type" 

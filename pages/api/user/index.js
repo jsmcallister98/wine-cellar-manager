@@ -1,7 +1,8 @@
 import nextConnect from 'next-connect';
 import middleware from '../../../src/middleware/middleware';
 import { extractUser } from '../../../utils/api-helpers';
-import WineRack from '../../../src/models/WineRack'
+import WineRack from '../../../src/models/WineRack';
+import Bottle from '../../../src/models/Bottle';
 
 const handler = nextConnect();
 
@@ -15,30 +16,45 @@ handler.patch(async (req, res) => {
     return;
   }
 
-  let rowArray = []
-  let columnArray = []
-  for (let i = 1; i <= req.body.rows; i++) {
-    rowArray.push(i)
-  }
-  for (let i = 1; i <= req.body.columns; i++) {
-    columnArray.push(i)
-  }
-  console.log(req.user)
-  console.log(req.body)
+  if (req.body.isWinerack) {
+    let rowArray = []
+    let columnArray = []
+    for (let i = 1; i <= req.body.rows; i++) {
+      rowArray.push(i)
+    }
+    for (let i = 1; i <= req.body.columns; i++) {
+      columnArray.push(i)
+    }
+    console.log(req.user)
+    console.log(req.body)
+  
+    const newRack = await WineRack.create({
+      label: req.body.label,
+      rows: rowArray,
+      columns: columnArray
+    });
+  
+    await req.db.collection('users').updateOne(
+      { _id: req.user._id },
+        { $push: { wineracks: newRack } },
+        { new: true, useFindAndModify: false },
+    );
+    res.json({ user: { bottles, wineracks } });
 
-  const newRack = await WineRack.create({
-    label: req.body.label,
-    rows: rowArray,
-    columns: columnArray
-  });
-
-  const { name, bottles, wineracks } = req.body;
-  await req.db.collection('users').updateOne(
-    { _id: req.user._id },
-      { $push: { wineracks: newRack } },
-      { new: true, useFindAndModify: false },
-  );
-  res.json({ user: { name, bottles, wineracks } });
+  } else if (req.body.isBottle) {
+    console.log(req.user)
+    console.log(req.body)
+  
+    // const newBottle = await Bottle.create(req.body);
+    // console.log(newBottle)
+  
+    await req.db.collection('users').updateOne(
+      { _id: req.user._id, "wineracks.label": req.body.rack },
+        { $push: { "wineracks.$.bottles" : req.body } },
+        { new: true, useFindAndModify: false },
+    );
+    res.json(req.user);
+  }
 });
 
 export default handler;
