@@ -28,18 +28,19 @@ handler.patch(async (req, res) => {
     console.log(req.user)
     console.log(req.body)
   
-    const newRack = await WineRack.create({
+    const newRack = {
       label: req.body.label,
       rows: rowArray,
-      columns: columnArray
-    });
+      columns: columnArray,
+      bottles: []
+    };
   
     await req.db.collection('users').updateOne(
       { _id: req.user._id },
         { $push: { wineracks: newRack } },
         { new: true, useFindAndModify: false },
     );
-    res.json({ user: { bottles, wineracks } });
+    res.json(req.user);
 
   } else if (req.body.isBottle) {
     console.log(req.user)

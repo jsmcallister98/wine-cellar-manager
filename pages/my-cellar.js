@@ -61,12 +61,15 @@ const Cellar = () => {
 
   const handleWinerackSubmit = async (e) => {
     e.preventDefault();
+    console.log("posting rack...")
     if (isUpdating) return;
     setIsUpdating(true);
     const winerack = {
       label: e.currentTarget.label.value,
       rows: e.currentTarget.rows.value,
       columns: e.currentTarget.columns.value,
+      bottles: [],
+      isWinerack: true
     };
     const res = await fetch('/api/user', {
       method: 'PATCH',
@@ -95,6 +98,7 @@ const Cellar = () => {
     label: '',
     rows: 0,
     columns: 0,
+    bottles: [],
     isWinerack: true
   });
   
@@ -120,8 +124,6 @@ const Cellar = () => {
   
   const handleRackSubmit = async (e) => {
     e.preventDefault();
-    console.log(JSON.stringify(newRack))
-    console.log(user)
     await fetch('/api/wineracks', {
       method: 'POST',
       headers: { 
@@ -133,8 +135,13 @@ const Cellar = () => {
     .then(res => res.json())
     .then(data => console.log(data))
     .catch(error => console.log(error));
-    // window.location.reload();
+    window.location.reload();
   };
+
+  const handleRackSubmits = (e) => {
+    handleRackSubmit(e)
+    handleWinerackSubmit(e)
+  }
 
   // post new bottle to server 
   const [newBottle, setNewBottle] = useState({
@@ -254,7 +261,7 @@ const Cellar = () => {
           </MenuItem>
           <SubMenu title="Add a Rack" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
           {msg.message ? <p style={{ color: msg.isError ? 'red' : '#0070f3', textAlign: 'center' }}>{msg.message}</p> : null}
-            <form onSubmit={handleWinerackSubmit}>
+            <form onSubmit={handleRackSubmits}>
               <label htmlFor="label">
                 <input 
                   onChange={(e) => handleLabelChange(e)}
