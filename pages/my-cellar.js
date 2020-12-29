@@ -88,6 +88,7 @@ const Cellar = () => {
         },
       });
       setMsg({ message: 'Cellar updated' });
+      window.location.reload();
     } else {
       setMsg({ message: await res.text(), isError: true });
     }
@@ -138,10 +139,6 @@ const Cellar = () => {
     window.location.reload();
   };
 
-  const handleRackSubmits = (e) => {
-    handleRackSubmit(e)
-    handleWinerackSubmit(e)
-  }
 
   // post new bottle to server 
   const [newBottle, setNewBottle] = useState({
@@ -228,6 +225,7 @@ const Cellar = () => {
         },
       });
       setMsg({ message: 'Cellar updated' });
+      window.location.reload();
     } else {
       setMsg({ message: await res.text(), isError: true });
     }
@@ -261,7 +259,7 @@ const Cellar = () => {
           </MenuItem>
           <SubMenu title="Add a Rack" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
           {msg.message ? <p style={{ color: msg.isError ? 'red' : '#0070f3', textAlign: 'center' }}>{msg.message}</p> : null}
-            <form onSubmit={handleRackSubmits}>
+            <form onSubmit={handleWinerackSubmit}>
               <label htmlFor="label">
                 <input 
                   onChange={(e) => handleLabelChange(e)}
@@ -302,7 +300,7 @@ const Cellar = () => {
           </SubMenu>
           <SubMenu title="Add a Bottle" icon={<FaIcons.FaWineBottle className="bottle-icon" />}>
           {msg.message ? <p style={{ color: msg.isError ? 'red' : '#0070f3', textAlign: 'center' }}>{msg.message}</p> : null}
-            <form onSubmit={handleBothSubmit}>
+            <form onSubmit={handleNewBottleSubmit}>
               <input onChange={(e) => handleNameChange(e)} type="text" placeholder="Bottle Name" 
                 sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
               <input onChange={(e) => handleTypeChange(e)} type="text" placeholder="Wine Type" 
@@ -337,11 +335,12 @@ const Cellar = () => {
       
       <div 
         sx={{display: "flex",
-          justifyContent: "center",
+          justifyContent: "space-around",
           width: "100%"}}
         className={"rack-container"}>
         {wineracks && wineracks.map(winerack => (
           <div key={winerack.label} sx={{ m: 3 }}>
+            <h2>{winerack.label}</h2>
             {winerack.rows.map(row => (
               <Grid
                 key={row}           
@@ -362,12 +361,27 @@ const Cellar = () => {
                 >
                   {winerack.bottles.map(bottle => (
                     bottle.yPosition == row && bottle.xPosition == column ? (
-                    <Box key={bottle.name} 
+                    <Box 
+                      className="bottle"
+                      key={bottle.name} 
                       sx={{width: 35, 
                         height: 35, 
                         borderRadius: '50%'}}
                         bg='primary'
                     >
+                      <Box 
+                       className="hide"
+                       bg="text"
+                       color="background"
+                       sx={{zIndex: "100000", width: 220, position: "absolute",
+                       margin: "-120px 0 0 20px", borderRadius: 5, 
+                       border: "1px solid #520101"}}>
+                        <ul sx={{padding: "0 20px"}}>
+                          <li sx={{borderBottom: "1px solid", padding: "5px"}}>{bottle.name}</li>
+                          <li sx={{borderBottom: "1px solid", padding: "5px"}}>{bottle.year}</li>
+                          <li sx={{borderBottom: "1px solid", padding: "5px"}}>{bottle.location}</li>
+                        </ul>
+                      </Box>
                     </Box> 
                     )
                       : (

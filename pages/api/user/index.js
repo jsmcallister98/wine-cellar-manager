@@ -28,12 +28,12 @@ handler.patch(async (req, res) => {
     console.log(req.user)
     console.log(req.body)
   
-    const newRack = {
+    const newRack = await WineRack.create({
       label: req.body.label,
       rows: rowArray,
       columns: columnArray,
       bottles: []
-    };
+    });
   
     await req.db.collection('users').updateOne(
       { _id: req.user._id },
@@ -46,14 +46,21 @@ handler.patch(async (req, res) => {
     console.log(req.user)
     console.log(req.body)
   
-    // const newBottle = await Bottle.create(req.body);
-    // console.log(newBottle)
+    const newBottle = await Bottle.create(req.body);
+    console.log(newBottle)
   
     await req.db.collection('users').updateOne(
       { _id: req.user._id, "wineracks.label": req.body.rack },
-        { $push: { "wineracks.$.bottles" : req.body } },
+        { $push: { "wineracks.$.bottles" : newBottle } },
         { new: true, useFindAndModify: false },
     );
+
+    await req.db.collection('users').updateOne(
+      { _id: req.user._id },
+      { $push: { "bottles" : newBottle } },
+      { new: true, useFindAndModify: false },
+    );
+
     res.json(req.user);
   }
 });

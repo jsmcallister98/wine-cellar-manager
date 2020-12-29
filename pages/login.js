@@ -40,6 +40,12 @@ function Login() {
   const [user, { mutate }] = useUser();
   const [errorMsg, setErrorMsg] = useState('');
 
+  const checkUser = useEffect(() => {
+    if (user) {
+      Router.replace("/my-cellar")
+    }
+  })
+
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     const body = {
