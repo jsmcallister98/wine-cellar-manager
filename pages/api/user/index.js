@@ -60,8 +60,15 @@ handler.patch(async (req, res) => {
       { $push: { "bottles" : newBottle } },
       { new: true, useFindAndModify: false },
     );
-
     res.json(req.user);
+
+  } else {
+    console.log(req.body)
+    const bottles = await req.db.collection('users').find(
+      { _id: req.user._id, "bottles.name" : req.body.param }
+    );
+    console.log(bottles)
+    res.send(bottles);
   }
 });
 

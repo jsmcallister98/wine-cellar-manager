@@ -9,12 +9,11 @@ import Head from 'next/head';
 import { useUser } from "../utils/hooks";
 
 const Cellar = () => {
+  // color theme
   const [colorMode, setColorMode] = useColorMode();
+
   // opening/closing of sidebar
   const [active, setActive] = useState(false);
-  
-  // hover over bottles to display info
-  const [hovering, setHovering] = useState(false);
   
   // // fetching data from server
   // const fetcher = url => fetch(url).then(res => res.json());
@@ -48,22 +47,11 @@ const Cellar = () => {
   const [user, { mutate }] = useUser();
   const { name, email, wineracks, bottles, cellars } = user || {};
   const [isUpdating, setIsUpdating] = useState(false);
-  const labelRef = useRef();
-  const rowsRef = useRef();
-  const columnsRef = useRef();
   const [msg, setMsg] = useState({ message: '', isError: false });
-
-  // useEffect(() => {
-  //   nameRef.current.value = user.name;
-  //   bottlesRef.current.value = user.bottles;
-  //   wineracksRef.current.value = user.wineracks;
-  // }, [user]);
-
+  
+  // post new rack to server
   const handleWinerackSubmit = async (e) => {
     e.preventDefault();
-    console.log("posting rack...")
-    if (isUpdating) return;
-    setIsUpdating(true);
     const winerack = {
       label: e.currentTarget.label.value,
       rows: e.currentTarget.rows.value,
@@ -88,133 +76,31 @@ const Cellar = () => {
         },
       });
       setMsg({ message: 'Cellar updated' });
-      window.location.reload();
     } else {
       setMsg({ message: await res.text(), isError: true });
     }
   };
-  
-  // post new rack to server
-  const [newRack, setNewRack] = useState({
-    label: '',
-    rows: 0,
-    columns: 0,
-    bottles: [],
-    isWinerack: true
-  });
-  
-  const handleLabelChange = (e) => {
-    const newParam = {label: e.target.value};
-    setNewRack({...newRack, ...newParam});
-  };
-
-  const handleUserChange = (e) => {
-    const newParam = {user: user.email};
-    setNewRack({...newRack, ...newParam});
-  };
-  
-  const handleRowsChange = (e) => {
-    const newParam = {rows: e.target.value};
-    setNewRack({...newRack, ...newParam});
-  };
-  
-  const handleColumnsChange = (e) => {
-    const newParam = {columns: e.target.value};
-    setNewRack({...newRack, ...newParam});
-  };
-  
-  const handleRackSubmit = async (e) => {
-    e.preventDefault();
-    await fetch('/api/wineracks', {
-      method: 'POST',
-      headers: { 
-        'Accept': 'application/json',
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(newRack),
-    })
-    .then(res => res.json())
-    .then(data => console.log(data))
-    .catch(error => console.log(error));
-    window.location.reload();
-  };
-
 
   // post new bottle to server 
-  const [newBottle, setNewBottle] = useState({
-    name: '', 
-    type: '', 
-    year: '', 
-    location: '',
-    rack: '',
-    xPosition: 0,
-    yPosition: 0,
-    isBottle: true
-  });
-
-  const handleNameChange = (e) => {
-    const newParam = {name: e.target.value};
-    setNewBottle({...newBottle, ...newParam});
-  };
-
-  const handleTypeChange = (e) => {
-    const newParam = {type: e.target.value};
-    setNewBottle({...newBottle, ...newParam});
-  };
-
-  const handleYearChange = (e) => {
-    const newParam = {year: e.target.value};
-    setNewBottle({...newBottle, ...newParam});
-  };
-
-  const handleLocationChange = (e) => {
-    const newParam = {location: e.target.value};
-    setNewBottle({...newBottle, ...newParam});
-  };
-
-  const handleRackChange = (e) => {
-    const newParam = {rack: e.target.value};
-    setNewBottle({...newBottle, ...newParam});
-  };
-
-  const handleXPositionChange = (e) => {
-    const newParam = {xPosition: parseInt(e.target.value)};
-    setNewBottle({...newBottle, ...newParam});
-    console.log(newBottle)
-  };
-
-  const handleYPositionChange = (e) => {
-    const newParam = {yPosition: parseInt(e.target.value)};
-    setNewBottle({...newBottle, ...newParam});
-  };
-
-  const handleBottleSubmit = async (e) => {
-    e.preventDefault();
-    await fetch('/api/bottles', {
-      method: 'POST',
-      headers: { 
-        'Accept': 'application/json',
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(newBottle)
-    })
-    .then(res => res.json())
-    .then(data => console.log(data))
-    .catch(error => console.log(error));
-    window.location.reload();
-  };
-
   const handleNewBottleSubmit = async (e) => {
     e.preventDefault();
-    if (isUpdating) return;
-    setIsUpdating(true);
+    const bottle = {
+      name: e.currentTarget.name.value,
+      type: e.currentTarget.type.value,
+      year: e.currentTarget.year.value,
+      location: e.currentTarget.location.value,
+      rack: e.currentTarget.rack.value,
+      yPosition: e.currentTarget.row.value,
+      xPosition: e.currentTarget.column.value,
+      isBottle: true
+    };
     const res = await fetch('/api/user', {
       method: 'PATCH',
       headers: { 
         'Accept': 'application/json',
         'Content-type': 'application/json'
       },
-      body: JSON.stringify(newBottle),
+      body: JSON.stringify(bottle),
     });
     if (res.status === 200) {
       const userData = await res.json();
@@ -225,15 +111,31 @@ const Cellar = () => {
         },
       });
       setMsg({ message: 'Cellar updated' });
-      window.location.reload();
+      console.log(userData)
     } else {
       setMsg({ message: await res.text(), isError: true });
     }
   };
 
-  const handleBothSubmit = (e) => {
-    handleNewBottleSubmit(e)
-    handleBottleSubmit(e)
+  // get specific bottle
+  const handleBottleSearch = async (e) => {
+    e.preventDefault();
+    const bottle = {
+      param: e.currentTarget.search.value
+    }
+    const res = await fetch('/api/user', {
+      method: 'PATCH',
+      headers: { 
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(bottle),
+    });
+    // if (res.status === 200) {
+    //   const userData = await res.json();
+    //   console.log(userData);
+    // }
+    console.log(res)
   }
 
   // if (isLoading || isLoadingRacks) return <div>Loading...</div>
@@ -253,8 +155,16 @@ const Cellar = () => {
         </SidebarHeader>      
         <Menu iconShape="square">
           <MenuItem icon={<FaIcons.FaSearch />}>
-            <form >
-              <input type="text" placeholder="Search" sx={{width: "100%", p: 2, borderRadius: 3, border: '1px solid', color: 'text'}} />
+            <form onSubmit={handleBottleSearch}>
+              <label htmlFor="search">
+                <input 
+                  type="text" 
+                  id="search"
+                  name="search"
+                  placeholder="Search" 
+                  sx={{width: "100%", p: 2, borderRadius: 3, border: '1px solid', color: '#000'}} 
+                />
+              </label>
             </form>
           </MenuItem>
           <SubMenu title="Add a Rack" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
@@ -262,32 +172,29 @@ const Cellar = () => {
             <form onSubmit={handleWinerackSubmit}>
               <label htmlFor="label">
                 <input 
-                  onChange={(e) => handleLabelChange(e)}
                   type="text" 
                   id="label"
                   name="label"
                   placeholder="Winerack label"
-                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'text'}}
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: '#000'}}
                 />
               </label>
               <label htmlFor="rows">
                 <input 
-                  onChange={(e) => handleRowsChange(e)} 
                   type="text" 
                   id="rows"
                   name="rows"
                   placeholder="Rows" 
-                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'text'}} 
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: '#000'}} 
                 />
               </label>
               <label htmlFor="columns">
                 <input 
-                  onChange={(e) => handleColumnsChange(e)} 
                   type="text" 
                   id="columns"
                   name="columns"
                   placeholder="Columns" 
-                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'text'}} 
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: '#000'}} 
                 />
               </label>
               <Button 
@@ -301,46 +208,96 @@ const Cellar = () => {
           <SubMenu title="Add a Bottle" icon={<FaIcons.FaWineBottle className="bottle-icon" />}>
           {msg.message ? <p style={{ color: msg.isError ? 'red' : '#0070f3', textAlign: 'center' }}>{msg.message}</p> : null}
             <form onSubmit={handleNewBottleSubmit}>
-              <input onChange={(e) => handleNameChange(e)} type="text" placeholder="Bottle Name" 
-                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
-              <input onChange={(e) => handleTypeChange(e)} type="text" placeholder="Wine Type" 
-                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
-              <input onChange={(e) => handleYearChange(e)} type="text" placeholder="Year" 
-                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
-              <input onChange={(e) => handleLocationChange(e)} type="text" placeholder="Location" 
-                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
-              <input onChange={(e) => handleRackChange(e)} type="text" placeholder="Winerack label" 
-                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
-              <input onChange={(e) => handleYPositionChange(e)} type="text" placeholder="Row" 
-                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
-              <input onChange={(e) => handleXPositionChange(e)} type="text" placeholder="Column" 
-                sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: 'primary'}} />
+              <label htmlFor="name">
+                <input 
+                  type="text" 
+                  id="name"
+                  name="name"
+                  placeholder="Winery" 
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
+                />
+              </label>
+              <label htmlFor="type">
+                <input 
+                  type="text" 
+                  id="type"
+                  name="type"
+                  placeholder="Wine Type" 
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
+                />
+              </label>
+              <label htmlFor="year">
+                <input 
+                  type="text" 
+                  id="year"
+                  name="year"
+                  placeholder="Year" 
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
+                />
+              </label>
+              <label htmlFor="location">
+                <input 
+                  type="text" 
+                  id="location"
+                  name="location"
+                  placeholder="Location" 
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
+                />
+              </label>
+              <label htmlFor="rack">
+                <input 
+                  type="text"
+                  id="rack"
+                  name="rack" 
+                  placeholder="Winerack" 
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}}
+                />
+              </label>
+              <label htmlFor="row">
+                <input 
+                  type="text" 
+                  id="row"
+                  name="row"
+                  placeholder="Row" 
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
+                />
+              </label>
+              <label htmlFor="column">
+                <input 
+                  type="text" 
+                  id="column"
+                  name="column"
+                  placeholder="Column" 
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
+                />
+              </label>
               <Button sx={{cursor: 'pointer', width: 174}} bg='background' color='text' type="submit">
-                Submit
+                Add Bottle
               </Button>
             </form>
           </SubMenu>
           <SubMenu title="My Racks" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
             {wineracks && wineracks.map(winerack => (
-              <MenuItem key={winerack.label + '_'}>{winerack.label}</MenuItem> 
+              <MenuItem key={winerack._id + "_"}>{winerack.label}</MenuItem> 
             ))}
           </SubMenu>
           <SubMenu title="My Bottles" icon={<FaIcons.FaWineBottle className="bottle-icon" />}>
             {bottles && bottles.map(bottle => (
-              <MenuItem key={bottle.name + '_'}>{bottle.name}</MenuItem>
+              <MenuItem key={bottle._id + "_"}>{bottle.name}</MenuItem>
               ))}
           </SubMenu>
         </Menu>
       </ProSidebar>
       
       <div 
+        className={"rack-container"}
         sx={{display: "flex",
           justifyContent: "space-around",
           width: "100%"}}
-        className={"rack-container"}>
+      >
         {wineracks && wineracks.map(winerack => (
           <div key={winerack.label} sx={{ m: 3 }}>
-            <h2>{winerack.label}</h2>
+            <h2 sx={{textAlign: "center"}}>{winerack.label}</h2>
             {winerack.rows.map(row => (
               <Grid
                 key={row}           
@@ -370,16 +327,23 @@ const Cellar = () => {
                         bg='primary'
                     >
                       <Box 
-                       className="hide"
-                       bg="text"
-                       color="background"
-                       sx={{zIndex: "100000", width: 220, position: "absolute",
-                       margin: "-120px 0 0 20px", borderRadius: 5, 
-                       border: "1px solid #520101"}}>
-                        <ul sx={{padding: "0 20px"}}>
-                          <li sx={{borderBottom: "1px solid", padding: "5px"}}>{bottle.name}</li>
-                          <li sx={{borderBottom: "1px solid", padding: "5px"}}>{bottle.year}</li>
-                          <li sx={{borderBottom: "1px solid", padding: "5px"}}>{bottle.location}</li>
+                        className="hide"
+                        bg="#fff"
+                        color="#000"
+                        sx={{zIndex: "100000", width: 150, position: "absolute",
+                          margin: "-120px 0 0 20px", borderRadius: 5, 
+                          border: "1px solid #520101"}}
+                      >
+                        <ul sx={{padding: "0 20px", marginTop: 10}}>
+                          <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                            {bottle.name}
+                          </li>
+                          <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                            {bottle.year}
+                          </li>
+                          <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                            {bottle.location}
+                          </li>
                         </ul>
                       </Box>
                     </Box> 
