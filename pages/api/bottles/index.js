@@ -9,9 +9,11 @@ const handler = nextConnect();
 handler.use(middleware);
 
 handler.get(async (req, res) => {
-  const bottles = await req.db.collection("bottles").find().toArray();
-  console.log(bottles)
-  res.send(JSON.stringify(bottles));
+  const user = await req.db.collection("users").findOne(
+    { _id: req.user._id }
+  );
+  console.log(user.bottles)
+  res.send(JSON.stringify(user.bottles));
 });
 
 export default handler;

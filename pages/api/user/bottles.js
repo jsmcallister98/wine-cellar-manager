@@ -13,10 +13,10 @@ handler.get(async (req, res) => res.json({ user: extractUser(req) }));
 handler.post( async (req, res) => {
   console.log(req.user)
   console.log(req.body)
-  const bottles = await req.db.collection('users').find(
-    { _id: req.user._id, "bottles.name" : req.body.param }
-  );
-  res.json(bottles);
+  const bottles = await req.db.collection('bottles').find(
+    { user: req.user._id, name : req.body.param }
+  ).toArray();
+  res.send(JSON.stringify(bottles));
 });
 
 export default handler;

@@ -14,42 +14,19 @@ const Cellar = () => {
 
   // opening/closing of sidebar
   const [active, setActive] = useState(false);
+
+  // used when searching for a bottle
+  const [fetchedBottles, setFetchedBottles] = useState();
   
-  // // fetching data from server
-  // const fetcher = url => fetch(url).then(res => res.json());
-  
-  // const useBottle = () => {
-    //   const { data, error } = useSWR(`/api/bottles/`, fetcher)
-    //   console.log(data)
-    
-    //   return { 
-      //     bottles: data,
-      //     isLoading: !error && !data,
-      //     isError: error
-      //   }
-      // };
-      
-      // const useWineRack = () => {
-        //   const { data, error } = useSWR(`/api/wineracks/`, fetcher)
-        //   console.log(data)
-        
-        //   return { 
-          //     wineracks: data,
-          //     isLoadingRacks: !error && !data,
-          //     isError: error
-          //   }
-          // };
-          
-          // const { wineracks, isLoadingRacks } = useWineRack();
-          
-          // const { bottles, isLoading } = useBottle();
-          
+  // ======================================================
+  // posting data to mongodb
+  // ======================================================
   const [user, { mutate }] = useUser();
   const { name, email, wineracks, bottles, cellars } = user || {};
   const [isUpdating, setIsUpdating] = useState(false);
   const [msg, setMsg] = useState({ message: '', isError: false });
   
-  // post new rack to server
+  // post new rack
   const handleWinerackSubmit = async (e) => {
     e.preventDefault();
     const winerack = {
@@ -81,7 +58,7 @@ const Cellar = () => {
     }
   };
 
-  // post new bottle to server 
+  // post new bottle
   const handleNewBottleSubmit = async (e) => {
     e.preventDefault();
     const bottle = {
@@ -131,14 +108,10 @@ const Cellar = () => {
       },
       body: JSON.stringify(bottle),
     });
-    // if (res.status === 200) {
-    //   const userData = await res.json();
-    //   console.log(userData);
-    // }
-    console.log(res)
+    const foundBottles = await res.json();
+    console.log(foundBottles)
+    setFetchedBottles(foundBottles)
   }
-
-  // if (isLoading || isLoadingRacks) return <div>Loading...</div>
 
   return (
     <Flex id="CellarPage">
@@ -317,41 +290,108 @@ const Cellar = () => {
                     bg='background'
                 >
                   {winerack.bottles.map(bottle => (
-                    bottle.yPosition == row && bottle.xPosition == column ? (
-                    <Box 
-                      className="bottle"
-                      key={bottle.name} 
-                      sx={{width: 35, 
-                        height: 35, 
-                        borderRadius: '50%'}}
-                        bg='primary'
-                    >
-                      <Box 
-                        className="hide"
-                        bg="#fff"
-                        color="#000"
-                        sx={{zIndex: "100000", width: 150, position: "absolute",
-                          margin: "-120px 0 0 20px", borderRadius: 5, 
-                          border: "1px solid #520101"}}
-                      >
-                        <ul sx={{padding: "0 20px", marginTop: 10}}>
-                          <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
-                            {bottle.name}
-                          </li>
-                          <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
-                            {bottle.year}
-                          </li>
-                          <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
-                            {bottle.location}
-                          </li>
-                        </ul>
-                      </Box>
-                    </Box> 
+                    fetchedBottles && bottle.yPosition == row && bottle.xPosition == column ? (
+                      fetchedBottles.map(fetchedBottle => (
+                        fetchedBottle.xPosition == column && fetchedBottle.yPosition == row ? (
+                        <Box 
+                          className="bottle"
+                          key={bottle.name} 
+                          sx={{width: 35, 
+                            height: 35, 
+                            borderRadius: '50%'}}
+                            bg='text'
+                        >
+                          <Box 
+                            className="hide"
+                            bg="#fff"
+                            color="#000"
+                            sx={{zIndex: "100000", width: 150, position: "absolute",
+                              margin: "-120px 0 0 20px", borderRadius: 5, 
+                              border: "1px solid #520101"}}
+                          >
+                            <ul sx={{padding: "0 20px", marginTop: 10}}>
+                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                {bottle.name}
+                              </li>
+                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                {bottle.year}
+                              </li>
+                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                {bottle.location}
+                              </li>
+                            </ul>
+                          </Box>
+                        </Box> 
+                        ) : (
+                        <Box 
+                          className="bottle"
+                          key={bottle.name} 
+                          sx={{width: 35, 
+                            height: 35, 
+                            borderRadius: '50%'}}
+                            bg='primary'
+                        >
+                          <Box 
+                            className="hide"
+                            bg="#fff"
+                            color="#000"
+                            sx={{zIndex: "100000", width: 150, position: "absolute",
+                              margin: "-120px 0 0 20px", borderRadius: 5, 
+                              border: "1px solid #520101"}}
+                          >
+                            <ul sx={{padding: "0 20px", marginTop: 10}}>
+                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                {bottle.name}
+                              </li>
+                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                {bottle.year}
+                              </li>
+                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                {bottle.location}
+                              </li>
+                            </ul>
+                          </Box>
+                        </Box> 
+                        )
+                      ))
                     )
-                      : (
-                        null
+                    : 
+                    ( !fetchedBottles && bottle.yPosition == row && bottle.xPosition == column ? (
+                          <Box 
+                            className="bottle"
+                            key={bottle.name} 
+                            sx={{width: 35, 
+                              height: 35, 
+                              borderRadius: '50%'}}
+                              bg='primary'
+                          >
+                            <Box 
+                              className="hide"
+                              bg="#fff"
+                              color="#000"
+                              sx={{zIndex: "100000", width: 150, position: "absolute",
+                                margin: "-120px 0 0 20px", borderRadius: 5, 
+                                border: "1px solid #520101"}}
+                            >
+                              <ul sx={{padding: "0 20px", marginTop: 10}}>
+                                <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                  {bottle.name}
+                                </li>
+                                <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                  {bottle.year}
+                                </li>
+                                <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                  {bottle.location}
+                                </li>
+                              </ul>
+                            </Box>
+                          </Box> 
+                          ) : (
+                            null
+                        )
+                      )
                     )
-                  ))}
+                  )}
                 </Flex>
                 ))}
               </Grid>

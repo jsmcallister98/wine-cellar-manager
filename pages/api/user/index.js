@@ -28,12 +28,14 @@ handler.patch(async (req, res) => {
     console.log(req.user)
     console.log(req.body)
   
-    const newRack = ({
+    const newRack = {
       label: req.body.label,
       rows: rowArray,
       columns: columnArray,
       bottles: []
-    });
+    };
+    
+    await req.db.collection('wineracks').insertOne(newRack);
   
     await req.db.collection('users').updateOne(
       { _id: req.user._id },
@@ -43,18 +45,31 @@ handler.patch(async (req, res) => {
     res.json(req.user);
 
   } else if (req.body.isBottle) {
-    console.log(req.user)
     console.log(req.body)
+
+    const newBottle = {
+      name: req.body.name,
+      type: req.body.type,
+      year: req.body.year,
+      location: req.body.location,
+      rack: req.body.rack,
+      yPosition: Number(req.body.yPosition),
+      xPosition: Number(req.body.xPosition),
+      isBottle: true,
+      user: req.user._id
+    };
+
+    await req.db.collection("bottles").insertOne(newBottle);
   
     await req.db.collection('users').updateOne(
       { _id: req.user._id, "wineracks.label": req.body.rack },
-        { $push: { "wineracks.$.bottles" : req.body } },
+        { $push: { "wineracks.$.bottles" : newBottle } },
         { new: true, useFindAndModify: false },
     );
 
     await req.db.collection('users').updateOne(
       { _id: req.user._id },
-      { $push: { "bottles" : req.body } },
+      { $push: { "bottles" : newBottle } },
       { new: true, useFindAndModify: false },
     );
     res.json(req.user);
