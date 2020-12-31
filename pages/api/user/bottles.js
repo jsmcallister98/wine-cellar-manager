@@ -18,3 +18,5 @@ handler.post( async (req, res) => {
   );
   res.json(bottles);
 });
+
+export default handler;

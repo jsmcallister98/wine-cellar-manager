@@ -44,6 +44,9 @@ const Navbar = () => {
           <Link href='my-cellar'>
            <a sx={{variant: 'styles.a', fontWeight: '500'}} > My Cellar </a> 
           </Link>
+          <Link href='my-bottles'>
+           <a sx={{variant: 'styles.a', fontWeight: '500'}} > My Bottles </a> 
+          </Link>
           {!user && <Link href='login'> 
            <a sx={{variant: 'styles.a', fontWeight: '500'}} > Sign In </a>
           </Link>}

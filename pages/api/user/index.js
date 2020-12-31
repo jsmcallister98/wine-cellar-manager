@@ -28,7 +28,7 @@ handler.patch(async (req, res) => {
     console.log(req.user)
     console.log(req.body)
   
-    const newRack = await WineRack.create({
+    const newRack = ({
       label: req.body.label,
       rows: rowArray,
       columns: columnArray,
@@ -46,18 +46,15 @@ handler.patch(async (req, res) => {
     console.log(req.user)
     console.log(req.body)
   
-    const newBottle = await Bottle.create(req.body);
-    console.log(newBottle)
-  
     await req.db.collection('users').updateOne(
       { _id: req.user._id, "wineracks.label": req.body.rack },
-        { $push: { "wineracks.$.bottles" : newBottle } },
+        { $push: { "wineracks.$.bottles" : req.body } },
         { new: true, useFindAndModify: false },
     );
 
     await req.db.collection('users').updateOne(
       { _id: req.user._id },
-      { $push: { "bottles" : newBottle } },
+      { $push: { "bottles" : req.body } },
       { new: true, useFindAndModify: false },
     );
     res.json(req.user);

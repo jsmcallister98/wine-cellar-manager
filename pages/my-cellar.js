@@ -123,8 +123,8 @@ const Cellar = () => {
     const bottle = {
       param: e.currentTarget.search.value
     }
-    const res = await fetch('/api/user', {
-      method: 'PATCH',
+    const res = await fetch('/api/user/bottles', {
+      method: 'POST',
       headers: { 
         'Accept': 'application/json',
         'Content-type': 'application/json'
