@@ -29,14 +29,32 @@ const BottlesPage = () => {
 
   return (
     <Box>
-      <div>
-        
+      <div sx={{m: 4}}>
+        Sort By: 
       </div>
-      {bottles && bottles.map((bottle) => (
-        <Box key={bottle._id} sx={{background: "#520101", width: "100px", height: "100px"}}>
-          {bottle.name}
-        </Box>
-      ))}
+      <Flex sx={{justifyContent: "center"}}>
+        <Grid gap={5} columns={3}>
+          {bottles && bottles.map((bottle) => (
+            <Box 
+              key={bottle._id} 
+              sx={{background: "#fff", 
+                   width: "100%", 
+                   height: "auto",
+                   border: "2px solid #8b1d1d",
+                   borderRadius: 10
+                   }}
+            >
+              <ul sx={{ paddingLeft: 20, paddingRight: 20 }}>
+                <li>Name: {bottle.name}</li>
+                <li>Location: {bottle.location}</li>
+                <li>Year: {bottle.year}</li>
+                <li>Type: {bottle.type}</li>
+                <li>Rack: {bottle.rack}</li>
+              </ul>
+            </Box>
+          ))}
+        </Grid>
+      </Flex>
     </Box>
   )
 }

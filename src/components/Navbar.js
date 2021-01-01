@@ -50,7 +50,7 @@ const Navbar = () => {
           {!user && <Link href='login'> 
            <a sx={{variant: 'styles.a', fontWeight: '500'}} > Sign In </a>
           </Link>}
-          {user && <Link href='login'> 
+          {user && <Link href='/'> 
            <a onClick={handleLogout} sx={{variant: 'styles.a', fontWeight: '500'}} > Logout </a>
           </Link>}
         </ul>

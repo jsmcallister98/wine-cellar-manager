@@ -322,36 +322,9 @@ const Cellar = () => {
                             </ul>
                           </Box>
                         </Box> 
-                        ) : (
-                        <Box 
-                          className="bottle"
-                          key={bottle.name} 
-                          sx={{width: 35, 
-                            height: 35, 
-                            borderRadius: '50%'}}
-                            bg='primary'
-                        >
-                          <Box 
-                            className="hide"
-                            bg="#fff"
-                            color="#000"
-                            sx={{zIndex: "100000", width: 150, position: "absolute",
-                              margin: "-120px 0 0 20px", borderRadius: 5, 
-                              border: "1px solid #520101"}}
-                          >
-                            <ul sx={{padding: "0 20px", marginTop: 10}}>
-                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
-                                {bottle.name}
-                              </li>
-                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
-                                {bottle.year}
-                              </li>
-                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
-                                {bottle.location}
-                              </li>
-                            </ul>
-                          </Box>
-                        </Box> 
+                        ) : 
+                        (
+                          null
                         )
                       ))
                     )
