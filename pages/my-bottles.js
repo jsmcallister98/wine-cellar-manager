@@ -36,7 +36,7 @@ const BottlesPage = () => {
       <div sx={{m: 4}}>
         Sort By: 
       </div>
-      <Flex sx={{justifyContent: "center"}}>
+      <Flex sx={{justifyContent: "center", mx: 3}}>
         <Grid gap={5} columns={[1, 2, 2, 3]}>
           {bottles && bottles.map((bottle) => (
             <Box 
@@ -46,7 +46,8 @@ const BottlesPage = () => {
                    width: "100%", 
                    height: "auto",
                    border: "2px solid grey",
-                   borderRadius: '5px'
+                   borderRadius: '5px',
+                   boxShadow: '5px 5px 4px 0px #8b1d1d'
                    }}
             >
               <Flex sx={{alignItems: 'center', justifyContent: 'space-around'}}>

@@ -299,7 +299,7 @@ const Cellar = () => {
                           sx={{width: 35, 
                             height: 35, 
                             borderRadius: '50%'}}
-                            bg='#f5bd2f'
+                            bg='#52c8ff'
                         >
                           <Box 
                             className="hide"
