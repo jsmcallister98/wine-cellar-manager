@@ -292,14 +292,14 @@ const Cellar = () => {
                   {winerack.bottles.map(bottle => (
                     fetchedBottles && bottle.yPosition == row && bottle.xPosition == column ? (
                       fetchedBottles.map(fetchedBottle => (
-                        fetchedBottle.xPosition == column && fetchedBottle.yPosition == row ? (
+                        fetchedBottle.xPosition == column && fetchedBottle.yPosition == row && fetchedBottle.name == bottle.name ? (
                         <Box 
                           className="bottle"
                           key={bottle.name} 
                           sx={{width: 35, 
                             height: 35, 
                             borderRadius: '50%'}}
-                            bg='text'
+                            bg='#f5bd2f'
                         >
                           <Box 
                             className="hide"
