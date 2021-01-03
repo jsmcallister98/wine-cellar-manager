@@ -114,6 +114,29 @@ const Cellar = () => {
     setFetchedBottles(foundBottles)
   }
 
+  // get bottles
+  const [userBottles, setUserBottles] = useState([]);
+  const [total, setTotal] = useState(0);
+
+  useEffect(async () => {
+    const bottles = await handleBottlesSearch();
+    bottles.forEach(bottle => {
+      setTotal(total + bottle.price)
+    }) 
+  }, []);
+
+  const handleBottlesSearch = async () => {
+    const res = await fetch("/api/bottles", {
+      method: 'GET',
+      headers: { 
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
+      }
+    });
+    const bottles = await res.json();
+    return bottles;
+    };
+
   return (
     <Flex id="CellarPage">
       <Head>My Wine Cellar</Head>
@@ -264,6 +287,8 @@ const Cellar = () => {
         </Menu>
       </ProSidebar>
       
+      <div>
+        <p>Total value: ${total}</p>
       <div 
         className={"rack-container"}
         sx={{display: "flex",
@@ -402,6 +427,7 @@ const Cellar = () => {
             ))}
           </div>
         ))}
+      </div>
       </div>
     </Flex>
   )

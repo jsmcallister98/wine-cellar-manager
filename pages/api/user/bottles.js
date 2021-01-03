@@ -11,8 +11,6 @@ handler.use(middleware);
 handler.get(async (req, res) => res.json({ user: extractUser(req) }));
 
 handler.post( async (req, res) => {
-  console.log(req.user)
-  console.log(req.body)
   const bottles = await req.db.collection('bottles').find(
     { user: req.user._id, name : req.body.param }
   ).toArray();

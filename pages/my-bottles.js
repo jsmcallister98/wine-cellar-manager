@@ -67,7 +67,7 @@ const BottlesPage = () => {
                 <Flex sx={{justifyContent: 'space-between'}}>
                   <p sx={{m: 0}}><TiLocation sx={{ fontSize: '1.2rem' }}/> {bottle.location}</p>
                   <p sx={{m: 0}}><FcCalendar sx={{ fontSize: '1.2rem' }}/> {bottle.year}</p>
-                  <h4 sx={{m: 0}}>${bottle.year}</h4>
+                  <h4 sx={{m: 0}}>${bottle.price}</h4>
                 </Flex>
                 <p>This bottle is located in rack {bottle.rack} in position ({bottle.xPosition}, {bottle.yPosition}).</p>
               </Box>
