@@ -20,6 +20,7 @@
 	text-align: center;
 }
 
+
 .login-content form{
 	width: 360px;
 }
@@ -197,6 +198,10 @@
 	.login-content{
 		justify-content: center;
 	}
+}
+
+.flip {
+	display: none !important;
 }
 
 /* flip animation */

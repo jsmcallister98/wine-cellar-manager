@@ -14,6 +14,8 @@ function Login() {
   // UI animation hadnling
   const [focusedUser, setFocusedUser] = useState(false)
   const [focusedPass, setFocusedPass] = useState(false)
+  const [focusedName, setFocusedName] = useState(false)
+
   
   const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
@@ -118,7 +120,7 @@ function Login() {
                         name="email"
                         className="input" 
                         onFocus={() => setFocusedUser(true)}
-                        onBlur={() => handleFocusedUser()}
+                        
                       />
                     </label>
                 </div>
@@ -138,7 +140,7 @@ function Login() {
                         name="password"
                         className="input"
                         onFocus={() => setFocusedPass(true)}
-                        onBlur={() => handleFocusedPass()} 
+                         
                       />
                     </label>
                 </div>
@@ -154,7 +156,9 @@ function Login() {
               >
                 Sign In
               </button>
-              <button 
+              <button
+                type="button"
+                onClick={() => setClicked(true)} 
                 className="btn"
               >
                   New Here? Sign Up
@@ -165,7 +169,7 @@ function Login() {
           <form onSubmit={handleRegisterSubmit}>
           {errorMsg ? <p style={{ color: 'red' }}>{errorMsg}</p> : null}            <img src="/images/login_img1.svg" />
             <h2 className="title">Welcome</h2>
-              <div className={focusedUser ? "input-div one focus" : "input-div one"}>
+              <div className={focusedName ? "input-div one focus" : "input-div one"}>
                 <div className="i">
                   <FAicons.FaUser className="fas fa-user"></FAicons.FaUser>
                 </div>
@@ -177,8 +181,7 @@ function Login() {
                         id="name"
                         name="name" 
                         className="input" 
-                        onFocus={() => setFocusedUser(true)}
-                        onBlur={() => handleFocusedUser()} 
+                        onFocus={() => setFocusedName(true)}
                       />
                     </label>
                 </div>
@@ -196,7 +199,6 @@ function Login() {
                         name="email"
                         className="input" 
                         onFocus={() => setFocusedUser(true)}
-                        onBlur={() => handleFocusedUser()} 
                       />
                     </label>
                 </div>
@@ -214,7 +216,6 @@ function Login() {
                         name="password" 
                         className="input"
                         onFocus={() => setFocusedPass(true)}
-                        onBlur={() => handleFocusedPass()} 
                       />
                     </label>
                 </div>
@@ -223,7 +224,10 @@ function Login() {
                 type="submit"
                 className="btn">Sign Up
               </button>
-              <input type="submit" className="btn" value="Login" />
+              <p>Already a Member?</p>
+              <button onClick={() => setClicked(false)} type="submit" className="btn">
+                Sign In
+              </button>
             </form>
         </div>
       </div>
