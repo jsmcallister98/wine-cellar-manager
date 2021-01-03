@@ -295,17 +295,20 @@ const Cellar = () => {
         <p>Total value: ${total}</p>
       <div 
         className={"rack-container"}
-        sx={{display: "flex",
+        sx={{display: "block",
           justifyContent: "space-around",
           width: "100%"}}
       >
         {wineracks && wineracks.map(winerack => (
-          <div key={winerack.label} sx={{ m: 3 }}>
+          <div key={winerack.label} sx={{ m: 'auto', maxWidth: `${winerack.columns.length * 56}px` }}>
             <h2 sx={{textAlign: "center"}}>{winerack.label}</h2>
             {winerack.rows.map(row => (
               <Grid
                 key={row}           
-                sx={{p: 1, gridTemplateColumns: `repeat(${winerack.columns.length}, minmax(20px, 1fr))`}}
+                sx={{
+                  p: 1, 
+                  gridTemplateColumns: `repeat(${winerack.columns.length}, minmax(20px, 1fr))`
+                }}
                 columns={winerack.columns.length}
                 gap={[1, 2, 3, 3]}
                 bg='wood'
