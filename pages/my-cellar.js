@@ -17,9 +17,10 @@ const Cellar = () => {
 
   // used when searching for a bottle
   const [fetchedBottles, setFetchedBottles] = useState();
+
   
   // ======================================================
-  // posting data to mongodb
+  // interacting with mongodb
   // ======================================================
   const [user, { mutate }] = useUser();
   const { name, email, wineracks, bottles, cellars } = user || {};
@@ -114,15 +115,18 @@ const Cellar = () => {
     setFetchedBottles(foundBottles)
   }
 
-  // get bottles
+  // get all user bottles and total value of cellar on page load
   const [userBottles, setUserBottles] = useState([]);
   const [total, setTotal] = useState(0);
 
   useEffect(async () => {
     const bottles = await handleBottlesSearch();
-    bottles.forEach(bottle => {
-      setTotal(total + bottle.price)
+    let totalPrice = 0
+    await bottles.forEach(bottle => {
+      totalPrice += bottle.price
+      console.log(totalPrice)
     }) 
+    setTotal(totalPrice);
   }, []);
 
   const handleBottlesSearch = async () => {
@@ -287,7 +291,7 @@ const Cellar = () => {
         </Menu>
       </ProSidebar>
       
-      <div>
+      <div sx={{width: "100%"}}>
         <p>Total value: ${total}</p>
       <div 
         className={"rack-container"}
@@ -301,9 +305,9 @@ const Cellar = () => {
             {winerack.rows.map(row => (
               <Grid
                 key={row}           
-                sx={{p: 1}}
+                sx={{p: 1, gridTemplateColumns: `repeat(${winerack.columns.length}, minmax(20px, 1fr))`}}
                 columns={winerack.columns.length}
-                gap={3}
+                gap={[1, 2, 3, 3]}
                 bg='wood'
               >
                 {winerack.columns.map(column => (
@@ -311,12 +315,14 @@ const Cellar = () => {
                   key={column} 
                   sx={{justifyContent: 'center', 
                     alignItems: 'center', 
-                    width: 40, 
-                    height: 40, 
-                    borderRadius: 3}} 
+                    minWidth: 20,
+                    minHeight: 20,
+                    borderRadius: 3,
+                    position: 'relative'
+                  }} 
                     bg='background'
                 >
-                  {winerack.bottles.map(bottle => (
+                  {winerack.bottles.map((bottle, index) => (
                     fetchedBottles && bottle.yPosition == row && bottle.xPosition == column ? (
                       fetchedBottles.map(fetchedBottle => (
                         fetchedBottle.xPosition == column && fetchedBottle.yPosition == row && fetchedBottle.name == bottle.name ? (
@@ -362,8 +368,12 @@ const Cellar = () => {
                             key={bottle.name} 
                             sx={ 
                               bottle.type == "Red" ? 
-                              {width: 35, 
-                              height: 35, 
+                              {maxWidth: '2.2rem', 
+                              maxHeight: '2.2rem',
+                              width: '100%',
+                              height: '100%',
+                              position: 'absolute', 
+                              mx: '2px',
                               borderRadius: '50%',
                               background: '#820101',
                               border: '2px solid #000'} :
@@ -416,7 +426,24 @@ const Cellar = () => {
                             </Box>
                           </Box> 
                           ) : (
+                            index === 0 ? (
+                              <Box 
+                              className="bottle"
+                              key={bottle.name} 
+                              bg='background'
+                              sx={ 
+                                {
+                                  width: '2.5rem',
+                                  height: '2.5rem', 
+                                  borderRadius: '50%',
+                                } 
+                              }
+                              >
+                            {() => setFirstLoop(false)}
+                          </Box> ) :
+                          (
                             null
+                          )
                         )
                       )
                     )
