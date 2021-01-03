@@ -50,6 +50,7 @@ handler.patch(async (req, res) => {
     const newBottle = {
       name: req.body.name,
       type: req.body.type,
+      price: Number(req.body.price),
       year: req.body.year,
       location: req.body.location,
       rack: req.body.rack,

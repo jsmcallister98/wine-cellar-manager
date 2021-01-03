@@ -51,7 +51,12 @@ const BottlesPage = () => {
                    }}
             >
               <Flex sx={{alignItems: 'center', justifyContent: 'space-around'}}>
-                <FaWineBottle sx={{ fontSize: '3rem', m: 3, color: '#8b1d1d' }}/>
+                <FaWineBottle sx={ bottle.type == "Red" ? { fontSize: '3rem', m: 3, color: '#8b1d1d', background: '#fff' } :
+                                   bottle.type == "White" ? { fontSize: '3rem', m: 3, color: '#fff', background: '#cfa669' } :
+                                   bottle.type == "Rose" ? { fontSize: '3rem', m: 3, color: '#ffabca', background: '#fff' } :
+                                   bottle.type == "Dessert" ? { fontSize: '3rem', m: 3, color: '#f59f9f', background: '#fff' } :
+                                   bottle.type == "Sparkling" ? { fontSize: '3rem', m: 3, color: '#e3d38d', background: '#fff' } :
+                                   null }/>
                 <Box px={4} sx={{}}>
                   <h4 sx={{mb: 0}}>{bottle.name}</h4>
                   <p sx={{mt: 0}}>{bottle.type}</p>

@@ -64,6 +64,7 @@ const Cellar = () => {
     const bottle = {
       name: e.currentTarget.name.value,
       type: e.currentTarget.type.value,
+      price: e.currentTarget.price.value,
       year: e.currentTarget.year.value,
       location: e.currentTarget.location.value,
       rack: e.currentTarget.rack.value,
@@ -170,10 +171,7 @@ const Cellar = () => {
                   sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: '#000'}} 
                 />
               </label>
-              <Button 
-                disabled={isUpdating}
-                type="submit"
-                sx={{cursor: 'pointer', width: 174}} bg='background' color='text' type="submit">
+              <Button type="submit" sx={{cursor: 'pointer', width: 174}} bg='background' color='text' type="submit">
                 Create Winerack
               </Button>
             </form>
@@ -186,16 +184,30 @@ const Cellar = () => {
                   type="text" 
                   id="name"
                   name="name"
-                  placeholder="Winery" 
+                  placeholder="Name" 
                   sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
                 />
               </label>
               <label htmlFor="type">
-                <input 
-                  type="text" 
+                <select
+                  type="select" 
                   id="type"
                   name="type"
                   placeholder="Wine Type" 
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', width: 174}}>
+                    <option value="Red">Red</option>
+                    <option value="White">White</option>
+                    <option value="Rose">Rose</option>
+                    <option value="Dessert">Dessert</option>
+                    <option value="Sparkling">Sparkling</option>
+                </select>
+              </label>
+              <label htmlFor="price">
+                <input 
+                  type="text" 
+                  id="price"
+                  name="price"
+                  placeholder="Price" 
                   sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
                 />
               </label>
@@ -248,16 +260,6 @@ const Cellar = () => {
                 Add Bottle
               </Button>
             </form>
-          </SubMenu>
-          <SubMenu title="My Racks" icon={<FaIcons.FaBorderAll className="bottle-icon" />}>
-            {wineracks && wineracks.map(winerack => (
-              <MenuItem key={winerack._id + "_"}>{winerack.label}</MenuItem> 
-            ))}
-          </SubMenu>
-          <SubMenu title="My Bottles" icon={<FaIcons.FaWineBottle className="bottle-icon" />}>
-            {bottles && bottles.map(bottle => (
-              <MenuItem key={bottle._id + "_"}>{bottle.name}</MenuItem>
-              ))}
           </SubMenu>
         </Menu>
       </ProSidebar>
@@ -333,10 +335,39 @@ const Cellar = () => {
                           <Box 
                             className="bottle"
                             key={bottle.name} 
-                            sx={{width: 35, 
+                            sx={ 
+                              bottle.type == "Red" ? 
+                              {width: 35, 
                               height: 35, 
-                              borderRadius: '50%'}}
-                              bg='primary'
+                              borderRadius: '50%',
+                              background: '#820101',
+                              border: '2px solid #000'} :
+                              bottle.type == "White" ? 
+                              {width: 35, 
+                              height: 35, 
+                              borderRadius: '50%',
+                              background: '#fff',
+                              border: '2px solid #000'} :
+                              bottle.type == "Rose" ? 
+                              {width: 35, 
+                              height: 35, 
+                              borderRadius: '50%',
+                              background: '#ffabca',
+                              border: '2px solid #000'} :
+                              bottle.type == "Dessert" ?
+                              {width: 35, 
+                              height: 35, 
+                              borderRadius: '50%',
+                              background: '#f59f9f',
+                              border: '2px solid #000'} :
+                              bottle.type == "Sparkling" ? 
+                              {width: 35, 
+                              height: 35, 
+                              borderRadius: '50%',
+                              background: '#c99b57',
+                              border: '2px solid #000'} :
+                              null
+                            }
                           >
                             <Box 
                               className="hide"
