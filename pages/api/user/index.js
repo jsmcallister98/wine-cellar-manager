@@ -85,5 +85,43 @@ handler.patch(async (req, res) => {
   }
 });
 
+handler.delete( async (req, res) => {
+  if (!req.user) {
+    req.status(401).end();
+    return;
+  }
+
+  if (req.body.isWinerack) {
+    console.log(req.body)
+    
+    await req.db.collection('wineracks').deleteOne(
+      { _id: req.body._id }
+   )
+   res.send("Winerack deleted.")
+  
+    await req.db.collection('users').deleteOne(
+      { _id: req.user._id, "wineracks._id": req.body._id }
+    );
+    res.json(req.user);
+
+  } else if (req.body.isBottle) {
+    console.log(req.body)
+
+    await req.db.collection("bottles").deleteOne(
+      { _id: req.body._id }
+    );
+  
+    await req.db.collection('users').updateOne(
+      { _id: req.user._id, "wineracks.label": req.body.rack, "wineracks.$.bottles": req.body._id }
+    );
+
+    await req.db.collection('users').updateOne(
+      { _id: req.user._id, bottles: req.body._id },
+    );
+    res.json(req.user);
+
+  } 
+});
+
 export default handler;
 

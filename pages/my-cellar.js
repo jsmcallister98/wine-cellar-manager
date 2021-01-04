@@ -291,7 +291,8 @@ const Cellar = () => {
         </Menu>
       </ProSidebar>
       
-      <div sx={{width: "100%"}}>
+      <div sx={active ? {width: "calc(100% - 80px)"} :
+                {width: "calc(100% - 250px)"}}>
         <p>Total value: ${total}</p>
       <div 
         className={"rack-container"}
@@ -300,7 +301,10 @@ const Cellar = () => {
           width: "100%"}}
       >
         {wineracks && wineracks.map(winerack => (
-          <div key={winerack.label} sx={{ m: 'auto', maxWidth: `${winerack.columns.length * 56}px` }}>
+          <div key={winerack.label} 
+               sx={{ m: 'auto', 
+                     maxWidth: `${winerack.columns.length * 48}px`,
+                     minWidth: `${winerack.columns.length * 24}px` }}>
             <h2 sx={{textAlign: "center"}}>{winerack.label}</h2>
             {winerack.rows.map(row => (
               <Grid
@@ -310,7 +314,7 @@ const Cellar = () => {
                   gridTemplateColumns: `repeat(${winerack.columns.length}, minmax(20px, 1fr))`
                 }}
                 columns={winerack.columns.length}
-                gap={[1, 2, 3, 3]}
+                gap={[1, 1, 2, 2]}
                 bg='wood'
               >
                 {winerack.columns.map(column => (

@@ -4,7 +4,7 @@ $sidebar-width: 250px !default;
 $sidebar-collapsed-width: 80px !default;
 // $highlight-color: #eeb8b8 !default;
 // $submenu-bg-color: #ffffff !default;
-$submenu-bg-color-collapsed: #eee2de !default;
+$submenu-bg-color-collapsed: transparent !default;
 // $icon-bg-color: #ffffff !default;
 $icon-size: 35px !default;
 $breakpoint-xs: 480px !default;
@@ -21,6 +21,10 @@ $breakpoint-xl: 1200px !default;
 
   .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item {
     background: none;
+  }
+
+  .popper-inner {
+    display: none !important;
   }
 
   span.pro-icon-wrapper {
