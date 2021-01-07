@@ -158,6 +158,24 @@ const Cellar = () => {
       window.location.reload()
     }
 
+    // delete bottle
+    const handleBottleDelete = async (bottle) => {
+      const res = await fetch('/api/user', {
+        method: 'DELETE',
+        headers: { 
+          'Accept': 'application/json',
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(bottle),
+      });
+      if (res.status === 200) {
+        setMsg({ message: 'Cellar updated' });
+      } else {
+        setMsg({ message: await res.text(), isError: true });
+      }
+      window.location.reload()
+    }
+
   return (
     <Flex id="CellarPage">
       <Head>My Wine Cellar</Head>
@@ -399,6 +417,9 @@ const Cellar = () => {
                               <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                 {bottle.location}
                               </li>
+                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                <button onClick={() => handleBottleDelete(bottle)}>Delete</button>
+                              </li>
                             </ul>
                           </Box>
                         </Box> 
@@ -478,6 +499,9 @@ const Cellar = () => {
                               </li>
                               <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                 {bottle.location}
+                              </li>
+                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                <button onClick={() => handleBottleDelete(bottle)}>Delete</button>
                               </li>
                             </ul>
                           </Box>
@@ -561,6 +585,9 @@ const Cellar = () => {
                                 </li>
                                 <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                   {bottle.location}
+                                </li>
+                                <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                  <button onClick={() => handleBottleDelete(bottle)}>Delete</button>
                                 </li>
                               </ul>
                             </Box>
