@@ -29,8 +29,8 @@ const Navbar = () => {
 
 
   return (
-    <nav sx={colorMode === 'default' ? { background: 'linear-gradient(180deg, #520101 0%, #000000 100%)', zIndex: '1000', width: '100vw'} : 
-    { background: 'linear-gradient(180deg, #6d5642 0%, #eee2de 100%)', zIndex: '1000', width: '100vw'} }>
+    <nav sx={colorMode === 'default' ? { background: 'linear-gradient(180deg, #520101 0%, #000000 100%)', zIndex: '1000', width: '100%'} : 
+    { background: 'linear-gradient(180deg, #6d5642 0%, #eee2de 100%)', zIndex: '1000', width: '100%'} }>
       <Flex sx={{ justifyContent: 'space-between', alignItems: 'center'}}>
         <Flex sx={{ justifyContent: 'space-between', alignItems: 'center'}}>
           <Link href='/'>

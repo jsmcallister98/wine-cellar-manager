@@ -18,12 +18,11 @@ const Cellar = () => {
   // used when searching for a bottle
   const [fetchedBottles, setFetchedBottles] = useState();
 
-  
   // ======================================================
   // interacting with mongodb
   // ======================================================
   const [user, { mutate }] = useUser();
-  const { name, email, wineracks, bottles, cellars } = user || {};
+  const { name, email, wineracks, bottles } = user || {};
   const [isUpdating, setIsUpdating] = useState(false);
   const [msg, setMsg] = useState({ message: '', isError: false });
   
@@ -140,6 +139,24 @@ const Cellar = () => {
     const bottles = await res.json();
     return bottles;
     };
+
+    // delete winerack
+    const handleWinerackDelete = async (winerack) => {
+      const res = await fetch('/api/user', {
+        method: 'DELETE',
+        headers: { 
+          'Accept': 'application/json',
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(winerack),
+      });
+      if (res.status === 200) {
+        setMsg({ message: 'Cellar updated' });
+      } else {
+        setMsg({ message: await res.text(), isError: true });
+      }
+      window.location.reload()
+    }
 
   return (
     <Flex id="CellarPage">
@@ -296,16 +313,18 @@ const Cellar = () => {
         <p>Total value: ${total}</p>
       <div 
         className={"rack-container"}
-        sx={{display: "block",
-          justifyContent: "space-around",
+        sx={{display: "flex",
+          flexWrap: 'wrap',
+          justifyContent: "space-evenly",
           width: "100%"}}
       >
         {wineracks && wineracks.map(winerack => (
           <div key={winerack.label} 
-               sx={{ m: 'auto', 
+               sx={{ my: 'auto', 
                      maxWidth: `${winerack.columns.length * 48}px`,
                      minWidth: `${winerack.columns.length * 24}px` }}>
             <h2 sx={{textAlign: "center"}}>{winerack.label}</h2>
+            <button onClick={() => handleWinerackDelete(winerack)}>Delete</button>
             {winerack.rows.map(row => (
               <Grid
                 key={row}           
@@ -329,16 +348,37 @@ const Cellar = () => {
                   }} 
                     bg='background'
                 >
-                  {winerack.bottles.map((bottle, index) => (
+                  {winerack.bottles == "" ? (
+                    <Box 
+                      className="bottle"
+                      key={row + column} 
+                      bg='background'
+                      sx={ 
+                        {
+                          width: '2.5rem',
+                          height: '2.5rem', 
+                          borderRadius: '50%',
+                        } 
+                      }
+                      >
+                    </Box>
+                  ) : 
+                  winerack.bottles.map((bottle, index) => (
                     fetchedBottles && bottle.yPosition == row && bottle.xPosition == column ? (
                       fetchedBottles.map(fetchedBottle => (
                         fetchedBottle.xPosition == column && fetchedBottle.yPosition == row && fetchedBottle.name == bottle.name ? (
                         <Box 
                           className="bottle"
                           key={bottle.name} 
-                          sx={{width: 35, 
-                            height: 35, 
-                            borderRadius: '50%'}}
+                          sx={{maxWidth: '2.2rem', 
+                          maxHeight: '2.2rem',
+                          width: '100%',
+                          height: '100%',
+                          position: 'absolute', 
+                          mx: '2px',
+                          borderRadius: '50%',
+                          border: '2px solid #000',
+                          zIndex: "1000"}}
                             bg='#52c8ff'
                         >
                           <Box 
@@ -364,7 +404,84 @@ const Cellar = () => {
                         </Box> 
                         ) : 
                         (
-                          null
+                          <Box 
+                          className="bottle"
+                          key={bottle.name} 
+                          sx={ 
+                            bottle.type == "Red" ? 
+                            {maxWidth: '2.2rem', 
+                            maxHeight: '2.2rem',
+                            width: '100%',
+                            height: '100%',
+                            position: 'absolute', 
+                            mx: '2px',
+                            borderRadius: '50%',
+                            background: '#820101',
+                            border: '2px solid #000'} :
+                            bottle.type == "White" ? 
+                            {maxWidth: '2.2rem', 
+                            maxHeight: '2.2rem',
+                            width: '100%',
+                            height: '100%',
+                            position: 'absolute', 
+                            mx: '2px',
+                            borderRadius: '50%',
+                            background: '#fff',
+                            border: '2px solid #000'} :
+                            bottle.type == "Rose" ? 
+                            {maxWidth: '2.2rem', 
+                            maxHeight: '2.2rem',
+                            width: '100%',
+                            height: '100%',
+                            position: 'absolute', 
+                            mx: '2px',
+                            borderRadius: '50%',
+                            background: '#ffabca',
+                            border: '2px solid #000'} :
+                            bottle.type == "Dessert" ?
+                            {maxWidth: '2.2rem', 
+                            maxHeight: '2.2rem',
+                            width: '100%',
+                            height: '100%',
+                            position: 'absolute', 
+                            mx: '2px',
+                            borderRadius: '50%',
+                            background: '#f59f9f',
+                            border: '2px solid #000'} :
+                            bottle.type == "Sparkling" ? 
+                            {maxWidth: '2.2rem', 
+                            maxHeight: '2.2rem',
+                            width: '100%',
+                            height: '100%',
+                            position: 'absolute', 
+                            mx: '2px',
+                            borderRadius: '50%',
+                            background: '#c99b57',
+                            border: '2px solid #000'} :
+                            null
+                          }
+                        >
+                          <Box 
+                            className="hide"
+                            bg="#fff"
+                            color="#000"
+                            sx={{zIndex: "100000", width: 150, position: "absolute",
+                              margin: "-120px 0 0 20px", borderRadius: 5, 
+                              border: "1px solid #520101"}}
+                          >
+                            <ul sx={{padding: "0 20px", marginTop: 10}}>
+                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                {bottle.name}
+                              </li>
+                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                {bottle.year}
+                              </li>
+                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                {bottle.location}
+                              </li>
+                            </ul>
+                          </Box>
+                        </Box> 
                         )
                       ))
                     )
@@ -385,26 +502,42 @@ const Cellar = () => {
                               background: '#820101',
                               border: '2px solid #000'} :
                               bottle.type == "White" ? 
-                              {width: 35, 
-                              height: 35, 
+                              {maxWidth: '2.2rem', 
+                              maxHeight: '2.2rem',
+                              width: '100%',
+                              height: '100%',
+                              position: 'absolute', 
+                              mx: '2px',
                               borderRadius: '50%',
                               background: '#fff',
                               border: '2px solid #000'} :
                               bottle.type == "Rose" ? 
-                              {width: 35, 
-                              height: 35, 
+                              {maxWidth: '2.2rem', 
+                              maxHeight: '2.2rem',
+                              width: '100%',
+                              height: '100%',
+                              position: 'absolute', 
+                              mx: '2px',
                               borderRadius: '50%',
                               background: '#ffabca',
                               border: '2px solid #000'} :
                               bottle.type == "Dessert" ?
-                              {width: 35, 
-                              height: 35, 
+                              {maxWidth: '2.2rem', 
+                              maxHeight: '2.2rem',
+                              width: '100%',
+                              height: '100%',
+                              position: 'absolute', 
+                              mx: '2px',
                               borderRadius: '50%',
                               background: '#f59f9f',
                               border: '2px solid #000'} :
                               bottle.type == "Sparkling" ? 
-                              {width: 35, 
-                              height: 35, 
+                              {maxWidth: '2.2rem', 
+                              maxHeight: '2.2rem',
+                              width: '100%',
+                              height: '100%',
+                              position: 'absolute', 
+                              mx: '2px',
                               borderRadius: '50%',
                               background: '#c99b57',
                               border: '2px solid #000'} :
@@ -446,7 +579,6 @@ const Cellar = () => {
                                 } 
                               }
                               >
-                            {() => setFirstLoop(false)}
                           </Box> ) :
                           (
                             null

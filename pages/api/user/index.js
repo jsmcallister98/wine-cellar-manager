@@ -3,6 +3,7 @@ import middleware from '../../../src/middleware/middleware';
 import { extractUser } from '../../../utils/api-helpers';
 import WineRack from '../../../src/models/WineRack';
 import Bottle from '../../../src/models/Bottle';
+const ObjectId = require('mongodb').ObjectId;
 
 const handler = nextConnect();
 
@@ -91,32 +92,34 @@ handler.delete( async (req, res) => {
     return;
   }
 
-  if (req.body.isWinerack) {
+  if (req.body.label) {
     console.log(req.body)
     
     await req.db.collection('wineracks').deleteOne(
-      { _id: req.body._id }
+      { _id: new ObjectId(req.body._id) }
    )
-   res.send("Winerack deleted.")
   
-    await req.db.collection('users').deleteOne(
-      { _id: req.user._id, "wineracks._id": req.body._id }
+    await req.db.collection('users').updateOne(
+      { _id: req.user._id },
+      { $pull: { wineracks: { _id: new ObjectId(req.body._id) } } }
     );
-    res.json(req.user);
+    res.send("Winerack deleted from user.")
 
   } else if (req.body.isBottle) {
     console.log(req.body)
 
     await req.db.collection("bottles").deleteOne(
-      { _id: req.body._id }
+      { _id: new ObjectId(req.body._id) }
     );
   
     await req.db.collection('users').updateOne(
-      { _id: req.user._id, "wineracks.label": req.body.rack, "wineracks.$.bottles": req.body._id }
-    );
+      { _id: req.user._id },
+      { $pull: { bottles: { _id: new ObjectId(req.body._id) } } }    
+      );
 
     await req.db.collection('users').updateOne(
-      { _id: req.user._id, bottles: req.body._id },
+      { _id: req.user._id, "wineracks.label": req.body.rack },
+      { $pull: { "wineracks.$.bottles" : { _id: new ObjectId(req.body._id) } } }
     );
     res.json(req.user);
 
