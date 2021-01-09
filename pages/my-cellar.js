@@ -193,6 +193,42 @@ const Cellar = () => {
       }
     }
 
+  // edit bottle position
+  const handleBottleEdit = async (e, bottle) => {
+    e.preventDefault();
+    const updatedBottle = {
+      _id: bottle._id,
+      name: bottle.name,
+      type: bottle.type,
+      price: bottle.price,
+      year: bottle.year,
+      location: bottle.location,
+      rack: bottle.rack,
+      yPosition: e.currentTarget.row.value,
+      xPosition: e.currentTarget.column.value,
+      isBottle: true
+    };
+    const res = await fetch('/api/user/bottles', {
+      method: 'PATCH',
+      headers: { 
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(updatedBottle),
+    });
+    if (res.status === 200) {
+      const userData = await res.json();
+      mutate({
+        user: {
+          ...user,
+          ...userData,
+        },
+      });
+      console.log(userData);
+    }
+    window.location.reload();
+  };
+
   return (
     <Flex id="CellarPage">
       <Head>My Wine Cellar</Head>
@@ -611,7 +647,7 @@ const Cellar = () => {
                               bg="#fff"
                               color="#000"
                               sx={{zIndex: "100000", width: 150, position: "absolute",
-                                margin: "-140px 0 0 20px", borderRadius: 5, 
+                                margin: "-100px 0 0 20px", borderRadius: 5, 
                                 border: "1px solid"}}
                             >
                               <ul sx={{padding: "0 20px", marginTop: 10}}>
@@ -624,14 +660,35 @@ const Cellar = () => {
                                 <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                   {bottle.location}
                                 </li>
-                                <li sx={{ padding: "5px", fontSize: "0.8rem"}}>
+                                <form className="editPos" onSubmit={(e) => handleBottleEdit(e, bottle)}>
+                                  <Button sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }} bg='background' color='text' type="submit">
+                                    Move To:
+                                  </Button>
+                                  <label htmlFor="row">
+                                    <input 
+                                      type="text" 
+                                      id="row"
+                                      name="row"
+                                      placeholder="Row" 
+                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
+                                    />
+                                  </label>
+                                  <label htmlFor="column">
+                                    <input 
+                                      type="text" 
+                                      id="column"
+                                      name="column"
+                                      placeholder="Col" 
+                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
+                                    />
+                                  </label>
                                   <Button 
                                     onClick={() => handleBottleDelete(bottle)}
                                     bg='background' color='text'
-                                    sx={{ cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>
+                                    sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>
                                     <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
                                   </Button>                                                            
-                                </li>
+                                </form>
                               </ul>
                             </Box>
                           </Box> 
