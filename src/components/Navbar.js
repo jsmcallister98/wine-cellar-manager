@@ -7,6 +7,7 @@ import { Flex } from 'theme-ui'
 import ThemeToggle from './ThemeToggle'
 import { useColorMode } from "theme-ui";
 import { useUser } from "../../utils/hooks";
+import { FaWineGlassAlt } from "react-icons/fa";
 
 const Navbar = () => {
   // ========================================================
@@ -35,7 +36,7 @@ const Navbar = () => {
         <Flex sx={{ justifyContent: 'space-between', alignItems: 'center'}}>
           <Link href='/'>
             <a sx={{variant: 'styles.a', paddingRight: 0, marginRight: 20, fontWeight: '500', fontSize: '1.2rem'}}>
-              WineOh 
+              <FaWineGlassAlt sx={{ color: 'text' }} /> WineOh 
             </a>
           </Link>
           <ThemeToggle />

@@ -151,11 +151,17 @@ const Cellar = () => {
         body: JSON.stringify(winerack),
       });
       if (res.status === 200) {
+        const userData = await res.json();
+        mutate({
+          user: {
+            ...user,
+            ...userData.user,
+          },
+        });
         setMsg({ message: 'Cellar updated' });
       } else {
         setMsg({ message: await res.text(), isError: true });
       }
-      window.location.reload()
     }
 
     // delete bottle
@@ -169,11 +175,17 @@ const Cellar = () => {
         body: JSON.stringify(bottle),
       });
       if (res.status === 200) {
+        const userData = await res.json();
+        mutate({
+          user: {
+            ...user,
+            ...userData.user,
+          },
+        });
         setMsg({ message: 'Cellar updated' });
       } else {
         setMsg({ message: await res.text(), isError: true });
       }
-      window.location.reload()
     }
 
   return (
@@ -341,14 +353,26 @@ const Cellar = () => {
                sx={{ my: 'auto', 
                      maxWidth: `${winerack.columns.length * 48}px`,
                      minWidth: `${winerack.columns.length * 24}px` }}>
-            <h2 sx={{textAlign: "center"}}>{winerack.label}</h2>
-            <button onClick={() => handleWinerackDelete(winerack)}>Delete</button>
+            <Flex className="rack" sx={{justifyContent: 'center', alignItems: 'center'}}>
+              <h2 sx={{textAlign: "center"}}>
+                {winerack.label}
+              </h2>
+              <Button 
+                onClick={() => handleWinerackDelete(winerack)} 
+                className="hide"
+                bg='background' color='text'
+                sx={{ cursor: "pointer", border: '2px solid #520101', height: 40, py: 0, ml: 3, display: 'none' }}>
+                <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
+              </Button>
+            </Flex>
+            <div sx={{ color: 'text', ':hover': { border: '1px solid' } }}>  
             {winerack.rows.map(row => (
               <Grid
                 key={row}           
                 sx={{
                   p: 1, 
                   gridTemplateColumns: `repeat(${winerack.columns.length}, minmax(20px, 1fr))`
+                  
                 }}
                 columns={winerack.columns.length}
                 gap={[1, 1, 2, 2]}
@@ -417,8 +441,13 @@ const Cellar = () => {
                               <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                 {bottle.location}
                               </li>
-                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
-                                <button onClick={() => handleBottleDelete(bottle)}>Delete</button>
+                              <li sx={{ padding: "5px", fontSize: "0.8rem"}}>
+                                <Button 
+                                  onClick={() => handleBottleDelete(bottle)}
+                                  bg='background' color='text'
+                                  sx={{ cursor: "pointer", border: '2px solid #520101' }}>
+                                  Delete
+                                </Button>
                               </li>
                             </ul>
                           </Box>
@@ -500,9 +529,13 @@ const Cellar = () => {
                               <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                 {bottle.location}
                               </li>
-                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
-                                <button onClick={() => handleBottleDelete(bottle)}>Delete</button>
-                              </li>
+                              <li sx={{ padding: "5px", fontSize: "0.8rem"}}>
+                                <Button 
+                                  onClick={() => handleBottleDelete(bottle)}
+                                  bg='background' color='text'
+                                  sx={{ cursor: "pointer", border: '2px solid #520101' }}>
+                                  Delete
+                                </Button>                              </li>
                             </ul>
                           </Box>
                         </Box> 
@@ -570,11 +603,11 @@ const Cellar = () => {
                           >
                             <Box 
                               className="hide"
-                              bg="#fff"
+                              bg="muted"
                               color="#000"
                               sx={{zIndex: "100000", width: 150, position: "absolute",
                                 margin: "-120px 0 0 20px", borderRadius: 5, 
-                                border: "1px solid #520101"}}
+                                border: "1px solid"}}
                             >
                               <ul sx={{padding: "0 20px", marginTop: 10}}>
                                 <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
@@ -586,8 +619,13 @@ const Cellar = () => {
                                 <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                   {bottle.location}
                                 </li>
-                                <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
-                                  <button onClick={() => handleBottleDelete(bottle)}>Delete</button>
+                                <li sx={{ padding: "5px", fontSize: "0.8rem"}}>
+                                  <Button 
+                                    onClick={() => handleBottleDelete(bottle)}
+                                    bg='background' color='text'
+                                    sx={{ cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>
+                                    <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
+                                  </Button>                                
                                 </li>
                               </ul>
                             </Box>
@@ -618,6 +656,7 @@ const Cellar = () => {
                 ))}
               </Grid>
             ))}
+            </div>
           </div>
         ))}
       </div>

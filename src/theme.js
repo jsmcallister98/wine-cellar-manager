@@ -49,7 +49,7 @@ export default {
         background: '#eee2de',
         primary: '#8b1d1d',
         secondary: '#ffc7e0',
-        muted: '#DED6CD',
+        muted: '#fff',
         wood: '#987b61'
       }
     }

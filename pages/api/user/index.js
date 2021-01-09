@@ -103,7 +103,7 @@ handler.delete( async (req, res) => {
       { _id: req.user._id },
       { $pull: { wineracks: { _id: new ObjectId(req.body._id) } } }
     );
-    res.send("Winerack deleted from user.")
+    res.json(req.user)
 
   } else if (req.body.isBottle) {
     console.log(req.body)

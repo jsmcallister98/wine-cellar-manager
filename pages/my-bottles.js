@@ -41,7 +41,8 @@ const BottlesPage = () => {
           {bottles && bottles.map((bottle) => (
             <Box 
               key={bottle._id} 
-              sx={{background: "#fff", 
+              bg='muted'
+              sx={{
                    color: "#000",
                    width: "100%", 
                    height: "auto",
