@@ -89,6 +89,7 @@ const Cellar = () => {
         },
       });
       setMsg({ message: 'Cellar updated' });
+      setTotal(Number(total) + Number(bottle.price))
       console.log(userData)
     } else {
       setMsg({ message: await res.text(), isError: true });
@@ -142,6 +143,7 @@ const Cellar = () => {
 
     // delete winerack
     const handleWinerackDelete = async (winerack) => {
+
       const res = await fetch('/api/user', {
         method: 'DELETE',
         headers: { 
@@ -158,7 +160,9 @@ const Cellar = () => {
             ...userData.user,
           },
         });
-        setMsg({ message: 'Cellar updated' });
+        winerack.bottles.map(async bottle => {
+          await handleBottleDelete(bottle);
+        });
       } else {
         setMsg({ message: await res.text(), isError: true });
       }
@@ -182,7 +186,7 @@ const Cellar = () => {
             ...userData.user,
           },
         });
-        setMsg({ message: 'Cellar updated' });
+        setTotal(Number(total) - Number(bottle.price));
       } else {
         setMsg({ message: await res.text(), isError: true });
       }
@@ -365,7 +369,7 @@ const Cellar = () => {
                 <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
               </Button>
             </Flex>
-            <div sx={{ color: 'text', ':hover': { border: '1px solid' } }}>  
+            <div sx={{ color: 'wood', ':hover': { border: '1px solid', p: 0 } }}>  
             {winerack.rows.map(row => (
               <Grid
                 key={row}           
@@ -412,8 +416,8 @@ const Cellar = () => {
                         <Box 
                           className="bottle"
                           key={bottle.name} 
-                          sx={{maxWidth: '2.2rem', 
-                          maxHeight: '2.2rem',
+                          sx={{maxWidth: '2.3rem', 
+                          maxHeight: '2.3rem',
                           width: '100%',
                           height: '100%',
                           position: 'absolute', 
@@ -421,14 +425,14 @@ const Cellar = () => {
                           borderRadius: '50%',
                           border: '2px solid #000',
                           zIndex: "1000"}}
-                            bg='#52c8ff'
+                            bg='#2bff96'
                         >
                           <Box 
                             className="hide"
                             bg="#fff"
                             color="#000"
                             sx={{zIndex: "100000", width: 150, position: "absolute",
-                              margin: "-120px 0 0 20px", borderRadius: 5, 
+                              margin: "-140px 0 0 20px", borderRadius: 5, 
                               border: "1px solid #520101"}}
                           >
                             <ul sx={{padding: "0 20px", marginTop: 10}}>
@@ -445,8 +449,7 @@ const Cellar = () => {
                                 <Button 
                                   onClick={() => handleBottleDelete(bottle)}
                                   bg='background' color='text'
-                                  sx={{ cursor: "pointer", border: '2px solid #520101' }}>
-                                  Delete
+                                  sx={{ cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>                                  <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
                                 </Button>
                               </li>
                             </ul>
@@ -486,7 +489,7 @@ const Cellar = () => {
                             position: 'absolute', 
                             mx: '2px',
                             borderRadius: '50%',
-                            background: '#ffabca',
+                            background: '#ffbeef',
                             border: '2px solid #000'} :
                             bottle.type == "Dessert" ?
                             {maxWidth: '2.2rem', 
@@ -496,7 +499,7 @@ const Cellar = () => {
                             position: 'absolute', 
                             mx: '2px',
                             borderRadius: '50%',
-                            background: '#f59f9f',
+                            background: '#4f0048',
                             border: '2px solid #000'} :
                             bottle.type == "Sparkling" ? 
                             {maxWidth: '2.2rem', 
@@ -516,7 +519,7 @@ const Cellar = () => {
                             bg="#fff"
                             color="#000"
                             sx={{zIndex: "100000", width: 150, position: "absolute",
-                              margin: "-120px 0 0 20px", borderRadius: 5, 
+                              margin: "-140px 0 0 20px", borderRadius: 5, 
                               border: "1px solid #520101"}}
                           >
                             <ul sx={{padding: "0 20px", marginTop: 10}}>
@@ -533,9 +536,9 @@ const Cellar = () => {
                                 <Button 
                                   onClick={() => handleBottleDelete(bottle)}
                                   bg='background' color='text'
-                                  sx={{ cursor: "pointer", border: '2px solid #520101' }}>
-                                  Delete
-                                </Button>                              </li>
+                                  sx={{ cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>                                  <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
+                                </Button>                              
+                              </li>
                             </ul>
                           </Box>
                         </Box> 
@@ -576,7 +579,7 @@ const Cellar = () => {
                               position: 'absolute', 
                               mx: '2px',
                               borderRadius: '50%',
-                              background: '#ffabca',
+                              background: '#ffbeef',
                               border: '2px solid #000'} :
                               bottle.type == "Dessert" ?
                               {maxWidth: '2.2rem', 
@@ -586,7 +589,7 @@ const Cellar = () => {
                               position: 'absolute', 
                               mx: '2px',
                               borderRadius: '50%',
-                              background: '#f59f9f',
+                              background: '#4f0048',
                               border: '2px solid #000'} :
                               bottle.type == "Sparkling" ? 
                               {maxWidth: '2.2rem', 
@@ -603,10 +606,10 @@ const Cellar = () => {
                           >
                             <Box 
                               className="hide"
-                              bg="muted"
+                              bg="#fff"
                               color="#000"
                               sx={{zIndex: "100000", width: 150, position: "absolute",
-                                margin: "-120px 0 0 20px", borderRadius: 5, 
+                                margin: "-140px 0 0 20px", borderRadius: 5, 
                                 border: "1px solid"}}
                             >
                               <ul sx={{padding: "0 20px", marginTop: 10}}>

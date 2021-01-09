@@ -52,18 +52,18 @@ const BottlesPage = () => {
                    }}
             >
               <Flex sx={{alignItems: 'center', justifyContent: 'space-around'}}>
-                <FaWineBottle sx={ bottle.type == "Red" ? { fontSize: '3rem', m: 3, color: '#8b1d1d', background: '#fff' } :
+                <FaWineBottle sx={ bottle.type == "Red" ? { fontSize: '3rem', m: 3, color: '#8b1d1d', background: 'muted' } :
                                    bottle.type == "White" ? { fontSize: '3rem', m: 3, color: '#fff', background: '#cfa669' } :
-                                   bottle.type == "Rose" ? { fontSize: '3rem', m: 3, color: '#ffabca', background: '#fff' } :
-                                   bottle.type == "Dessert" ? { fontSize: '3rem', m: 3, color: '#f59f9f', background: '#fff' } :
-                                   bottle.type == "Sparkling" ? { fontSize: '3rem', m: 3, color: '#e3d38d', background: '#fff' } :
+                                   bottle.type == "Rose" ? { fontSize: '3rem', m: 3, color: '#ff86e6', background: 'muted' } :
+                                   bottle.type == "Dessert" ? { fontSize: '3rem', m: 3, color: '#4f0048', background: 'muted' } :
+                                   bottle.type == "Sparkling" ? { fontSize: '3rem', m: 3, color: '#c99b57', background: 'muted' } :
                                    null }/>
                 <Box px={4} sx={{}}>
                   <h4 sx={{mb: 0}}>{bottle.name}</h4>
-                  <p sx={{mt: 0}}>{bottle.type}</p>
+                  <p sx={{mt: 0, fontWeight: '500'}}>{bottle.type}</p>
                 </Box>
               </Flex>
-              <hr sx={{mx: 3}}/>
+              <hr sx={{mx: 3, background: '#000'}}/>
               <Box sx={{ paddingLeft: 20, paddingRight: 20,  }}>
                 <Flex sx={{justifyContent: 'space-between'}}>
                   <p sx={{m: 0}}><TiLocation sx={{ fontSize: '1.2rem' }}/> {bottle.location}</p>
