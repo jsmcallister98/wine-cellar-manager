@@ -10,7 +10,7 @@ import { BiDollar } from "react-icons/bi";
 import { useUser } from '../utils/hooks';
 
 const BottlesPage = () => {
-  const [user] = useUser();
+  const [user, { mutate }] = useUser();
 
   const [bottles, setBottles] = useState();
 
@@ -30,6 +30,41 @@ const BottlesPage = () => {
     console.log(bottles)
     setBottles(bottles)
     };
+
+  const handleBottleEdit = async (e, bottle) => {
+    e.preventDefault();
+    const updatedBottle = {
+      _id: bottle._id,
+      name: bottle.name,
+      type: bottle.type,
+      price: bottle.price,
+      year: bottle.year,
+      location: bottle.location,
+      rack: bottle.rack,
+      yPosition: e.currentTarget.row.value,
+      xPosition: e.currentTarget.column.value,
+      isBottle: true
+    };
+    const res = await fetch('/api/user/bottles', {
+      method: 'PATCH',
+      headers: { 
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(updatedBottle),
+    });
+    if (res.status === 200) {
+      const userData = await res.json();
+      mutate({
+        user: {
+          ...user,
+          ...userData,
+        },
+      });
+      console.log(userData);
+    }
+    window.location.reload();
+  };
 
   return (
     <Box>
@@ -72,6 +107,29 @@ const BottlesPage = () => {
                 </Flex>
                 <p>This bottle is located in rack {bottle.rack} in position ({bottle.xPosition}, {bottle.yPosition}).</p>
               </Box>
+              <form onSubmit={(e) => handleBottleEdit(e, bottle)}>
+              <label htmlFor="row">
+                <input 
+                  type="text" 
+                  id="row"
+                  name="row"
+                  placeholder="Row" 
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
+                />
+              </label>
+              <label htmlFor="column">
+                <input 
+                  type="text" 
+                  id="column"
+                  name="column"
+                  placeholder="Column" 
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
+                />
+              </label>
+              <Button sx={{cursor: 'pointer', width: 174}} bg='background' color='text' type="submit">
+                Edit Bottle
+              </Button>
+            </form>
             </Box>
           ))}
         </Grid>

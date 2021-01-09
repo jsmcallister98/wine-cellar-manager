@@ -138,6 +138,7 @@ const Cellar = () => {
       }
     });
     const bottles = await res.json();
+    setUserBottles(bottles);
     return bottles;
     };
 
@@ -409,8 +410,8 @@ const Cellar = () => {
                       >
                     </Box>
                   ) : 
-                  winerack.bottles.map((bottle, index) => (
-                    fetchedBottles && bottle.yPosition == row && bottle.xPosition == column ? (
+                  userBottles.map((bottle, index) => (
+                    fetchedBottles && bottle.yPosition == row && bottle.xPosition == column && bottle.rack == winerack.label ? (
                       fetchedBottles.map(fetchedBottle => (
                         fetchedBottle.xPosition == column && fetchedBottle.yPosition == row && fetchedBottle.name == bottle.name ? (
                         <Box 
@@ -536,7 +537,8 @@ const Cellar = () => {
                                 <Button 
                                   onClick={() => handleBottleDelete(bottle)}
                                   bg='background' color='text'
-                                  sx={{ cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>                                  <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
+                                  sx={{ cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>                                  
+                                  <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
                                 </Button>                              
                               </li>
                             </ul>
@@ -546,7 +548,7 @@ const Cellar = () => {
                       ))
                     )
                     : 
-                    ( !fetchedBottles && bottle.yPosition == row && bottle.xPosition == column ? (
+                    ( !fetchedBottles && bottle.yPosition == row && bottle.xPosition == column && bottle.rack == winerack.label ? (
                           <Box 
                             className="bottle"
                             key={bottle.name} 
@@ -628,7 +630,7 @@ const Cellar = () => {
                                     bg='background' color='text'
                                     sx={{ cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>
                                     <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
-                                  </Button>                                
+                                  </Button>                                                            
                                 </li>
                               </ul>
                             </Box>
