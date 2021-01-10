@@ -36,12 +36,12 @@ const Navbar = () => {
         <Flex sx={{ justifyContent: 'space-between', alignItems: 'center'}}>
           <Link href='/'>
             <a sx={{variant: 'styles.a', paddingRight: 0, marginRight: 20, fontWeight: '500', fontSize: '1.2rem'}}>
-              <FaWineGlassAlt sx={{ color: 'text' }} /> WineOh 
+              WineOh 
             </a>
           </Link>
           <ThemeToggle />
         </Flex>
-        <ul>
+        <div>
           <Link href='my-cellar'>
            <a sx={{variant: 'styles.a', fontWeight: '500'}} > My Cellar </a> 
           </Link>
@@ -54,7 +54,7 @@ const Navbar = () => {
           {user && <Link href='/'> 
            <a onClick={handleLogout} sx={{variant: 'styles.a', fontWeight: '500'}} > Logout </a>
           </Link>}
-        </ul>
+        </div>
       </Flex>
     </nav>
   )

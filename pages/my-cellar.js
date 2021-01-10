@@ -232,7 +232,9 @@ const Cellar = () => {
 
   return (
     <Flex id="CellarPage">
-      <Head>My Wine Cellar</Head>
+      <Head>
+        <title>My Cellar</title>
+      </Head>
       
       <ProSidebar collapsed={active} sx={colorMode === 'default' ? { background: '#520101', color: '#fff'} : 
           { background: '#987b61', color: '#000'} }>
@@ -287,7 +289,7 @@ const Cellar = () => {
                   sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: '#000'}} 
                 />
               </label>
-              <Button type="submit" sx={{cursor: 'pointer', width: 174}} bg='background' color='text' type="submit">
+              <Button type="submit" sx={{cursor: 'pointer', width: 174}} bg='background' color='text' type="submit" name="create winerack">
                 Create Winerack
               </Button>
             </form>
@@ -372,7 +374,7 @@ const Cellar = () => {
                   sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
                 />
               </label>
-              <Button sx={{cursor: 'pointer', width: 174}} bg='background' color='text' type="submit">
+              <Button sx={{cursor: 'pointer', width: 174}} bg='background' color='text' type="submit" name="add bottle">
                 Add Bottle
               </Button>
             </form>
@@ -483,6 +485,7 @@ const Cellar = () => {
                               <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                 {bottle.location}
                               </li>
+                            </ul>
                               <form className="editPos" onSubmit={(e) => handleBottleEdit(e, bottle)}>
                                   <Button sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }} bg='background' color='text' type="submit">
                                     Move To:
@@ -512,14 +515,13 @@ const Cellar = () => {
                                     <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
                                   </Button>    
                                 </form>
-                            </ul>
                           </Box>
                         </Box> 
                         ) : 
                         (
                           <Box 
                           className="bottle"
-                          key={bottle.name} 
+                          key={bottle.name + '_'} 
                           sx={ 
                             bottle.type == "Red" ? 
                             {maxWidth: '2.2rem', 
@@ -592,6 +594,7 @@ const Cellar = () => {
                               <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                 {bottle.location}
                               </li>
+                            </ul>
                               <form className="editPos" onSubmit={(e) => handleBottleEdit(e, bottle)}>
                                   <Button sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }} bg='background' color='text' type="submit">
                                     Move To:
@@ -621,7 +624,6 @@ const Cellar = () => {
                                   <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
                                 </Button>    
                               </form>
-                            </ul>
                           </Box>
                         </Box> 
                         )
@@ -631,7 +633,7 @@ const Cellar = () => {
                     ( !fetchedBottles && bottle.yPosition == row && bottle.xPosition == column && bottle.rack == winerack.label ? (
                           <Box 
                             className="bottle"
-                            key={bottle.name} 
+                            key={'_' + bottle.name} 
                             sx={ 
                               bottle.type == "Red" ? 
                               {maxWidth: '2.2rem', 
@@ -704,6 +706,7 @@ const Cellar = () => {
                                 <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                   {bottle.location}
                                 </li>
+                              </ul>
                                 <form className="editPos" onSubmit={(e) => handleBottleEdit(e, bottle)}>
                                   <Button sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }} bg='background' color='text' type="submit">
                                     Move To:
@@ -733,14 +736,13 @@ const Cellar = () => {
                                     <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
                                   </Button>                                                            
                                 </form>
-                              </ul>
                             </Box>
                           </Box> 
                           ) : (
                             index === 0 ? (
                               <Box 
                               className="bottle"
-                              key={bottle.name} 
+                              key={bottle.name + '__'} 
                               bg='background'
                               sx={ 
                                 {

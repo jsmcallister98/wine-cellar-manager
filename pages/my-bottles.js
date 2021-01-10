@@ -8,8 +8,8 @@ import { FaTrashAlt } from "react-icons/fa";
 import { FaCaretDown } from "react-icons/fa";
 import { TiLocation } from "react-icons/ti";
 import { FcCalendar } from "react-icons/fc";
-import { FiMove } from "react-icons/fi";
 import { useUser } from '../utils/hooks';
+import Head from 'next/head';
 
 const BottlesPage = () => {
   const [user, { mutate }] = useUser();
@@ -127,6 +127,9 @@ const BottlesPage = () => {
 
   return (
     <Box>
+      <Head>
+        <title>My Bottles</title>
+      </Head>
       <div sx={{m: 4}}>
         <h5>Sort By:</h5>
         <Button onClick={() => handlePriceSort()}>Price</Button>
