@@ -85,9 +85,10 @@ const Cellar = () => {
       mutate({
         user: {
           ...user,
-          ...userData.user,
+          ...userData,
         },
       });
+      handleBottlesSearch();
       setMsg({ message: 'Cellar updated' });
       setTotal(Number(total) + Number(bottle.price))
       console.log(userData)
@@ -226,7 +227,7 @@ const Cellar = () => {
       });
       console.log(userData);
     }
-    window.location.reload();
+    handleBottlesSearch();
   };
 
   return (
@@ -353,21 +354,21 @@ const Cellar = () => {
                   sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}}
                 />
               </label>
-              <label htmlFor="row">
-                <input 
-                  type="text" 
-                  id="row"
-                  name="row"
-                  placeholder="Row" 
-                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
-                />
-              </label>
               <label htmlFor="column">
                 <input 
                   type="text" 
                   id="column"
                   name="column"
                   placeholder="Column" 
+                  sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
+                />
+              </label>
+              <label htmlFor="row">
+                <input 
+                  type="text" 
+                  id="row"
+                  name="row"
+                  placeholder="Row" 
                   sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
                 />
               </label>
@@ -406,7 +407,7 @@ const Cellar = () => {
                 <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
               </Button>
             </Flex>
-            <div sx={{ color: 'wood', ':hover': { border: '1px solid', p: 0 } }}>  
+            <Box bg='wood' sx={{ color: 'wood', ':hover': { border: '1px solid', p: 0 } }}>  
             {winerack.rows.map(row => (
               <Grid
                 key={row}           
@@ -461,7 +462,7 @@ const Cellar = () => {
                           mx: '2px',
                           borderRadius: '50%',
                           border: '2px solid #000',
-                          zIndex: "1000"}}
+                          zIndex: `calc(1000 - ${row + column})`}}
                             bg='#2bff96'
                         >
                           <Box 
@@ -469,7 +470,7 @@ const Cellar = () => {
                             bg="#fff"
                             color="#000"
                             sx={{zIndex: "100000", width: 150, position: "absolute",
-                              margin: "-140px 0 0 20px", borderRadius: 5, 
+                              margin: "-100px 0 0 20px", borderRadius: 5, 
                               border: "1px solid #520101"}}
                           >
                             <ul sx={{padding: "0 20px", marginTop: 10}}>
@@ -482,13 +483,35 @@ const Cellar = () => {
                               <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                 {bottle.location}
                               </li>
-                              <li sx={{ padding: "5px", fontSize: "0.8rem"}}>
-                                <Button 
-                                  onClick={() => handleBottleDelete(bottle)}
-                                  bg='background' color='text'
-                                  sx={{ cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>                                  <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
-                                </Button>
-                              </li>
+                              <form className="editPos" onSubmit={(e) => handleBottleEdit(e, bottle)}>
+                                  <Button sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }} bg='background' color='text' type="submit">
+                                    Move To:
+                                  </Button>
+                                  <label htmlFor="column">
+                                    <input 
+                                      type="text" 
+                                      id="column"
+                                      name="column"
+                                      placeholder="Col" 
+                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
+                                    />
+                                  </label>
+                                  <label htmlFor="row">
+                                    <input 
+                                      type="text" 
+                                      id="row"
+                                      name="row"
+                                      placeholder="Row" 
+                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
+                                    />
+                                  </label>
+                                  <Button 
+                                    onClick={() => handleBottleDelete(bottle)}
+                                    bg='background' color='text'
+                                    sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>
+                                    <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
+                                  </Button>    
+                                </form>
                             </ul>
                           </Box>
                         </Box> 
@@ -556,7 +579,7 @@ const Cellar = () => {
                             bg="#fff"
                             color="#000"
                             sx={{zIndex: "100000", width: 150, position: "absolute",
-                              margin: "-140px 0 0 20px", borderRadius: 5, 
+                              margin: "-100px 0 0 20px", borderRadius: 5, 
                               border: "1px solid #520101"}}
                           >
                             <ul sx={{padding: "0 20px", marginTop: 10}}>
@@ -569,14 +592,35 @@ const Cellar = () => {
                               <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                 {bottle.location}
                               </li>
-                              <li sx={{ padding: "5px", fontSize: "0.8rem"}}>
+                              <form className="editPos" onSubmit={(e) => handleBottleEdit(e, bottle)}>
+                                  <Button sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }} bg='background' color='text' type="submit">
+                                    Move To:
+                                  </Button>
+                                <label htmlFor="column">
+                                  <input 
+                                    type="text" 
+                                    id="column"
+                                    name="column"
+                                    placeholder="Col" 
+                                    sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
+                                  />
+                                </label>
+                                <label htmlFor="row">
+                                  <input 
+                                    type="text" 
+                                    id="row"
+                                    name="row"
+                                    placeholder="Row" 
+                                    sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
+                                  />
+                                </label>
                                 <Button 
                                   onClick={() => handleBottleDelete(bottle)}
                                   bg='background' color='text'
-                                  sx={{ cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>                                  
+                                  sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>
                                   <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
-                                </Button>                              
-                              </li>
+                                </Button>    
+                              </form>
                             </ul>
                           </Box>
                         </Box> 
@@ -664,21 +708,21 @@ const Cellar = () => {
                                   <Button sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }} bg='background' color='text' type="submit">
                                     Move To:
                                   </Button>
-                                  <label htmlFor="row">
-                                    <input 
-                                      type="text" 
-                                      id="row"
-                                      name="row"
-                                      placeholder="Row" 
-                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
-                                    />
-                                  </label>
                                   <label htmlFor="column">
                                     <input 
                                       type="text" 
                                       id="column"
                                       name="column"
                                       placeholder="Col" 
+                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
+                                    />
+                                  </label>
+                                  <label htmlFor="row">
+                                    <input 
+                                      type="text" 
+                                      id="row"
+                                      name="row"
+                                      placeholder="Row" 
                                       sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
                                     />
                                   </label>
@@ -718,7 +762,7 @@ const Cellar = () => {
                 ))}
               </Grid>
             ))}
-            </div>
+            </Box>
           </div>
         ))}
       </div>
