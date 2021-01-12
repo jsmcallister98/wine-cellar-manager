@@ -10,10 +10,9 @@ export default function Home() {
 
   return (
     <Flex sx={colorMode === 'default' ? { 
-              background: 'url(/images/wineoh1.jpg)',
+              background: 'url(/images/wineoh1.jpg) no-repeat center center fixed',
                width: '100%',
                height: '100vh',
-               backgroundRepeat: 'no-repeat',
                backgroundSize: 'cover',
                justifyContent: 'center',
                alignItems: 'center',
@@ -21,9 +20,10 @@ export default function Home() {
                background: 'url(/images/wineoh2.jpg) no-repeat center center fixed',
                backgroundSize: 'cover',
                justifyContent: 'center',
+               width: '100%',
                height: '100vh',
                alignItems: 'center',
-               marginTop: -69
+              //  marginTop: -69
       }}>
       <Head>
         <title>WineOh</title>
@@ -36,7 +36,7 @@ export default function Home() {
                 } : {
                 flexDirection: 'column',
                 textAlign: 'center',
-                mt: -128
+                mt: -250
         }}>
         <h1 sx={{ fontSize: [5, 6, 7, 7], fontWeight: 'semiBold' }}> Welcome To WineOh </h1>
         <p sx={{ fontSize: [2, 2, 3] }}> The easiest way to keep track of your favorite wines. </p>

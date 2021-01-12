@@ -37,5 +37,91 @@ a {
   display: block;
 }
 
+.dropdown {
+  list-style: none;
+  text-align: center;
+  border: 1px solid;
+  width: 150px;
+  margin-bottom: -15px;
+  height: 40px;
+}
+
+.dropdown h5 {
+  margin: auto;
+  text-align: center;
+  padding-top: 9px;
+}
+
+.dropdown_menu li {
+display: none;
+font-size: 16px;
+opacity: 0;
+border: 1px solid #000;
+padding: 8px;
+width: 150px;
+margin-left: -41px;
+cursor: pointer;
+}
+
+.dropdown_menu {
+  margin-top: 11px;
+  width: 150px;
+}
+
+.dropdown_menu li:hover {
+  background-color: #751111;
+}
+
+.dropdown:hover .dropdown_menu li {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.dropdown_item-1 {
+  animation: rotateX 420ms 60ms ease-in-out forwards;
+  transform-origin: top center;
+}
+
+.dropdown_item-2 {
+  animation: rotateX 420ms 120ms ease-in-out forwards;
+  transform-origin: top center;
+}
+
+.dropdown_item-3 {
+  animation: rotateX 420ms 180ms ease-in-out forwards;
+  transform-origin: top center;
+}
+
+.dropdown_item-4 {
+  animation: rotateX 420ms 240ms ease-in-out forwards;
+  transform-origin: top center;
+}
+
+.dropdown_item-5 {
+  animation: rotateX 420ms 300ms ease-in-out forwards;
+  transform-origin: top center;
+}
+
+.dropdown_item-6 {
+  animation: rotateX 420ms 360ms ease-in-out forwards;
+  transform-origin: top center;
+}
+
+
+@keyframes rotateX {
+  0% {
+    opacity: 0;
+    transform: rotateX(-90deg);
+  }
+  50% {
+    transform: rotateX(-20deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&display=swap');
 

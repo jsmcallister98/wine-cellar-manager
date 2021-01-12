@@ -693,21 +693,21 @@ const Cellar = () => {
                               bg="#fff"
                               color="#000"
                               sx={{zIndex: "100000", width: 150, position: "absolute",
-                                margin: "-100px 0 0 20px", borderRadius: 5, 
-                                border: "1px solid"}}
+                                margin: "-90px 0 0 20px", borderRadius: 5, 
+                                border: "1px solid", p: 'auto'}}
                             >
-                              <ul sx={{padding: "0 20px", marginTop: 10}}>
+                              <ul sx={{padding: "0 20px", mt: '5px', mb: 0}}>
                                 <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                   {bottle.name}
                                 </li>
                                 <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                   {bottle.year}
                                 </li>
-                                <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                <li sx={{ padding: "5px", fontSize: "0.8rem"}}>
                                   {bottle.location}
                                 </li>
                               </ul>
-                                <form className="editPos" onSubmit={(e) => handleBottleEdit(e, bottle)}>
+                                <form sx={{pl: 12, pb: '5px'}} className="editPos" onSubmit={(e) => handleBottleEdit(e, bottle)}>
                                   <Button sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }} bg='background' color='text' type="submit">
                                     Move To:
                                   </Button>

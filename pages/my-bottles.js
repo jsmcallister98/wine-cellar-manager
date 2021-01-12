@@ -130,15 +130,51 @@ const BottlesPage = () => {
       <Head>
         <title>My Bottles</title>
       </Head>
-      <div sx={{m: 4}}>
-        <h5>Sort By:</h5>
-        <Button onClick={() => handlePriceSort()}>Price</Button>
-        <Button onClick={() => handleYearSort()}>Year</Button>
-        <Button onClick={() => handleTypeSort()}>Type</Button>
-        <Button onClick={() => handleLocationSort()}>Location</Button>
-        <Button onClick={() => handleNameSort()}>Name</Button>
-        <Button onClick={() => handleRackSort()}>Rack</Button>
-      </div>
+      <Flex sx={{m: 4, alignItems: 'center'}}>
+        <div className="dropdown dropdown-6">
+          <Flex sx={{alignItems: 'center'}}>
+            <h5>Sort By:</h5>
+          </Flex>
+          <ul className="dropdown_menu dropdown_menu--animated dropdown_menu-6">
+            <li 
+              onClick={() => handlePriceSort()} 
+              className="dropdown_item-1"
+              sx={{background: "#520101", color: "#fff"}}>
+              Price
+            </li>
+            <li 
+              onClick={() => handleYearSort()} 
+              className="dropdown_item-2"
+              sx={{background: "#520101", color: "#fff"}}>
+              Year
+            </li>
+            <li 
+              onClick={() => handleTypeSort()} 
+              className="dropdown_item-3"
+              sx={{background: "#520101", color: "#fff"}}>
+              Type
+            </li>
+            <li 
+              onClick={() => handleLocationSort()} 
+              className="dropdown_item-4"
+              sx={{background: "#520101", color: "#fff"}}>
+              Location
+            </li>
+            <li 
+              onClick={() => handleNameSort()} 
+              className="dropdown_item-5"
+              sx={{background: "#520101", color: "#fff"}}>
+              Name
+            </li>
+            <li 
+              onClick={() => handleRackSort()} 
+              className="dropdown_item-6"
+              sx={{background: "#520101", color: "#fff"}}>
+              Rack
+            </li>
+          </ul>
+        </div>
+      </Flex>
       <Flex sx={{justifyContent: "center", mx: 3}}>
         <Grid gap={5} columns={[1, 2, 2, 3]}>
           {bottles && bottles.map((bottle) => (
