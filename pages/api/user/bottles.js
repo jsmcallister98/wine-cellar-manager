@@ -62,11 +62,4 @@ handler.patch( async (req, res) => {
     res.json(req.user);
   });
   
-  // await req.db.collection('users').updateOne(
-  //   { _id: req.user._id, "wineracks.label": req.body.rack, "wineracks.$.bottles._id": req.body._id },
-  //   { $set: {
-  //     yPosition: Number(req.body.yPosition),
-  //     xPosition: Number(req.body.xPosition),
-  //   }}  
-  //   );
 export default handler;

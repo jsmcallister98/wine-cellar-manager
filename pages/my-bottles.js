@@ -139,37 +139,37 @@ const BottlesPage = () => {
             <li 
               onClick={() => handlePriceSort()} 
               className="dropdown_item-1"
-              sx={{background: "#520101", color: "#fff"}}>
+              sx={{bg: 'primary', color: "#fff"}}>
               Price
             </li>
             <li 
               onClick={() => handleYearSort()} 
               className="dropdown_item-2"
-              sx={{background: "#520101", color: "#fff"}}>
+              sx={{bg: 'primary', color: "#fff"}}>
               Year
             </li>
             <li 
               onClick={() => handleTypeSort()} 
               className="dropdown_item-3"
-              sx={{background: "#520101", color: "#fff"}}>
+              sx={{bg: 'primary', color: "#fff"}}>
               Type
             </li>
             <li 
               onClick={() => handleLocationSort()} 
               className="dropdown_item-4"
-              sx={{background: "#520101", color: "#fff"}}>
+              sx={{bg: 'primary', color: "#fff"}}>
               Location
             </li>
             <li 
               onClick={() => handleNameSort()} 
               className="dropdown_item-5"
-              sx={{background: "#520101", color: "#fff"}}>
+              sx={{bg: 'primary', color: "#fff"}}>
               Name
             </li>
             <li 
               onClick={() => handleRackSort()} 
               className="dropdown_item-6"
-              sx={{background: "#520101", color: "#fff"}}>
+              sx={{bg: 'primary', color: "#fff"}}>
               Rack
             </li>
           </ul>

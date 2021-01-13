@@ -453,7 +453,7 @@ const Cellar = () => {
                     fetchedBottles && bottle.yPosition == row && bottle.xPosition == column && bottle.rack == winerack.label ? (
                       fetchedBottles.map(fetchedBottle => (
                         fetchedBottle.xPosition == column && fetchedBottle.yPosition == row && fetchedBottle.name == bottle.name ? (
-                        <Box 
+                          <div                           
                           className="bottle"
                           key={bottle.name} 
                           sx={{maxWidth: '2.3rem', 
@@ -463,60 +463,71 @@ const Cellar = () => {
                           position: 'absolute', 
                           mx: '2px',
                           borderRadius: '50%',
+                          }}
+                            bg='#2bff96'>
+                        <Box 
+                          className="bottle"
+                          key={bottle.name} 
+                          sx={{
+                          width: '100%',
+                          height: '100%',
+                          position: 'absolute', 
+                          borderRadius: '50%',
                           border: '2px solid #000',
-                          zIndex: `calc(1000 - ${row + column})`}}
+                          zIndex: `calc(1000 + ${row * 100 - column})`}}
                             bg='#2bff96'
                         >
+                        </Box> 
                           <Box 
                             className="hide"
                             bg="#fff"
                             color="#000"
                             sx={{zIndex: "100000", width: 150, position: "absolute",
-                              margin: "-100px 0 0 20px", borderRadius: 5, 
-                              border: "1px solid #520101"}}
+                              margin: "-90px 0 0 20px", borderRadius: 5, 
+                              border: "1px solid", p: 'auto'}}
                           >
-                            <ul sx={{padding: "0 20px", marginTop: 10}}>
+                            <ul sx={{padding: "0 20px", mt: '5px', mb: 0}}>
                               <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                 {bottle.name}
                               </li>
                               <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
                                 {bottle.year}
                               </li>
-                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                              <li sx={{ padding: "5px", fontSize: "0.8rem"}}>
                                 {bottle.location}
                               </li>
                             </ul>
-                              <form className="editPos" onSubmit={(e) => handleBottleEdit(e, bottle)}>
-                                  <Button sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }} bg='background' color='text' type="submit">
-                                    Move To:
-                                  </Button>
-                                  <label htmlFor="column">
-                                    <input 
-                                      type="text" 
-                                      id="column"
-                                      name="column"
-                                      placeholder="Col" 
-                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
-                                    />
-                                  </label>
-                                  <label htmlFor="row">
-                                    <input 
-                                      type="text" 
-                                      id="row"
-                                      name="row"
-                                      placeholder="Row" 
-                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
-                                    />
-                                  </label>
-                                  <Button 
-                                    onClick={() => handleBottleDelete(bottle)}
-                                    bg='background' color='text'
-                                    sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>
-                                    <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
-                                  </Button>    
-                                </form>
+                              <form sx={{pl: 12, pb: '5px', zIndex: 11000, position: 'relative'}} className="editPos" onSubmit={(e) => handleBottleEdit(e, bottle)}>
+                                <Button sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }} bg='background' color='text' type="submit">
+                                  Move To:
+                                </Button>
+                                <label htmlFor="column">
+                                  <input 
+                                    type="text" 
+                                    id="column"
+                                    name="column"
+                                    placeholder="Col" 
+                                    sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
+                                  />
+                                </label>
+                                <label htmlFor="row">
+                                  <input 
+                                    type="text" 
+                                    id="row"
+                                    name="row"
+                                    placeholder="Row" 
+                                    sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
+                                  />
+                                </label>
+                                <Button 
+                                  onClick={() => handleBottleDelete(bottle)}
+                                  bg='background' color='text'
+                                  sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>
+                                  <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
+                                </Button>                                                            
+                              </form>
                           </Box>
-                        </Box> 
+                          </div>
                         ) : 
                         (
                           <Box 
@@ -576,55 +587,55 @@ const Cellar = () => {
                             null
                           }
                         >
-                          <Box 
-                            className="hide"
-                            bg="#fff"
-                            color="#000"
-                            sx={{zIndex: "100000", width: 150, position: "absolute",
-                              margin: "-100px 0 0 20px", borderRadius: 5, 
-                              border: "1px solid #520101"}}
-                          >
-                            <ul sx={{padding: "0 20px", marginTop: 10}}>
-                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
-                                {bottle.name}
-                              </li>
-                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
-                                {bottle.year}
-                              </li>
-                              <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
-                                {bottle.location}
-                              </li>
-                            </ul>
-                              <form className="editPos" onSubmit={(e) => handleBottleEdit(e, bottle)}>
+                            <Box 
+                              className="hide"
+                              bg="#fff"
+                              color="#000"
+                              sx={{zIndex: "100000", width: 150, position: "absolute",
+                                margin: "-90px 0 0 20px", borderRadius: 5, 
+                                border: "1px solid", p: 'auto'}}
+                            >
+                              <ul sx={{padding: "0 20px", mt: '5px', mb: 0}}>
+                                <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                  {bottle.name}
+                                </li>
+                                <li sx={{borderBottom: "1px solid", padding: "5px", fontSize: "0.8rem"}}>
+                                  {bottle.year}
+                                </li>
+                                <li sx={{ padding: "5px", fontSize: "0.8rem"}}>
+                                  {bottle.location}
+                                </li>
+                              </ul>
+                                <form sx={{pl: 12, pb: '5px'}} className="editPos" onSubmit={(e) => handleBottleEdit(e, bottle)}>
                                   <Button sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }} bg='background' color='text' type="submit">
                                     Move To:
                                   </Button>
-                                <label htmlFor="column">
-                                  <input 
-                                    type="text" 
-                                    id="column"
-                                    name="column"
-                                    placeholder="Col" 
-                                    sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
-                                  />
-                                </label>
-                                <label htmlFor="row">
-                                  <input 
-                                    type="text" 
-                                    id="row"
-                                    name="row"
-                                    placeholder="Row" 
-                                    sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
-                                  />
-                                </label>
-                                <Button 
-                                  onClick={() => handleBottleDelete(bottle)}
-                                  bg='background' color='text'
-                                  sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>
-                                  <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
-                                </Button>    
-                              </form>
-                          </Box>
+                                  <label htmlFor="column">
+                                    <input 
+                                      type="text" 
+                                      id="column"
+                                      name="column"
+                                      placeholder="Col" 
+                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
+                                    />
+                                  </label>
+                                  <label htmlFor="row">
+                                    <input 
+                                      type="text" 
+                                      id="row"
+                                      name="row"
+                                      placeholder="Row" 
+                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
+                                    />
+                                  </label>
+                                  <Button 
+                                    onClick={() => handleBottleDelete(bottle)}
+                                    bg='background' color='text'
+                                    sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }}>
+                                    <FaIcons.FaTrashAlt sx={{ color: '#c10404', mb: '-1px' }} /> Delete
+                                  </Button>                                                            
+                                </form>
+                            </Box>
                         </Box> 
                         )
                       ))
