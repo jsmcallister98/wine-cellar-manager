@@ -1,6 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, Flex } from 'theme-ui'
+import React from 'react'
 import Head from 'next/head'
 import { useColorMode } from "theme-ui";
 

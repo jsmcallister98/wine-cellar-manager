@@ -126,7 +126,7 @@ const BottlesPage = () => {
   }
 
   return (
-    <Box>
+    <Box sx={{minHeight: '100vh'}}>
       <Head>
         <title>My Bottles</title>
       </Head>

@@ -204,7 +204,7 @@ const Cellar = () => {
       price: bottle.price,
       year: bottle.year,
       location: bottle.location,
-      rack: bottle.rack,
+      rack: e.currentTarget.rack.value,
       yPosition: e.currentTarget.row.value,
       xPosition: e.currentTarget.column.value,
       isBottle: true
@@ -434,22 +434,7 @@ const Cellar = () => {
                   }} 
                     bg='background'
                 >
-                  {winerack.bottles == "" ? (
-                    <Box 
-                      className="bottle"
-                      key={row + column} 
-                      bg='background'
-                      sx={ 
-                        {
-                          width: '2.5rem',
-                          height: '2.5rem', 
-                          borderRadius: '50%',
-                        } 
-                      }
-                      >
-                    </Box>
-                  ) : 
-                  userBottles.map((bottle, index) => (
+                  {userBottles.map((bottle, index) => (
                     fetchedBottles && bottle.yPosition == row && bottle.xPosition == column && bottle.rack == winerack.label ? (
                       fetchedBottles.map(fetchedBottle => (
                         fetchedBottle.xPosition == column && fetchedBottle.yPosition == row && fetchedBottle.name == bottle.name ? (
@@ -501,6 +486,16 @@ const Cellar = () => {
                                 <Button sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }} bg='background' color='text' type="submit">
                                   Move To:
                                 </Button>
+                                <label htmlFor="rack">
+                                  <input 
+                                    defaultValue={bottle.rack}
+                                    type="text" 
+                                    id="rack"
+                                    name="rack"
+                                    placeholder="Rack" 
+                                    sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
+                                  />
+                                </label>
                                 <label htmlFor="column">
                                   <input 
                                     type="text" 
@@ -610,6 +605,16 @@ const Cellar = () => {
                                   <Button sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }} bg='background' color='text' type="submit">
                                     Move To:
                                   </Button>
+                                  <label htmlFor="rack">
+                                    <input 
+                                      defaultValue={bottle.rack}
+                                      type="text" 
+                                      id="rack"
+                                      name="rack"
+                                      placeholder="Rack" 
+                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
+                                    />
+                                  </label>
                                   <label htmlFor="column">
                                     <input 
                                       type="text" 
@@ -722,13 +727,23 @@ const Cellar = () => {
                                   <Button sx={{width: '90%', fontSize: '0.8rem', cursor: "pointer", border: '1px solid', mt: 2, py: 1, ':hover': { background: '#9e9e9e' } }} bg='background' color='text' type="submit">
                                     Move To:
                                   </Button>
+                                  <label htmlFor="rack">
+                                    <input 
+                                      defaultValue={bottle.rack}
+                                      type="text" 
+                                      id="rack"
+                                      name="rack"
+                                      placeholder="Rack" 
+                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '30%'}} 
+                                    />
+                                  </label>
                                   <label htmlFor="column">
                                     <input 
                                       type="text" 
                                       id="column"
                                       name="column"
                                       placeholder="Col" 
-                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
+                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '30%'}} 
                                     />
                                   </label>
                                   <label htmlFor="row">
@@ -737,7 +752,7 @@ const Cellar = () => {
                                       id="row"
                                       name="row"
                                       placeholder="Row" 
-                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '45%'}} 
+                                      sx={{ p: 1, borderRadius: 3, mb: 2, border: '1px solid', width: '30%'}} 
                                     />
                                   </label>
                                   <Button 

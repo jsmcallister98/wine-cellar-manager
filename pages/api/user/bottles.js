@@ -36,6 +36,7 @@ handler.patch( async (req, res) => {
   await req.db.collection('bottles').updateOne(
     { _id: new ObjectId(req.body._id) }, 
     { $set: {
+      rack: req.body.rack,
       yPosition: Number(req.body.yPosition),
       xPosition: Number(req.body.xPosition),
     }}
