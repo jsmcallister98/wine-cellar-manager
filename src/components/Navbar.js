@@ -22,7 +22,7 @@ const StyledMenu = styled.nav`
     flex-direction: column;
     justify-content: center;
     background: ${({ colorMode }) => colorMode === 'default' ? 
-    'linear-gradient(180deg, #520101 0%, #000000 69px)' : 'linear-gradient(180deg, #6d5642 0%, #eee2de 69px)'};
+    'linear-gradient(180deg, #000000 0%, #000000 69px)' : 'linear-gradient(180deg, #eee2de 0%, #eee2de 69px)'};
     transform: ${({ open }) => open ? 'translateX(0)' : 'translateX(-100%)'};
     height: 100vh;
     text-align: left;
@@ -31,6 +31,7 @@ const StyledMenu = styled.nav`
     top: 0;
     left: 0;
     transition: transform 0.3s ease-in-out;
+    border-right: 2px solid ${({ colorMode }) => colorMode === 'default' ? '#520101' : '#520101'};
     }
 
   @media (max-width: 576px) {
@@ -202,26 +203,31 @@ const DesktopNavbar = ({ colorMode }) => {
       <Flex sx={{ justifyContent: 'space-between', alignItems: 'center'}}>
         <Flex sx={{ justifyContent: 'space-between', alignItems: 'center'}}>
           <Link href='/'>
-            <a sx={{variant: 'styles.a', paddingRight: 0, marginRight: 20, fontWeight: '500', fontSize: '1.2rem'}}>
+            <a sx={{variant: 'styles.a', paddingRight: 0, marginRight: 20, ml: 40, letterSpacing: '3px', fontWeight: '600', fontSize: '1.5rem'}}>
               WineOh 
             </a>
           </Link>
           <ThemeToggle />
         </Flex>
-        <div>
+        <Flex sx={{ width: '35%', minWidth: 510, justifyContent: 'space-between'}}>
           <Link href='my-cellar'>
           <a sx={{variant: 'styles.a', fontWeight: '500'}} > My Cellar </a> 
           </Link>
           <Link href='my-bottles'>
           <a sx={{variant: 'styles.a', fontWeight: '500'}} > My Bottles </a> 
           </Link>
+          <Link href='contact-us'>
+          <a sx={{variant: 'styles.a', fontWeight: '500'}} > Contact Us </a> 
+          </Link>
+        <Flex>
           {!user && <Link href='login'> 
-          <a sx={{variant: 'styles.a', fontWeight: '500'}} > Sign In </a>
+          <a sx={{variant: 'styles.a', fontWeight: '500', mr: 40}} > Sign In </a>
           </Link>}
           {user && <Link href='/'> 
-          <a onClick={handleLogout} sx={{variant: 'styles.a', fontWeight: '500'}} > Logout </a>
+          <a onClick={handleLogout} sx={{variant: 'styles.a', fontWeight: '500', mr: 40}} > Logout </a>
           </Link>}
-        </div>
+        </Flex>
+        </Flex>
       </Flex>
     </nav>
   )
