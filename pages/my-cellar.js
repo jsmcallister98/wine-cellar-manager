@@ -236,8 +236,8 @@ const Cellar = () => {
         <title>My Cellar</title>
       </Head>
       
-      <ProSidebar collapsed={active} sx={colorMode === 'default' ? { background: '#520101', color: '#fff'} : 
-          { background: '#987b61', color: '#000'} }>
+      <ProSidebar collapsed={active} sx={colorMode === 'default' ? { background: 'linear-gradient(0deg, #000000 0%, #520101 100%)', color: '#fff'} : 
+          { background: 'linear-gradient(0deg, #eee2de 0%, #987b61 70%)', color: '#000'} }>
         <SidebarHeader sx={colorMode === 'default' ? { background: 'linear-gradient(180deg, #000000 0%, #520101 100%)'} : 
           { background: 'linear-gradient(180deg, #eee2de 0%, #987b61 100%)'} }>
           <FaIcons.FaAngleDoubleLeft sx={{color: 'text'}} onClick={() => setActive(true)} 
