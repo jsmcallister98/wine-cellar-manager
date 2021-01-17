@@ -1,7 +1,4 @@
-import dbConnect from '../../../utils/dbConnect';
 import WineRack from '../../../src/models/WineRack';
-
-dbConnect()
 
 export default async (req, res) => {
   const { 
