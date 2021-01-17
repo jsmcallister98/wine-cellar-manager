@@ -87,6 +87,10 @@ const Menu = ({ open, colorMode }) => {
       <a sx={{variant: 'styles.a', fontWeight: '500'}} > My Bottles </a> 
       </Link>
 
+      <Link href='contact-us'>
+      <a sx={{variant: 'styles.a', fontWeight: '500'}} > Contact Us </a> 
+      </Link>
+
       {!user && <Link href='login'> 
       <a sx={{variant: 'styles.a', fontWeight: '500'}} > Sign In </a>
       </Link>}
