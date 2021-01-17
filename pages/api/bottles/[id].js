@@ -1,7 +1,4 @@
-import dbConnect from '../../../utils/dbConnect';
 import Bottle from '../../../src/models/Bottle';
-
-dbConnect();
 
 export default async (req, res) => {
   const { 
