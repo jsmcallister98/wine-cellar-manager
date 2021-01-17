@@ -433,7 +433,22 @@ const Cellar = () => {
                   }} 
                     bg='background'
                 >
-                  {userBottles.map((bottle, index) => (
+                  {winerack.bottles == "" ? (
+                    <Box 
+                      className="bottle"
+                      key={row + column} 
+                      bg='background'
+                      sx={ 
+                        {
+                          width: '2.5rem',
+                          height: '2.5rem', 
+                          borderRadius: '50%',
+                        } 
+                      }
+                      >
+                    </Box>
+                  ) : 
+                  userBottles.map((bottle, index) => (
                     fetchedBottles && bottle.yPosition == row && bottle.xPosition == column && bottle.rack == winerack.label ? (
                       fetchedBottles.map(fetchedBottle => (
                         fetchedBottle.xPosition == column && fetchedBottle.yPosition == row && fetchedBottle.name == bottle.name ? (
