@@ -203,30 +203,30 @@ const DesktopNavbar = ({ colorMode }) => {
       <Flex sx={{ justifyContent: 'space-between', alignItems: 'center'}}>
         <Flex sx={{ justifyContent: 'space-between', alignItems: 'center'}}>
           <Link href='/'>
-            <a sx={{variant: 'styles.a', paddingRight: 0, marginRight: 20, ml: 40, letterSpacing: '3px', fontWeight: '600', fontSize: '1.5rem'}}>
+            <a sx={{variant: 'styles.a', paddingRight: 0, marginRight: 20, ml: 40, letterSpacing: '3px', fontWeight: '600', fontSize: '1.5rem', borderBottom: '3px solid transparent', ':hover': { borderBottom: '3px solid'}}}>
               WineOh 
             </a>
           </Link>
           <ThemeToggle />
         </Flex>
-        <Flex sx={{ width: '35%', minWidth: 510, justifyContent: 'space-between'}}>
+        <Flex sx={{ width: '35%', minWidth: 385, justifyContent: 'space-between'}}>
           <Link href='my-cellar'>
-          <a sx={{variant: 'styles.a', fontWeight: '500'}} > My Cellar </a> 
+          <a sx={{variant: 'styles.a', fontWeight: '500', borderBottom: '3px solid transparent', ':hover': { borderBottom: '3px solid'}}} > My Cellar </a> 
           </Link>
           <Link href='my-bottles'>
-          <a sx={{variant: 'styles.a', fontWeight: '500'}} > My Bottles </a> 
+          <a sx={{variant: 'styles.a', fontWeight: '500', borderBottom: '3px solid transparent', ':hover': { borderBottom: '3px solid'}}} > My Bottles </a> 
           </Link>
           <Link href='contact-us'>
-          <a sx={{variant: 'styles.a', fontWeight: '500'}} > Contact Us </a> 
+          <a sx={{variant: 'styles.a', fontWeight: '500', borderBottom: '3px solid transparent', ':hover': { borderBottom: '3px solid'}}} > Contact Us </a> 
           </Link>
+        </Flex>
         <Flex>
           {!user && <Link href='login'> 
           <a sx={{variant: 'styles.a', fontWeight: '500', mr: 40}} > Sign In </a>
           </Link>}
           {user && <Link href='/'> 
-          <a onClick={handleLogout} sx={{variant: 'styles.a', fontWeight: '500', mr: 40}} > Logout </a>
+          <a onClick={handleLogout} sx={{variant: 'styles.a', fontWeight: '500', mr: 40, borderBottom: '3px solid transparent', ':hover': { borderBottom: '3px solid'}}} > Logout </a>
           </Link>}
-        </Flex>
         </Flex>
       </Flex>
     </nav>

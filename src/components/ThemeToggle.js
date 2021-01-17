@@ -13,7 +13,7 @@ const ThemeToggle = () => {
       onClick={e => {
         setColorMode(colorMode === 'default' ? 'light' : 'default')
       }}
-      sx={{ fontSize: 20, cursor: 'pointer'}}>
+      sx={{ fontSize: 20, cursor: 'pointer', ':hover': { fontSize: 21 }}}>
       {colorMode === 'default' ? 'Light' : 'Dark'}
     </RiSunFill>
   )

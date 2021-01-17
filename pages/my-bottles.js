@@ -15,9 +15,16 @@ const BottlesPage = () => {
   const [user, { mutate }] = useUser();
 
   const [bottles, setBottles] = useState();
+  const [total, setTotal] = useState(0);
 
-  useEffect(() => {
-    handleBottlesSearch();
+  useEffect(async () => {
+    const bottles = await handleBottlesSearch();
+    let totalPrice = 0
+    await bottles.forEach(bottle => {
+      totalPrice += bottle.price
+      console.log(totalPrice)
+    }) 
+    setTotal(totalPrice);
   }, []);
 
   const handleBottlesSearch = async () => {
@@ -29,8 +36,8 @@ const BottlesPage = () => {
       }
     });
     const bottles = await res.json();
-    console.log(bottles);
     setBottles(bottles);
+    return bottles;
     };
 
   const handleBottleEdit = async (e, bottle) => {
@@ -42,7 +49,7 @@ const BottlesPage = () => {
       price: bottle.price,
       year: bottle.year,
       location: bottle.location,
-      rack: bottle.rack,
+      rack: e.currentTarget.rack.value,
       yPosition: e.currentTarget.row.value,
       xPosition: e.currentTarget.column.value,
       isBottle: true
@@ -126,12 +133,12 @@ const BottlesPage = () => {
   }
 
   return (
-    <Box sx={{minHeight: '100vh'}}>
+    <Box sx={{minHeight: '100vh', mb: 7}}>
       <Head>
         <title>My Bottles</title>
       </Head>
-      <Flex sx={{m: 4, alignItems: 'center'}}>
-        <div className="dropdown dropdown-6">
+      <Flex sx={{m: 4, alignItems: 'center', ml: 70}}>
+        <div sx={{ my: 'auto'}} className="dropdown dropdown-6">
           <Flex sx={{alignItems: 'center'}}>
             <h5>Sort By:</h5>
           </Flex>
@@ -174,9 +181,10 @@ const BottlesPage = () => {
             </li>
           </ul>
         </div>
+        <p sx={{ fontWeight: '500', ml: 30 }}>Collection Value: ${total}</p>
       </Flex>
       <Flex sx={{justifyContent: "center", mx: 3}}>
-        <Grid gap={5} columns={[1, 2, 2, 3]}>
+        <Grid gap={5} columns={[1, 2, 2, 3, 4]}>
           {bottles && bottles.map((bottle) => (
             <Box 
               key={bottle._id} 
@@ -217,6 +225,16 @@ const BottlesPage = () => {
                   Edit Position <FaCaretDown />
                 </Button>
                 <form sx={{border: '1px solid', borderRadius: '0 0 5px 5px', width: 143, p: 2, position: 'absolute', background: '#fff', mt: '-10px'}} className="hide" onSubmit={(e) => handleBottleEdit(e, bottle)}>
+                  <label htmlFor="rack">
+                    <input 
+                      type="text" 
+                      id="rack"
+                      name="rack"
+                      placeholder="Rack" 
+                      defaultValue={bottle.rack}
+                      sx={{width: '60%', p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
+                    />
+                  </label>
                   <label htmlFor="column">
                     <input 
                       type="text" 

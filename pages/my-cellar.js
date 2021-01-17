@@ -253,7 +253,7 @@ const Cellar = () => {
                   type="text" 
                   id="search"
                   name="search"
-                  placeholder="Search" 
+                  placeholder="Search By Name" 
                   sx={{width: "100%", p: 2, borderRadius: 3, border: '1px solid', color: '#000'}} 
                 />
               </label>
@@ -384,7 +384,6 @@ const Cellar = () => {
       
       <div sx={active ? {width: "calc(100% - 80px)"} :
                 {width: "calc(100% - 250px)"}}>
-        <p>Total value: ${total}</p>
       <div 
         className={"rack-container"}
         sx={{display: "flex",

@@ -112,7 +112,8 @@ export default {
       color: 'text',
       textDecoration: 'none',
       cursor: 'pointer',
-      p: 20
+      m: 15,
+      py: '5px'
     },
     pre: {
       fontFamily: 'monospace',

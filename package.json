@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "clipboard": "^2.0.6",
     "connect-mongo": "^3.2.0",
     "express-session": "^1.17.1",
     "mongoose": "^5.11.9",
