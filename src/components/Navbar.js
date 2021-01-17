@@ -56,7 +56,7 @@ const StyledMenu = styled.nav`
   }
 `
 
-const Menu = ({ open, colorMode }) => {
+const Menu = ({ open, setOpen, colorMode }) => {
   // ========================================================
   // logout button
   // ========================================================
@@ -71,7 +71,7 @@ const Menu = ({ open, colorMode }) => {
   };
 
   return (
-    <StyledMenu className="stylednav" open={open} colorMode={colorMode}>
+    <StyledMenu className="stylednav" open={open} colorMode={colorMode} onClick={() => setOpen(!open)}>
 
       <ThemeToggle />
 
