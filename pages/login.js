@@ -156,12 +156,13 @@ function Login() {
               >
                 Sign In
               </button>
+              <p>New Here?</p>
               <button
                 type="button"
                 onClick={() => setClicked(true)} 
                 className="btn"
               >
-                  New Here? Sign Up
+                 Sign Up
               </button>
             </form>
         </Flex>

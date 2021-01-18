@@ -264,6 +264,7 @@ const Cellar = () => {
             <form onSubmit={handleWinerackSubmit}>
               <label htmlFor="label">
                 <input 
+                  className="input"
                   type="text" 
                   id="label"
                   name="label"
@@ -273,6 +274,7 @@ const Cellar = () => {
               </label>
               <label htmlFor="rows">
                 <input 
+                  className="input"
                   type="text" 
                   id="rows"
                   name="rows"
@@ -282,6 +284,7 @@ const Cellar = () => {
               </label>
               <label htmlFor="columns">
                 <input 
+                  className="input"
                   type="text" 
                   id="columns"
                   name="columns"
@@ -299,6 +302,7 @@ const Cellar = () => {
             <form onSubmit={handleNewBottleSubmit}>
               <label htmlFor="name">
                 <input 
+                  className="input"
                   type="text" 
                   id="name"
                   name="name"
@@ -306,8 +310,9 @@ const Cellar = () => {
                   sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
                 />
               </label>
-              <label htmlFor="type">
+              <label className="input" htmlFor="type">
                 <select
+                  className="input"
                   type="select" 
                   id="type"
                   name="type"
@@ -322,6 +327,7 @@ const Cellar = () => {
               </label>
               <label htmlFor="price">
                 <input 
+                  className="input"
                   type="text" 
                   id="price"
                   name="price"
@@ -331,6 +337,7 @@ const Cellar = () => {
               </label>
               <label htmlFor="year">
                 <input 
+                  className="input"
                   type="text" 
                   id="year"
                   name="year"
@@ -340,6 +347,7 @@ const Cellar = () => {
               </label>
               <label htmlFor="location">
                 <input 
+                  className="input"
                   type="text" 
                   id="location"
                   name="location"
@@ -349,6 +357,7 @@ const Cellar = () => {
               </label>
               <label htmlFor="rack">
                 <input 
+                  className="input"
                   type="text"
                   id="rack"
                   name="rack" 
@@ -358,6 +367,7 @@ const Cellar = () => {
               </label>
               <label htmlFor="column">
                 <input 
+                  className="input"
                   type="text" 
                   id="column"
                   name="column"
@@ -367,6 +377,7 @@ const Cellar = () => {
               </label>
               <label htmlFor="row">
                 <input 
+                  className="input"
                   type="text" 
                   id="row"
                   name="row"
