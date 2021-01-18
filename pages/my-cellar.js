@@ -236,7 +236,7 @@ const Cellar = () => {
         <title>My Cellar</title>
       </Head>
       
-      <ProSidebar collapsed={active} sx={colorMode === 'default' ? { background: 'linear-gradient(0deg, #000000 0%, #520101 100%)', color: '#fff'} : 
+      <ProSidebar collapsed={active} sx={colorMode === 'default' ? { background: 'linear-gradient(0deg, #000000 0%, #520101 70%)', color: '#fff'} : 
           { background: 'linear-gradient(0deg, #eee2de 0%, #987b61 70%)', color: '#000'} }>
         <SidebarHeader sx={colorMode === 'default' ? { background: 'linear-gradient(180deg, #000000 0%, #520101 100%)'} : 
           { background: 'linear-gradient(180deg, #eee2de 0%, #987b61 100%)'} }>
@@ -289,7 +289,7 @@ const Cellar = () => {
                   sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid', color: '#000'}} 
                 />
               </label>
-              <Button type="submit" sx={{cursor: 'pointer', width: 174}} bg='background' color='text' type="submit" name="create winerack">
+              <Button type="submit" sx={{border: '1px solid', cursor: 'pointer', width: 174}} bg='background' color='text' type="submit" name="create winerack">
                 Create Winerack
               </Button>
             </form>
@@ -374,7 +374,7 @@ const Cellar = () => {
                   sx={{p: 2, borderRadius: 3, mb: 2, border: '1px solid'}} 
                 />
               </label>
-              <Button sx={{cursor: 'pointer', width: 174}} bg='background' color='text' type="submit" name="add bottle">
+              <Button sx={{ border: '1px solid', cursor: 'pointer', width: 174}} bg='background' color='text' type="submit" name="add bottle">
                 Add Bottle
               </Button>
             </form>
