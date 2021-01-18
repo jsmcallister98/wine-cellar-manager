@@ -231,7 +231,7 @@ const Cellar = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex' }} id="CellarPage">
+    <Box sx={{ display: 'flex', minHeight: '100vh' }} id="CellarPage">
       <Head>
         <title>My Cellar</title>
       </Head>

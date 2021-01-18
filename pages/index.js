@@ -39,8 +39,8 @@ export default function Home() {
                 textAlign: 'center',
                 mt: -250
         }}>
-        <h1 sx={{ fontSize: [5, 6, 7, 7], fontWeight: 'semiBold' }}> Welcome To WineOh </h1>
-        <p sx={{ fontSize: [2, 2, 3] }}> The easiest way to keep track of your favorite wines. </p>
+        <h1 sx={{ px: 2, fontSize: [5, 6, 7, 7], fontWeight: 'semiBold' }}> Welcome To WineOh </h1>
+        <p sx={{ px: 2, fontSize: [2, 2, 3] }}> The easiest way to keep track of your favorite wines. </p>
       </Flex>
     </Flex>
   )
