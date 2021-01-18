@@ -172,7 +172,7 @@ function Login() {
             <h2 className="title">Welcome</h2>
               <div className={focusedName ? "input-div one focus" : "input-div one"}>
                 <div className="i">
-                  <FAicons.FaUser className="fas fa-user"></FAicons.FaUser>
+                  <FAicons.FaUser className="fas fa-user" sx={{color: 'text'}}></FAicons.FaUser>
                 </div>
                 <div className="div">
                     <h5>Name</h5>
@@ -189,7 +189,7 @@ function Login() {
               </div>
               <div className={focusedUser ? "input-div one focus" : "input-div one"}>
                 <div className="i">
-                  <FAicons.FaUser className="fas fa-user"></FAicons.FaUser>
+                  <FAicons.FaUser className="fas fa-user" sx={{color: 'text'}}></FAicons.FaUser>
                 </div>
                 <div className="div">
                     <h5>Email</h5>
@@ -206,7 +206,7 @@ function Login() {
               </div>
               <div className={focusedPass ? "input-div pass focus" : "input-div pass"}>
                 <div className="i"> 
-                  <FAicons.FaLock className="fas fa-lock"></FAicons.FaLock>
+                  <FAicons.FaLock className="fas fa-lock" sx={{color: 'text'}}></FAicons.FaLock>
                 </div>
                 <div className="div">
                     <h5>Password</h5>
