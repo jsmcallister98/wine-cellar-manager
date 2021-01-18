@@ -231,7 +231,7 @@ const Cellar = () => {
   };
 
   return (
-    <Flex id="CellarPage">
+    <Box sx={{ display: 'flex' }} id="CellarPage">
       <Head>
         <title>My Cellar</title>
       </Head>
@@ -382,7 +382,7 @@ const Cellar = () => {
         </Menu>
       </ProSidebar>
       
-      <div sx={active ? {width: "calc(100% - 80px)"} :
+      <div className="Cellar" sx={active ? {width: "calc(100% - 80px)"} :
                 {width: "calc(100% - 250px)"}}>
       <div 
         className={"rack-container"}
@@ -809,7 +809,7 @@ const Cellar = () => {
         ))}
       </div>
       </div>
-    </Flex>
+    </Box>
   )
 }
 

@@ -96,9 +96,9 @@ function Login() {
         <title>Login Page</title>
       </Head>
       <div className="container">
-        <div className="img">
+        <Flex sx={{ justifyContent: 'center', alignItems: 'center'}} className="img">
           <Image src="/images/loginpage1.svg" alt="image" width="713" height="600"/>
-        </div>
+        </Flex>
         <Flex 
           className={clicked ? "login-content flip" : "login-content unflip"}>
           <form onSubmit={handleLoginSubmit}>
@@ -146,9 +146,9 @@ function Login() {
                 </div>
               </div>
               <div className="link-cont">
-                <Link className="a" href="/">
+                {/* <Link className="a" href="/">
                   <a>Forgot Password?</a>
-                </Link>
+                </Link> */}
               </div>
               <button 
                 type="submit" 

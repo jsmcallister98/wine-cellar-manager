@@ -23,7 +23,7 @@ const Contact = () => {
     <Box 
     sx={{ 
           padding: 4,
-          mb: 7,
+          mb: '50vh',
           mx: 'auto',
           width: '100%',
           maxWidth: 600,

@@ -184,7 +184,7 @@ const BottlesPage = () => {
         <p sx={{ fontWeight: '500', ml: 30 }}>Collection Value: ${total}</p>
       </Flex>
       <Flex sx={{justifyContent: "center", mx: 3}}>
-        <Grid gap={5} columns={[1, 2, 2, 3, 4]}>
+        <Grid gap={5} columns={[1, 2, 2, 3, 3, 3, 4]}>
           {bottles && bottles.map((bottle) => (
             <Box 
               key={bottle._id} 

@@ -166,3 +166,12 @@ cursor: pointer;
   position: relative;
   transform-origin: 1px;
 }
+
+@media (max-width: 440px) {
+  #CellarPage {
+    display: block !important;
+  }
+  .Cellar {
+    width: 100% !important;
+  }
+}

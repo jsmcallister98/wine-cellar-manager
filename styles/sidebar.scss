@@ -20,6 +20,20 @@ $breakpoint-xl: 1200px !default;
     padding-bottom: 200vh;
   }
 
+  @media (max-width: 440px) {
+    .pro-sidebar{
+    min-height: 0;
+    padding-bottom: 0;
+    width: 100% !important;
+    }
+    .open-icon, .close-icon {
+      display: none;
+    }
+    .pro-sidebar-header {
+      height: 50px;
+    }
+  }
+
   .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item {
     background: none;
   }
