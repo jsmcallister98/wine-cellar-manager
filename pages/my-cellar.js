@@ -447,7 +447,7 @@ const Cellar = () => {
                   }} 
                     bg='background'
                 >
-                  {winerack.bottles == "" ? (
+                  {winerack == "" ? (
                     <Box 
                       className="bottle"
                       key={row + column} 
