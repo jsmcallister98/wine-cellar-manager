@@ -405,7 +405,7 @@ const Cellar = () => {
           justifyContent: "space-evenly",
           width: "100%"}}
       >
-        {wineracks && wineracks.map(winerack => (
+        {user.wineracks && user.wineracks.map(winerack => (
           <div key={winerack.label} 
                sx={{ my: 'auto', 
                      maxWidth: `${winerack.columns.length * 48}px`,
@@ -462,7 +462,7 @@ const Cellar = () => {
                       >
                     </Box>
                   ) : 
-                  userBottles.map((bottle, index) => (
+                  user.bottles.map((bottle, index) => (
                     fetchedBottles && bottle.yPosition == row && bottle.xPosition == column && bottle.rack == winerack.label ? (
                       fetchedBottles.map(fetchedBottle => (
                         fetchedBottle.xPosition == column && fetchedBottle.yPosition == row && fetchedBottle.name == bottle.name ? (

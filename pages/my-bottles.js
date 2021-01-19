@@ -19,28 +19,14 @@ const BottlesPage = () => {
 
   useEffect(async () => {
     if (user) {
-      const bottles = await handleBottlesSearch();
+      await setBottles(user.bottles);
       let totalPrice = 0
-      await bottles.forEach(bottle => {
+      await user.bottles.forEach(bottle => {
         totalPrice += bottle.price
-        console.log(totalPrice)
       }) 
       setTotal(totalPrice);
     }
-  }, []);
-
-  const handleBottlesSearch = async () => {
-    const res = await fetch("/api/bottles", {
-      method: 'GET',
-      headers: { 
-        'Accept': 'application/json',
-        'Content-type': 'application/json'
-      }
-    });
-    const bottles = await res.json();
-    setBottles(bottles);
-    return bottles;
-    };
+  });
 
   const handleBottleEdit = async (e, bottle) => {
     e.preventDefault();
@@ -72,9 +58,7 @@ const BottlesPage = () => {
           ...userData,
         },
       });
-      console.log(userData);
     }
-    handleBottlesSearch();
   };
 
   const handleBottleDelete = async (bottle) => {
@@ -99,38 +83,32 @@ const BottlesPage = () => {
   }
 
   const handlePriceSort = async () => {
-    await bottles.sort((a, b) => (a.price > b.price) ? 1 : -1);
-    console.log(bottles);
+    await user.bottles.sort((a, b) => (a.price > b.price) ? 1 : -1);
     setBottles([...bottles]);
   }
 
   const handleYearSort = async () => {
     await bottles.sort((a, b) => (a.year > b.year) ? 1 : -1);
-    console.log(bottles);
     setBottles([...bottles]);
   }
 
   const handleTypeSort = async () => {
     await bottles.sort((a, b) => (a.type > b.type) ? 1 : -1);
-    console.log(bottles);
     setBottles([...bottles]);
   }
 
   const handleLocationSort = async () => {
     await bottles.sort((a, b) => (a.location.toLowerCase() > b.location.toLowerCase()) ? 1 : -1);
-    console.log(bottles);
     setBottles([...bottles]);
   }
 
   const handleNameSort = async () => {
     await bottles.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1);
-    console.log(bottles);
     setBottles([...bottles]);
   }
 
   const handleRackSort = async () => {
     await bottles.sort((a, b) => (a.rack.toLowerCase() > b.rack.toLowerCase()) ? 1 : -1);
-    console.log(bottles);
     setBottles([...bottles]);
   }
 
