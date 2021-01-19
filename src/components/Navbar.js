@@ -73,11 +73,12 @@ const Menu = ({ open, setOpen, colorMode }) => {
   return (
     <StyledMenu className="stylednav" open={open} colorMode={colorMode} onClick={() => setOpen(!open)}>
 
-      <ThemeToggle />
-
-      <Link href='/'>
-      <a sx={{variant: 'styles.a', fontWeight: '500'}} > Home </a> 
-      </Link>
+      <Flex sx={{ justifyContent: 'center', alignItems: 'center', height: 100}}>
+        <Link href='/'>
+        <a sx={{variant: 'styles.a', fontWeight: '500'}} > Home </a> 
+        </Link>
+        <ThemeToggle />
+      </Flex>
 
       <Link href='my-cellar'>
       <a sx={{variant: 'styles.a', fontWeight: '500'}} > My Cellar </a> 
