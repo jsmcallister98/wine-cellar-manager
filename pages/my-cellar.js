@@ -233,12 +233,12 @@ const Cellar = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }} id="CellarPage">
+    <Box >
       <Head>
         <title>My Cellar</title>
       </Head>
       {!user && <p sx={{ textAlign: 'center', width: '100vw'}}>Please sign in to access your cellar.</p>}
-      {user && <div>
+      {user && <div sx={{ display: 'flex', minHeight: '100vh' }} id="CellarPage">
       <ProSidebar collapsed={active} sx={colorMode === 'default' ? { background: 'linear-gradient(0deg, #000000 0%, #520101 70%)', color: '#fff'} : 
           { background: 'linear-gradient(0deg, #eee2de 0%, #987b61 70%)', color: '#000'} }>
         <SidebarHeader sx={colorMode === 'default' ? { background: 'linear-gradient(180deg, #000000 0%, #520101 100%)'} : 
