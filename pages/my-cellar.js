@@ -121,13 +121,15 @@ const Cellar = () => {
   const [total, setTotal] = useState(0);
 
   useEffect(async () => {
-    const bottles = await handleBottlesSearch();
-    let totalPrice = 0
-    await bottles.forEach(bottle => {
-      totalPrice += bottle.price
-      console.log(totalPrice)
-    }) 
-    setTotal(totalPrice);
+    if (user) {
+      const bottles = await handleBottlesSearch();
+      let totalPrice = 0
+      await bottles.forEach(bottle => {
+        totalPrice += bottle.price
+        console.log(totalPrice)
+      }) 
+      setTotal(totalPrice);
+    }
   }, []);
 
   const handleBottlesSearch = async () => {
@@ -235,7 +237,8 @@ const Cellar = () => {
       <Head>
         <title>My Cellar</title>
       </Head>
-      
+      {!user && <p sx={{ textAlign: 'center', width: '100vw'}}>Please sign in to access your cellar.</p>}
+      {user && <div>
       <ProSidebar collapsed={active} sx={colorMode === 'default' ? { background: 'linear-gradient(0deg, #000000 0%, #520101 70%)', color: '#fff'} : 
           { background: 'linear-gradient(0deg, #eee2de 0%, #987b61 70%)', color: '#000'} }>
         <SidebarHeader sx={colorMode === 'default' ? { background: 'linear-gradient(180deg, #000000 0%, #520101 100%)'} : 
@@ -820,6 +823,7 @@ const Cellar = () => {
         ))}
       </div>
       </div>
+      </div>}
     </Box>
   )
 }

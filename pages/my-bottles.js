@@ -18,13 +18,15 @@ const BottlesPage = () => {
   const [total, setTotal] = useState(0);
 
   useEffect(async () => {
-    const bottles = await handleBottlesSearch();
-    let totalPrice = 0
-    await bottles.forEach(bottle => {
-      totalPrice += bottle.price
-      console.log(totalPrice)
-    }) 
-    setTotal(totalPrice);
+    if (user) {
+      const bottles = await handleBottlesSearch();
+      let totalPrice = 0
+      await bottles.forEach(bottle => {
+        totalPrice += bottle.price
+        console.log(totalPrice)
+      }) 
+      setTotal(totalPrice);
+    }
   }, []);
 
   const handleBottlesSearch = async () => {
@@ -137,6 +139,8 @@ const BottlesPage = () => {
       <Head>
         <title>My Bottles</title>
       </Head>
+      {!user && <p sx={{ textAlign: 'center', width: '100vw'}}>Please sign in to access your bottles.</p>}
+      {user && <div>
       <Flex sx={{m: 4, alignItems: 'center', ml: 70}}>
         <div sx={{ my: 'auto'}} className="dropdown dropdown-6">
           <Flex sx={{alignItems: 'center'}}>
@@ -268,6 +272,7 @@ const BottlesPage = () => {
           ))}
         </Grid>
       </Flex>
+      </div>}
     </Box>
   )
 }
