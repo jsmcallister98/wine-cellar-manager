@@ -1,5 +1,5 @@
-wineohapp.com                                                                                                                                                                       
-View video demonstration here: 
+https://wineohapp.com                                                                                                                                                                       
+View video demonstration here: https://www.youtube.com/watch?v=yLtHoqez1nM&feature=youtu.be
 
 # Project Summary
 This project allows user to keep track of all their wines, making it easy to find the perfect bottle for the perfect occasion. It also tracks the total value of the user's wine collection and gives them the option of sorting through their bottles by multiple parameters if they want to find their oldest bottle, their most expensive, or various other options. Moving, deleting, and creating wineracks and bottles is easy and intuitive. Support for mobile devices and large screens.
