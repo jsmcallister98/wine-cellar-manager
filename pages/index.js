@@ -41,6 +41,7 @@ export default function Home() {
         }}>
         <h1 sx={{ px: 2, fontSize: [5, 6, 7, 7], fontWeight: 'semiBold' }}> Welcome To WineOh </h1>
         <p sx={{ px: 2, fontSize: [2, 2, 3] }}> The easiest way to keep track of your favorite wines. </p>
+        <a sx={{ mx: 'auto', borderBottom: '1px solid transparent', cursor: 'pointer', fontSize: [2, 2, 3], ':hover': { borderBottom: '1px solid' }}} href="https://www.youtube.com/watch?v=yLtHoqez1nM&feature=youtu.be">Check out the demo here</a>
       </Flex>
     </Flex>
   )
